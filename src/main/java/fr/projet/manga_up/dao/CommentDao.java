@@ -10,6 +10,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CommentDao extends CrudRepository<Comment, Integer> {
-	@Query(value="SELECT * FROM comments c WHERE c.id_mangas = :id", nativeQuery=true)
+	@Query(value="SELECT * FROM comment c WHERE c.id_manga = :id", nativeQuery=true)
 	List<Comment> findAllById(Integer id);
 }
