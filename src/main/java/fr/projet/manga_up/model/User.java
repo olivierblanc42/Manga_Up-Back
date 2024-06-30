@@ -1,5 +1,6 @@
 package fr.projet.manga_up.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.time.Instant;
@@ -35,13 +36,15 @@ public class User {
     @Lob
     @Column(name = "picture", columnDefinition="blob")
     private byte[] img;
-    
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "Id_address", nullable = false)
+    @JsonIgnore
     private Address address;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "Id_gender", nullable = false)
+    @JsonIgnore
     private Gender gender;
 
     public Integer getId() {
@@ -100,29 +103,27 @@ public class User {
         this.createdAt = createdAt;
     }
 
-	public byte[] getImg() {
-		return img;
-	}
+    public byte[] getImg() {
+        return img;
+    }
 
-	public void setImg(byte[] img) {
-		this.img = img;
-	}
+    public void setImg(byte[] img) {
+        this.img = img;
+    }
 
-	public Address getAddress() {
-		return address;
-	}
+    public Address getAddress() {
+        return address;
+    }
 
-	public void setAddress(Address address) {
-		this.address = address;
-	}
+    public void setAddress(Address address) {
+        this.address = address;
+    }
 
-	public Gender getGender() {
-		return gender;
-	}
+    public Gender getGender() {
+        return gender;
+    }
 
-	public void setGender(Gender gender) {
-		this.gender = gender;
-	}
-
-
+    public void setGender(Gender gender) {
+        this.gender = gender;
+    }
 }
