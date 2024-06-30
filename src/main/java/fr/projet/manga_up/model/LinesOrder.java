@@ -3,7 +3,7 @@ package fr.projet.manga_up.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "line_orders")
+@Table(name = "line_orders", schema = "manga_up")
 public class LinesOrder {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,19 +37,19 @@ public class LinesOrder {
         this.numberArticles = numberArticles;
     }
 
-	public Manga getManga() {
-		return manga;
-	}
+    public Manga getManga() {
+        return manga;
+    }
 
-	public void setManga(Manga manga) {
-		this.manga = manga;
-	}
+    public void setManga(Manga manga) {
+        this.manga = manga;
+    }
 
-	public Cart getCart() {
-		return cart;
-	}
+    public Cart getCart() {
+        return cart;
+    }
 
-	public void setCart(Cart cart) {
-		this.cart = cart;
-	}
+    public void setCart(Cart cart) {
+        this.cart = cart;
+    }
 }
