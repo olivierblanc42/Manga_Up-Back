@@ -1,10 +1,19 @@
 package fr.projet.manga_up.model;
 
-import jakarta.persistence.*;
-
 import java.util.HashSet;
-import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "address", schema = "manga_up")
@@ -34,6 +43,9 @@ public class Address {
             joinColumns = @JoinColumn(name = "address_Id_address"),
             inverseJoinColumns = @JoinColumn(name = "cart_Id_cart"))
     private Set<Cart> carts = new HashSet<>();
+
+    @OneToMany
+    private List<User> users;
 
     public Set<Cart> getCarts() {
         return carts;
@@ -89,6 +101,14 @@ public class Address {
 
     public void setPostalCode(String postalCode) {
         this.postalCode = postalCode;
+    }
+
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
     }
 
     //Ajout d'une méthode qui permet d'afficher l'addresse
