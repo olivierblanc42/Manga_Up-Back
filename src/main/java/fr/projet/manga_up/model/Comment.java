@@ -24,11 +24,14 @@ public class Comment {
     @Column(name = "comment")
     private String comment;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "Id_manga", nullable = false)
     @JsonIgnore
     private Manga manga;
-    
+
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "Id_user", nullable = false)
+    private User user;
 
     public Integer getId() {
         return id;
@@ -61,19 +64,26 @@ public class Comment {
     public void setComment(String comment) {
         this.comment = comment;
     }
-    
+
     public Manga getManga() {
-		return manga;
-	}
+        return manga;
+    }
 
-	public void setManga(Manga manga) {
-		this.manga = manga;
-	}
+    public void setManga(Manga manga) {
+        this.manga = manga;
+    }
 
-	@Override
-	public String toString() {
-		return "Comment [id=" + id + ", rating=" + rating + ", createdAt=" + createdAt + ", comment=" + comment
-				+ ", manga=" + manga + "]";
-	}
-	
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    @Override
+    public String toString() {
+        return "Comment [id=" + id + ", rating=" + rating + ", createdAt=" + createdAt + ", comment=" + comment
+                + ", manga=" + manga + "]";
+    }
 }
