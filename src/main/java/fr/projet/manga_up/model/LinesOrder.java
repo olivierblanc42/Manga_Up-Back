@@ -52,4 +52,6 @@ public class LinesOrder {
 	public void setCart(Cart cart) {
 		this.cart = cart;
 	}
+
+
 }
