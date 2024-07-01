@@ -98,4 +98,6 @@ public class Author {
 	public void setImg(byte[] img) {
 		this.img = img;
 	}
+
+
 }

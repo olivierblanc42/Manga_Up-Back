@@ -66,4 +66,11 @@ public class Genre {
         this.createdDate = createdDate;
     }
 
+    public byte[] getImg() {
+        return img;
+    }
+
+    public void setImg(byte[] img) {
+        this.img = img;
+    }
 }
