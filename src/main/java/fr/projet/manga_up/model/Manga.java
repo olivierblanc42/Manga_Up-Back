@@ -54,15 +54,15 @@ public class Manga {
 
     @ManyToMany(mappedBy = "mangas")
     private Set<Genre> genres = new HashSet<>();
+        
+    @ManyToMany(mappedBy = "mangas")
+    private Set<User> users = new HashSet<>();
     
     @OneToMany(mappedBy="manga")
     private List<Picture> pictures;
 
     @OneToMany(mappedBy="manga")
     private List<Comment> comments;
-    
-    @ManyToMany(mappedBy = "mangas")
-    private Set<User> users = new HashSet<>();
 
     public Set<Genre> getGenres() {
         return genres;
