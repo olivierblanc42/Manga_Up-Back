@@ -23,7 +23,7 @@ public class CategoryService {
 
 	public Category getCategory(Integer id) {
 		Optional<Category> categoryOptional = categoryDao.findById(id);
-		LOGGER.debug("Récupération info genre : ", categoryOptional);
+		LOGGER.debug("Récupération info genre");
 		if (categoryOptional.isEmpty()) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "cette catégori n'a pas été trouvé");
 		} else {

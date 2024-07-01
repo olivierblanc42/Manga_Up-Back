@@ -23,7 +23,7 @@ public class GenreService {
 
 	public Genre getGenre(Integer id) {
 		Optional<Genre> genreOptional = genreDao.findById(id);
-		LOGGER.debug("Récupération info genre : ", genreOptional);
+		LOGGER.debug("Récupération info genre : ");
 		if (genreOptional.isEmpty()) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Ce genre n'a pas été trouvé");
 		} else {

@@ -27,7 +27,7 @@ public class MangaService {
 	}
 
 	public List<Manga> getTenManga() {
-		List<Manga> mangas = mangaDao.FindTenManga();
+		List<Manga> mangas = mangaDao.findTenManga();
 		return mangas;
 	}
 

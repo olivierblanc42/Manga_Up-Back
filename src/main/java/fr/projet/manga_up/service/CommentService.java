@@ -15,8 +15,6 @@ public class CommentService {
 	private CommentDao commentDao;
 	
 	public List<Comment> getCommentsByIdManga(Integer id) {
-		System.out.println("commentDao.findAllById(id) : ");
-		System.out.println(commentDao.findAllById(id));
 		return commentDao.findAllById(id);
 	}
 }
