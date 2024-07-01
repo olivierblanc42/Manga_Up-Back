@@ -32,18 +32,16 @@ public class MangaController {
 	 * @return Retourne le Manga de l'id spécifié.
 	 */
 	@GetMapping(value="/{id}", produces=MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Manga> getManga(@PathVariable Integer id){
+	public ResponseEntity<Manga> getManga(@PathVariable("id") String id){
 		LOGGER.info("Méthode getMangaId, id : {}", id);
-		Manga manga=mangaService.getManga(id);
+		Manga manga=mangaService.getManga(Integer.parseInt(id));
 		LOGGER.info("Manga : {}", manga);
 		return ResponseEntity.ok(manga);
 	}
 
-
-
 	@GetMapping()
 	public ResponseEntity<List<Manga>> getManga() {
-		LOGGER.info("Récupération des ");
+		LOGGER.info("Récupération de la liste des mangas");
 		List<Manga> mangas =  mangaService.getAllManga();
 		LOGGER.info("Mangas : {}", mangas);
 		return ResponseEntity.ok(mangas);
@@ -56,10 +54,4 @@ public class MangaController {
 		LOGGER.info("Mangas : {}", mangas);
 		return ResponseEntity.ok(mangas);
 	}
-
-
-
-
-
-
 }
