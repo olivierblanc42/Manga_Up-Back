@@ -31,4 +31,9 @@ public class MangaService {
 		return mangas;
 	}
 
+	public List<Manga> getAllManga() {
+		List<Manga> mangas = mangaDao.findAllManga();
+		return mangas;
+	}
+
 }

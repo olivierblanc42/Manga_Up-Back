@@ -39,8 +39,18 @@ public class MangaController {
 		return ResponseEntity.ok(manga);
 	}
 
+
+
+	@GetMapping()
+	public ResponseEntity<List<Manga>> getManga() {
+		LOGGER.info("Récupération des ");
+		List<Manga> mangas =  mangaService.getAllManga();
+		LOGGER.info("Mangas : {}", mangas);
+		return ResponseEntity.ok(mangas);
+	}
+
 	@GetMapping(value="/ten", produces=MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<Manga>> getTenManga(@PathVariable String ten) {
+	public ResponseEntity<List<Manga>> getTenManga() {
 		LOGGER.info("Récupération de 10 manga ");
 		List<Manga> mangas =  mangaService.getTenManga();
 		LOGGER.info("Mangas : {}", mangas);
@@ -51,11 +61,5 @@ public class MangaController {
 
 
 
-	@GetMapping()
-	public ResponseEntity<List<Manga>> getTenManga() {
-		LOGGER.info("Récupération des ");
-		List<Manga> mangas =  mangaService.getTenManga();
-		LOGGER.info("Mangas : {}", mangas);
-		return ResponseEntity.ok(mangas);
-	}
+
 }

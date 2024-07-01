@@ -14,4 +14,7 @@ public interface MangaDao extends CrudRepository<Manga, Integer> {
 	@Query(value ="SELECT * FROM manga LIMIT 10", nativeQuery = true)
 	List<Manga> FindTenManga();
 
+	@Query(value ="SELECT * FROM manga ", nativeQuery = true)
+	List<Manga> findAllManga();
+
 }
