@@ -4,10 +4,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.time.Instant;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "user", schema = "manga_up", uniqueConstraints = {
-        @UniqueConstraint(name = "users_AK", columnNames = {"email"})
+        @UniqueConstraint(name = "user_AK", columnNames = {"email"})
 })
 public class User {
     @Id
@@ -36,7 +38,7 @@ public class User {
     @Lob
     @Column(name = "picture", columnDefinition="blob")
     private byte[] img;
-
+    
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "Id_address", nullable = false)
     @JsonIgnore
@@ -46,6 +48,13 @@ public class User {
     @JoinColumn(name = "Id_gender", nullable = false)
     @JsonIgnore
     private Gender gender;
+
+   @ManyToMany
+    @JoinTable(name = "user_manga",
+            joinColumns = @JoinColumn(name = "user_Id_user"),
+            inverseJoinColumns = @JoinColumn(name = "manga_Id_manga"))
+    @JsonIgnore
+    private Set<Manga> mangas = new HashSet<>();
 
     public Integer getId() {
         return id;
@@ -103,27 +112,35 @@ public class User {
         this.createdAt = createdAt;
     }
 
-    public byte[] getImg() {
-        return img;
+	public byte[] getImg() {
+		return img;
+	}
+
+	public void setImg(byte[] img) {
+		this.img = img;
+	}
+
+	public Address getAddress() {
+		return address;
+	}
+
+	public void setAddress(Address address) {
+		this.address = address;
+	}
+
+	public Gender getGender() {
+		return gender;
+	}
+
+	public void setGender(Gender gender) {
+		this.gender = gender;
+	}
+    public Set<Manga> getMangas() {
+        return mangas;
     }
 
-    public void setImg(byte[] img) {
-        this.img = img;
+    public void setMangas(Set<Manga> mangas) {
+        this.mangas = mangas;
     }
 
-    public Address getAddress() {
-        return address;
-    }
-
-    public void setAddress(Address address) {
-        this.address = address;
-    }
-
-    public Gender getGender() {
-        return gender;
-    }
-
-    public void setGender(Gender gender) {
-        this.gender = gender;
-    }
 }

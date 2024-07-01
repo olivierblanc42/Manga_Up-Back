@@ -26,7 +26,7 @@ public class Manga {
     @Column(name = "Id_manga", nullable = false)
     private Integer id;
 
-    @Column(name = "title", length = 500)
+    @Column(name = "title", length = 500, unique=true, nullable = false)
     private String title;
 
     @Column(name = "release_date")
@@ -61,6 +61,9 @@ public class Manga {
     @OneToMany(mappedBy="manga")
     private List<Comment> comments;
     
+    @ManyToMany(mappedBy = "mangas")
+    private Set<User> users = new HashSet<>();
+
     public Set<Genre> getGenres() {
         return genres;
     }
@@ -156,5 +159,12 @@ public class Manga {
 	public void setComments(List<Comment> comments) {
 		this.comments = comments;
 	}
+    
+    public Set<User> getUsers() {
+        return users;
+    }
 
+    public void setUsers(Set<User> users) {
+        this.users = users;
+    }
 }

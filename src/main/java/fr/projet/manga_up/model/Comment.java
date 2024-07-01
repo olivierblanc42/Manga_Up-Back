@@ -64,14 +64,14 @@ public class Comment {
     public void setComment(String comment) {
         this.comment = comment;
     }
-
+    
     public Manga getManga() {
-        return manga;
-    }
+		return manga;
+	}
 
-    public void setManga(Manga manga) {
-        this.manga = manga;
-    }
+	public void setManga(Manga manga) {
+		this.manga = manga;
+	}
 
     public User getUser() {
         return user;
@@ -81,9 +81,10 @@ public class Comment {
         this.user = user;
     }
 
-    @Override
-    public String toString() {
-        return "Comment [id=" + id + ", rating=" + rating + ", createdAt=" + createdAt + ", comment=" + comment
-                + ", manga=" + manga + "]";
-    }
+	@Override
+	public String toString() {
+		return "Comment [id=" + id + ", rating=" + rating + ", createdAt=" + createdAt + ", comment=" + comment
+				+ ", manga=" + manga + "]";
+	}
+	
 }

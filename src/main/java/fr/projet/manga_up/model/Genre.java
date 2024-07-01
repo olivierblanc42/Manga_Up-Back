@@ -23,6 +23,10 @@ public class Genre {
     @Column(name = "created_date")
     private Instant createdDate;
 
+    @Lob
+    @Column(name="picture", columnDefinition="blob")
+    private byte[] img;
+
     @ManyToMany
     @JoinTable(name = "genre_manga",
             joinColumns = @JoinColumn(name = "genre_Id_genre"),
