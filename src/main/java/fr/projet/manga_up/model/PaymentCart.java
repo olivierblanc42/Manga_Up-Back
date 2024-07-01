@@ -41,5 +41,4 @@ public class PaymentCart {
     public void setCreatedAt(Instant createdAt) {
         this.createdAt = createdAt;
     }
-
 }

@@ -49,7 +49,7 @@ public class User {
     @JsonIgnore
     private Gender gender;
 
-   @ManyToMany
+    @ManyToMany
     @JoinTable(name = "user_manga",
             joinColumns = @JoinColumn(name = "user_Id_user"),
             inverseJoinColumns = @JoinColumn(name = "manga_Id_manga"))
@@ -142,5 +142,4 @@ public class User {
     public void setMangas(Set<Manga> mangas) {
         this.mangas = mangas;
     }
-
 }
