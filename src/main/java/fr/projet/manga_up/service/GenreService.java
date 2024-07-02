@@ -1,5 +1,6 @@
 package fr.projet.manga_up.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.slf4j.Logger;
@@ -23,12 +24,19 @@ public class GenreService {
 
 	public Genre getGenre(Integer id) {
 		Optional<Genre> genreOptional = genreDao.findById(id);
-		LOGGER.debug("Récupération info genre : ");
+		LOGGER.debug("Récupération info genre : ", genreOptional);
 		if (genreOptional.isEmpty()) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Ce genre n'a pas été trouvé");
 		} else {
 			return genreOptional.get();
 		}
+	}
+
+	public List<Genre> getSixGenres() {
+		return genreDao.findSixGenres();
+	}
+	public List<Genre> getAllGenres() {
+		return genreDao.findALLGenre();
 	}
 
 }

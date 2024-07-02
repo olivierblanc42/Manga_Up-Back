@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 import fr.projet.manga_up.model.Genre;
 import fr.projet.manga_up.service.GenreService;
 
+import java.util.List;
+
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/genres")
@@ -26,8 +28,35 @@ public class GenreController {
 
 	@GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Genre> getGenreId(@PathVariable Integer id) {
-		LOGGER.info("Obtenir un manga");
+		LOGGER.info("Obtenir un genre");
 		Genre genre = genreService.getGenre(id);
 		return ResponseEntity.ok(genre);
 	}
+
+	/**
+	 *
+	 *
+	 * @return une liste de six genre@
+	 */
+	@GetMapping(value ="/six",produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<Genre>> getGenreSix() {
+		LOGGER.info("Récupération des  genres ");
+		List<Genre> genres = genreService.getSixGenres();
+		return ResponseEntity.ok(genres);
+	}
+
+
+
+	/**
+	 *
+	 *
+	 * @return une liste avec tout les genres
+	 */
+	@GetMapping()
+	public ResponseEntity<List<Genre>> getAllGenre() {
+		LOGGER.info("Récupération des  genres ");
+		List<Genre> genres = genreService.getAllGenres();
+		return ResponseEntity.ok(genres);
+	}
+
 }
