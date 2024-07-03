@@ -27,6 +27,7 @@ public class SecurityConfig {
 	        	"/api/mangas/**",
 	        	"/api/genres/**",
 				"/api/categories/**",
+				"/api/users/**",
 	        	"/swagger-ui/**", 
 	        	"/v3/api-docs/**", 
 	        	"/swagger-ui.html", 
