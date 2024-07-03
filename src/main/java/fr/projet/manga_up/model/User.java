@@ -1,6 +1,8 @@
 package fr.projet.manga_up.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 
 import java.time.Instant;
@@ -8,6 +10,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
+@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class, property="@userId")
 @Table(name = "user", schema = "manga_up", uniqueConstraints = {
         @UniqueConstraint(name = "user_AK", columnNames = {"email"})
 })
@@ -39,21 +42,18 @@ public class User {
     @Column(name = "picture", columnDefinition="blob")
     private byte[] img;
     
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "Id_address", nullable = false)
-    @JsonIgnore
     private Address address;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "Id_gender", nullable = false)
-    @JsonIgnore
     private Gender gender;
 
     @ManyToMany
     @JoinTable(name = "user_manga",
             joinColumns = @JoinColumn(name = "user_Id_user"),
             inverseJoinColumns = @JoinColumn(name = "manga_Id_manga"))
-    @JsonIgnore
     private Set<Manga> mangas = new HashSet<>();
 
     public Integer getId() {
