@@ -1,9 +1,12 @@
 package fr.projet.manga_up.controller;
 
+import fr.projet.manga_up.model.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import fr.projet.manga_up.service.UserService;
 
@@ -12,6 +15,16 @@ import fr.projet.manga_up.service.UserService;
 @RequestMapping("/api/users")
 public class UserController {
 
+    private static final Logger LOGGER= LoggerFactory.getLogger(UserController.class);
+
     @Autowired
     private UserService userService;
+
+    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<User> getUser(@PathVariable(value = "id") Integer id){
+        LOGGER.info("getUser récupération de l'utilisateur par son id : {}", id);
+        User user=userService.getUser(id);
+        LOGGER.info("User : {}", user);
+        return ResponseEntity.ok(user);
+    }
 }
