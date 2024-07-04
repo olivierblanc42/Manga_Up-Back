@@ -20,13 +20,13 @@ public class Picture{
     @Column(name = "is_Poster", nullable = false)
     private Boolean isPoster = false;
 
+    @Column(name = "title", length = 255)
+    private String title;
+
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "Id_manga", nullable = false)
     @JsonIgnore
     private Manga manga;
-    
-    @Column(name = "title", length = 255)
-    private String title;
     
     public Integer getId() {
         return id;
@@ -44,29 +44,21 @@ public class Picture{
 		this.img = img;
 	}
 
-	public Boolean getIsPoster() {
-        return isPoster;
-    }
-
-    public void setIsPoster(Boolean isPoster) {
-        this.isPoster = isPoster;
-    }
-
 	public Manga getManga() {
 		return manga;
 	}
 
-	public void setManga(Manga manga) {
-		this.manga = manga;
-	}
-
-    public Boolean getPoster() {
+    public Boolean getIsPoster() {
         return isPoster;
     }
 
-    public void setPoster(Boolean poster) {
+    public void setIsPoster(Boolean poster) {
         isPoster = poster;
     }
+
+    public void setManga(Manga manga) {
+		this.manga = manga;
+	}
 
     public String getTitle() {
         return title;

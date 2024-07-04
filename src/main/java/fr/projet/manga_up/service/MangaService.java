@@ -3,6 +3,7 @@ package fr.projet.manga_up.service;
 import java.util.List;
 import java.util.Optional;
 
+import fr.projet.manga_up.dao.CommentDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
@@ -16,7 +17,7 @@ public class MangaService {
 	
 	@Autowired
 	private MangaDao mangaDao;
-	
+
 	public Manga getManga(Integer id){
 		Optional<Manga> mo=mangaDao.findById(id);
 		if(mo.isEmpty()) {

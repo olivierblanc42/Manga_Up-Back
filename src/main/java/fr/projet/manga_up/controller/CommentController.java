@@ -32,7 +32,7 @@ public class CommentController {
 	 * @return Retourne une liste de commentaires.
 	 */
 	@GetMapping(value="/{id}", produces=MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<Comment>> getCommentsByIdManga(@PathVariable Integer id){
+	public ResponseEntity<List<Comment>> getCommentsByIdManga(@PathVariable("id") Integer id){
 		LOGGER.info("Méthode getCommentsByIdManga, id : {}", id);
 		List<Comment> comments=commentService.getCommentsByIdManga(id);
 		LOGGER.info("List comments : {}", comments);

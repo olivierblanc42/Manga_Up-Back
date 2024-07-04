@@ -1,5 +1,6 @@
 package fr.projet.manga_up.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.HashSet;
@@ -35,9 +36,6 @@ public class Address {
             joinColumns = @JoinColumn(name = "address_Id_address"),
             inverseJoinColumns = @JoinColumn(name = "cart_Id_cart"))
     private Set<Cart> carts = new HashSet<>();
-
-    @OneToMany
-    private List<User> users;
 
     public Set<Cart> getCarts() {
         return carts;
@@ -93,14 +91,6 @@ public class Address {
 
     public void setPostalCode(String postalCode) {
         this.postalCode = postalCode;
-    }
-
-    public List<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(List<User> users) {
-        this.users = users;
     }
 
     //Ajout d'une méthode qui permet d'afficher l'addresse

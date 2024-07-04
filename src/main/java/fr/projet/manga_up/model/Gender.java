@@ -2,6 +2,7 @@ package fr.projet.manga_up.model;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -22,6 +23,7 @@ public class Gender {
     private String label;
 
     @OneToMany(mappedBy="gender")
+    @JsonIgnore
     private List<User> users;
     
     public Integer getId() {

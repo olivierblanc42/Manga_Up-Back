@@ -31,7 +31,7 @@ public class PictureController {
 	 * @return Retourne une liste de picture.
 	 */
 	@GetMapping(value="/{id}", produces=MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<Picture>> getPicturesByIdManga(@PathVariable Integer id){
+	public ResponseEntity<List<Picture>> getPicturesByIdManga(@PathVariable("id") Integer id){
 //		LOGGER.info("Méthode getPicturesByIdManga, id : {}", id);
 		List<Picture> pictures=pictureService.getPicturesByIdManga(id);
 //		LOGGER.info("List pictures : {}", pictures);

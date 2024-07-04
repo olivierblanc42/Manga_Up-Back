@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -21,7 +22,6 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class, property="@mangaId")
 @Table(name = "manga", schema = "manga_up")
 public class Manga {
     @Id
@@ -63,9 +63,6 @@ public class Manga {
     
     @OneToMany(mappedBy="manga")
     private List<Picture> pictures;
-
-    @OneToMany(mappedBy="manga")
-    private List<Comment> comments;
 
     public Set<Genre> getGenres() {
         return genres;
@@ -155,14 +152,6 @@ public class Manga {
 		this.pictures = pictures;
 	}
 
-	public List<Comment> getComments() {
-		return comments;
-	}
-
-	public void setComments(List<Comment> comments) {
-		this.comments = comments;
-	}
-    
     public Set<User> getUsers() {
         return users;
     }
