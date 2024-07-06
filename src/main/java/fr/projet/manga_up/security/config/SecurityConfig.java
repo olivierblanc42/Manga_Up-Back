@@ -14,7 +14,7 @@ import fr.projet.manga_up.controller.MangaController;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-	private static final Logger LOGGER=LoggerFactory.getLogger(MangaController.class);
+	private static final Logger LOGGER=LoggerFactory.getLogger(SecurityConfig.class);
 
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {

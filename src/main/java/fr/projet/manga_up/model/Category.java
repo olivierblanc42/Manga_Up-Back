@@ -76,5 +76,4 @@ public class Category {
 	public void setMangas(List<Manga> mangas) {
 		this.mangas = mangas;
 	}
-
 }

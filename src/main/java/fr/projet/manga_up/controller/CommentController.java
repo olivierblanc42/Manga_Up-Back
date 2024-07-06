@@ -21,7 +21,7 @@ import fr.projet.manga_up.service.CommentService;
 @RequestMapping("/api/comments")
 public class CommentController {
 	
-	private static final Logger LOGGER=LoggerFactory.getLogger(MangaController.class);
+	private static final Logger LOGGER=LoggerFactory.getLogger(CommentController.class);
 	
 	@Autowired
 	private CommentService commentService;

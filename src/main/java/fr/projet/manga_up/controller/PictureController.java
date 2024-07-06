@@ -20,7 +20,7 @@ import fr.projet.manga_up.service.PictureService;
 @RestController
 @RequestMapping("/api/pictures")
 public class PictureController {
-	private static final Logger LOGGER=LoggerFactory.getLogger(MangaController.class);
+	private static final Logger LOGGER=LoggerFactory.getLogger(PictureController.class);
 	
 	@Autowired
 	private PictureService pictureService;
@@ -32,9 +32,9 @@ public class PictureController {
 	 */
 	@GetMapping(value="/{id}", produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Picture>> getPicturesByIdManga(@PathVariable("id") Integer id){
-//		LOGGER.info("Méthode getPicturesByIdManga, id : {}", id);
+		LOGGER.info("Méthode getPicturesByIdManga, id : {}", id);
 		List<Picture> pictures=pictureService.getPicturesByIdManga(id);
-//		LOGGER.info("List pictures : {}", pictures);
+		LOGGER.info("List pictures : {}", pictures);
 		return ResponseEntity.ok(pictures);
 	}
 }

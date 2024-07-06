@@ -4,7 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.time.Instant;
+import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -52,7 +54,7 @@ public class User {
             joinColumns = @JoinColumn(name = "user_Id_user"),
             inverseJoinColumns = @JoinColumn(name = "manga_Id_manga"))
     @JsonIgnore
-    private Set<Manga> mangas = new HashSet<>();
+    private Set<Manga> mangas=new HashSet<>();;
 
     public Integer getId() {
         return id;
@@ -133,6 +135,7 @@ public class User {
 	public void setGender(Gender gender) {
 		this.gender = gender;
 	}
+
     public Set<Manga> getMangas() {
         return mangas;
     }
@@ -140,4 +143,18 @@ public class User {
     public void setMangas(Set<Manga> mangas) {
         this.mangas = mangas;
     }
+/*
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", fisrtname='" + fisrtname + '\'' +
+                ", lastname='" + lastname + '\'' +
+                ", mangas=" + mangas +
+                '}';
+    }
+    */
 }

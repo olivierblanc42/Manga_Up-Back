@@ -6,9 +6,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -159,4 +156,19 @@ public class Manga {
     public void setUsers(Set<User> users) {
         this.users = users;
     }
+/*
+    @Override
+    public String toString() {
+        return "Manga{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", releaseDate=" + releaseDate +
+                ", price=" + price +
+                ", pointFidelity=" + pointFidelity +
+                ", category=" + category +
+                ", users=" + users +
+                '}';
+    }
+
+ */
 }

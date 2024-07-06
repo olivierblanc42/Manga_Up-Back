@@ -4,8 +4,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.fasterxml.jackson.databind.util.JSONPObject;
 import fr.projet.manga_up.model.Comment;
+import fr.projet.manga_up.model.User;
 import fr.projet.manga_up.service.CommentService;
+import fr.projet.manga_up.service.UserService;
+import org.apache.tomcat.util.json.JSONParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +31,8 @@ public class MangaController {
 	private MangaService mangaService;
 	@Autowired
 	private CommentService commentService;
+	@Autowired
+	private UserService userService;
 
 	/**
 	 * Récupère le manga et ses caracteristiques.
@@ -35,14 +41,12 @@ public class MangaController {
 	 */
 	@GetMapping(value="/{id}", produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> getManga(@PathVariable("id") Integer id){
-		LOGGER.info("Méthode getMangaId, id : {}", id);
+		LOGGER.info("Dans controller getMangaId, id : {}", id);
 		Map<String, Object> response = new HashMap<>();
 		Manga manga=mangaService.getManga(id);
 		List<Comment> comments=commentService.getCommentsByIdManga(id);
 		response.put("manga", manga);
 		response.put("comments", comments);
-		LOGGER.info("Manga : {}", manga);
-		LOGGER.info("Comments : {}", comments);
 		return ResponseEntity.ok(response);
 	}
 
@@ -71,14 +75,31 @@ public class MangaController {
 	}
 
    @PostMapping(value="/{id}", produces=MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<String> addUserInFavorite(@PathVariable("id") String id){
-		LOGGER.info("addUserInFavorite : {}", id);
-		return ResponseEntity.ok("ok");
+	public ResponseEntity<?> addUserInFavorite(
+			@PathVariable("id") Integer idManga,
+   			@RequestBody User _user){
+		LOGGER.info("addUserInFavorite id : {}", idManga);
+		LOGGER.info("idUser : {}", _user.getId());
+		Manga manga=mangaService.addUserInFavorite(_user.getId(), idManga);
+	    List<Comment> comments=commentService.getCommentsByIdManga(idManga);
+	    Map<String, Object> response = new HashMap<>();
+	    response.put("manga", manga);
+	    response.put("comments", comments);
+	    return ResponseEntity.ok(response);
 	}
 
 	@DeleteMapping(value = "/{id}", produces=MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<String> deleteUserAsFavorite(@PathVariable("id") String id){
-		LOGGER.info("deleteUserAsFavorite : {}", id);
-		return ResponseEntity.ok("ok");
+	public ResponseEntity<?> deleteUserAsFavorite(
+			@PathVariable("id") Integer idManga,
+			@RequestBody User _user){
+		LOGGER.info("deleteUserAsFavorite id : {}", idManga);
+		LOGGER.info("deleteUserAsFavorite body : {}", _user.getId());
+		mangaService.deleteUserAsFavorite(_user.getId(), idManga);
+		Manga manga=mangaService.getManga(idManga);
+		List<Comment> comments=commentService.getCommentsByIdManga(idManga);
+		Map<String, Object> response = new HashMap<>();
+		response.put("manga", manga);
+		response.put("comments", comments);
+		return ResponseEntity.ok(response);
 	}
 }
