@@ -1,5 +1,6 @@
 package fr.projet.manga_up.controller;
 
+import fr.projet.manga_up.model.Manga;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import fr.projet.manga_up.model.Genre;
 import fr.projet.manga_up.service.GenreService;
+
+import java.util.List;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -30,4 +33,14 @@ public class GenreController {
 		Genre genre = genreService.getGenre(id);
 		return ResponseEntity.ok(genre);
 	}
+
+
+	@GetMapping(value="/six", produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<Genre>> getGenreSix() {
+		LOGGER.info("Récupération de 10 manga ");
+		List<Genre> genres = genreService.getSixGenre() ;
+		LOGGER.info("Mangas : {}", genres);
+		return ResponseEntity.ok(genres);
+	}
+
 }

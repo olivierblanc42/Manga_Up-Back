@@ -1,7 +1,9 @@
 package fr.projet.manga_up.service;
 
+import java.util.List;
 import java.util.Optional;
 
+import fr.projet.manga_up.model.Manga;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +31,11 @@ public class GenreService {
 		} else {
 			return genreOptional.get();
 		}
+	}
+
+
+	public List<Genre> getSixGenre() {
+		return genreDao.findGenreLimit6();
 	}
 
 }

@@ -54,10 +54,18 @@ public class MangaController {
 		return ResponseEntity.ok(mangas);
 	}
 
-	@GetMapping(value="/ten", produces=MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<Manga>> getTenMangas() {
+	@GetMapping(value="/oderDate", produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<Manga>> getOderDate() {
 		LOGGER.info("Récupération de 10 manga ");
-		List<Manga> mangas =  mangaService.getTenManga();
+		List<Manga> mangas =  mangaService.getMangaOrderDateLimit9();
+		LOGGER.info("Mangas : {}", mangas);
+		return ResponseEntity.ok(mangas);
+	}
+
+	@GetMapping(value="/nine", produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<Manga>> getNineMangas() {
+		LOGGER.info("Récupération de 10 manga ");
+		List<Manga> mangas =  mangaService.getNineManga();
 		LOGGER.info("Mangas : {}", mangas);
 		return ResponseEntity.ok(mangas);
 	}

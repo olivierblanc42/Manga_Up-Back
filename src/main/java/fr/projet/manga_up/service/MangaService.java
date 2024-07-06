@@ -27,14 +27,22 @@ public class MangaService {
 		}
 	}
 
-	public List<Manga> getTenManga() {
-		List<Manga> mangas = mangaDao.findTenManga();
+	public List<Manga> getNineManga() {
+		List<Manga> mangas = mangaDao.findNineManga();
 		return mangas;
 	}
 
 	public List<Manga> getAllManga() {
-		List<Manga> mangas = mangaDao.findAllManga();
-		return mangas;
+        return mangaDao.findAllManga();
 	}
+
+	public List<Manga> getMangaLimitOne() {
+		return mangaDao.findMangaLimitOne();
+	}
+
+	public List<Manga> getMangaOrderDateLimit9(){
+		return mangaDao.findMangaOrderByDate();
+	}
+
 
 }
