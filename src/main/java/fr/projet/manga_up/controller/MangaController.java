@@ -89,12 +89,8 @@ public class MangaController {
    			@RequestBody User _user){
 		LOGGER.info("addUserInFavorite id : {}", idManga);
 		LOGGER.info("idUser : {}", _user.getId());
-		Manga manga=mangaService.addUserInFavorite(_user.getId(), idManga);
-	    List<Comment> comments=commentService.getCommentsByIdManga(idManga);
-	    Map<String, Object> response = new HashMap<>();
-	    response.put("manga", manga);
-	    response.put("comments", comments);
-	    return ResponseEntity.ok(response);
+		mangaService.addUserInFavorite(_user.getId(), idManga);
+	    return ResponseEntity.ok().build();
 	}
 
 	@DeleteMapping(value = "/{id}", produces=MediaType.APPLICATION_JSON_VALUE)
@@ -104,11 +100,6 @@ public class MangaController {
 		LOGGER.info("deleteUserAsFavorite id : {}", idManga);
 		LOGGER.info("deleteUserAsFavorite body : {}", _user.getId());
 		mangaService.deleteUserAsFavorite(_user.getId(), idManga);
-		Manga manga=mangaService.getManga(idManga);
-		List<Comment> comments=commentService.getCommentsByIdManga(idManga);
-		Map<String, Object> response = new HashMap<>();
-		response.put("manga", manga);
-		response.put("comments", comments);
-		return ResponseEntity.ok(response);
+		return ResponseEntity.ok().build();
 	}
 }
