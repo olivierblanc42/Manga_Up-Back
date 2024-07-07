@@ -42,7 +42,7 @@ public class MangaService {
         return mangaDao.findAllManga();
 	}
 
-	public List<Manga> getMangaLimitOne() {
+	public Manga getMangaLimitOne() {
 		return mangaDao.findMangaLimitOne();
 	}
 
