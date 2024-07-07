@@ -58,6 +58,15 @@ public class MangaController {
 		return ResponseEntity.ok(mangas);
 	}
 
+
+	@GetMapping(value="/oderOne", produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Manga> getMangaLimitOne(){
+		LOGGER.info("Récupération 1 manga");
+		Manga manga =  mangaService.getMangaLimitOne();
+		LOGGER.info("Mangas : {}", manga);
+		return ResponseEntity.ok(manga);
+	}
+
 	@GetMapping(value="/oderDate", produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Manga>> getOderDate() {
 		LOGGER.info("Récupération de 10 manga ");
