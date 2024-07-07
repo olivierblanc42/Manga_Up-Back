@@ -1,5 +1,9 @@
 package fr.projet.manga_up.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.util.JSONPObject;
 import fr.projet.manga_up.model.Manga;
 import fr.projet.manga_up.model.User;
 import fr.projet.manga_up.service.MangaService;
@@ -11,6 +15,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import fr.projet.manga_up.service.UserService;
+
+import java.lang.runtime.ObjectMethods;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @CrossOrigin(origins="*")
 @RestController
@@ -25,11 +34,16 @@ public class UserController {
     private MangaService mangaService;
 
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<User> getUser(@PathVariable("id") Integer id){
+    public ResponseEntity<?> getUser(@PathVariable("id") Integer id){
         LOGGER.info("getUser récupération de l'utilisateur par son id : {}", id);
         User user=userService.getUser(id);
+        List<Integer> mangasId=userService.getAllMangaByUserId(id);
         LOGGER.info("User : {}", user);
-        return ResponseEntity.ok(user);
+        LOGGER.info("Liste des id des mangas : {}", mangasId);
+        Map<String, Object> response = new HashMap<>();
+        response.put("user", user);
+        response.put("mangasId", mangasId);
+        return ResponseEntity.ok(response);
     }
 
 

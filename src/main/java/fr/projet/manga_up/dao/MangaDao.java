@@ -2,7 +2,6 @@ package fr.projet.manga_up.dao;
 
 import java.util.List;
 
-import fr.projet.manga_up.model.User;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -20,11 +19,11 @@ public interface MangaDao extends CrudRepository<Manga, Integer> {
 	List<Manga> findNineManga();
 
 	@Modifying
-	@Query(value = "INSERT INTO user_manga (user_id_user, manga_id_manga) VALUES (?, ?)", nativeQuery = true)
+	@Query(value = "INSERT INTO user_manga (id_user, id_manga) VALUES (?, ?)", nativeQuery = true)
 	void addUserInFavorite(@Param("idUser") Integer idUser, @Param("idManga") Integer idManga);
 
 	@Modifying
-	@Query(value = "DELETE FROM `user_manga` um WHERE um.user_id_user= :idUser AND um.manga_id_manga= :idManga", nativeQuery = true)
+	@Query(value = "DELETE FROM `user_manga` um WHERE um.id_user= :idUser AND um.id_manga= :idManga", nativeQuery = true)
 	void deleteUserAsFavorite(@Param("idUser") Integer idUser, @Param("idManga") Integer idManga);
 
 	@Query(value ="SELECT * FROM manga ", nativeQuery = true)

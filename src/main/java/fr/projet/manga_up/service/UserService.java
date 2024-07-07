@@ -1,6 +1,7 @@
 package fr.projet.manga_up.service;
 
 import fr.projet.manga_up.dao.UserDao;
+import fr.projet.manga_up.model.Manga;
 import fr.projet.manga_up.model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
 import java.util.Optional;
 
 @Component
@@ -28,5 +30,10 @@ public class UserService {
         }else {
             return ou.get();
         }
+    }
+
+    public List<Integer> getAllMangaByUserId(Integer id){
+        List<Integer> mangasId=userDao.getAllMangaByUserId(id);
+        return mangasId;
     }
 }

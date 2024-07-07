@@ -14,6 +14,7 @@ import java.util.Set;
         @UniqueConstraint(name = "user_AK", columnNames = {"email"})
 })
 public class User {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Id_user", nullable = false)
@@ -49,12 +50,12 @@ public class User {
     @JoinColumn(name = "Id_gender", nullable = false)
     private Gender gender;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_manga",
-            joinColumns = @JoinColumn(name = "user_Id_user"),
-            inverseJoinColumns = @JoinColumn(name = "manga_Id_manga"))
+            joinColumns = @JoinColumn(name = "Id_user"),
+            inverseJoinColumns = @JoinColumn(name = "Id_manga"))
     @JsonIgnore
-    private Set<Manga> mangas=new HashSet<>();;
+    private Set<Manga> mangas=new HashSet<>();
 
     public Integer getId() {
         return id;
@@ -143,7 +144,7 @@ public class User {
     public void setMangas(Set<Manga> mangas) {
         this.mangas = mangas;
     }
-/*
+
     @Override
     public String toString() {
         return "User{" +
@@ -156,5 +157,5 @@ public class User {
                 ", mangas=" + mangas +
                 '}';
     }
-    */
+
 }

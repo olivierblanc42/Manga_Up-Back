@@ -68,7 +68,7 @@ public class MangaController {
 
 	@GetMapping(value="/nine", produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Manga>> getNineMangas() {
-		LOGGER.info("Récupération de 10 manga ");
+		LOGGER.info("Récupération de 9 manga ");
 		List<Manga> mangas =  mangaService.getNineManga();
 		LOGGER.info("Mangas : {}", mangas);
 		return ResponseEntity.ok(mangas);
