@@ -17,4 +17,7 @@ public interface UserDao extends CrudRepository<User, Integer> {
     @Modifying
     @Query(value = "SELECT Id_manga FROM user_manga WHERE id_user= :id", nativeQuery = true)
     List<Integer> getAllMangaByUserId(@Param("id") Integer id);
+
+    User findByUsername(String userName);
+
 }
