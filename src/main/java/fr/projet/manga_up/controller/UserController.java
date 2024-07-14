@@ -45,6 +45,4 @@ public class UserController {
         response.put("mangasId", mangasId);
         return ResponseEntity.ok(response);
     }
-
-
 }
