@@ -5,6 +5,10 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -29,12 +33,19 @@ public class CommentController {
 	/**
 	 * 
 	 * @param id L'id qui représente le Manga et qui permettra de récupérer les commentaires associés.
-	 * @return Retourne une liste de commentaires.
+	 * @return Retourne une liste de commentaires suivant les spécifications de la pagination.
 	 */
 	@GetMapping(value="/{id}", produces=MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<Comment>> getCommentsByIdManga(@PathVariable("id") Integer id){
+	public ResponseEntity<?> getCommentsByIdManga(
+			@PathVariable("id") Integer id,
+			@PageableDefault(
+					page = 0,
+					size = 6,
+					sort="createdAt",
+					direction = Sort.Direction.DESC) Pageable pageable
+	){
 		LOGGER.info("Méthode getCommentsByIdManga, id : {}", id);
-		List<Comment> comments=commentService.getCommentsByIdManga(id);
+		Page<Comment> comments=commentService.getCommentsByIdManga(id, pageable);
 		LOGGER.info("List comments : {}", comments);
 		return ResponseEntity.ok(comments);
 	}
