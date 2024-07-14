@@ -4,15 +4,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.fasterxml.jackson.databind.util.JSONPObject;
 import fr.projet.manga_up.model.Comment;
 import fr.projet.manga_up.model.User;
 import fr.projet.manga_up.service.CommentService;
 import fr.projet.manga_up.service.UserService;
-import org.apache.tomcat.util.json.JSONParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -35,18 +37,32 @@ public class MangaController {
 	private UserService userService;
 
 	/**
-	 * Récupère le manga et ses caracteristiques.
+	 *
 	 * @param id L'id qui représente le Manga que l'on souhaite obtenir.
-	 * @return Retourne le Manga de l'id spécifié.
+	 * @param pageable Pagination pour les commentaires. Récupère notamment le numéro de page demandé.
+	 * Ex d'url qui doit être utilisé : localhost:8080/users?page=2&size=5&sort=createdAt,DESC
+	 * @return Retourne le Manga de l'id spécifié + les 6 premiers commentaires si on arrive pour
+	 * la première fois sur la page. Sinon récupère la page demandé par l'utilisateur grâce à la pagination.
 	 */
 	@GetMapping(value="/{id}", produces=MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> getManga(@PathVariable("id") Integer id){
+	public ResponseEntity<?> getManga(
+			@PathVariable("id") Integer id,
+			@PageableDefault(
+				page = 0,
+				size = 6,
+				sort="createdAt",
+				direction = Sort.Direction.DESC) Pageable pageable
+	){
+		LOGGER.info("Pageable : {}", pageable);
 		LOGGER.info("Dans controller getMangaId, id : {}", id);
 		Map<String, Object> response = new HashMap<>();
 		Manga manga=mangaService.getManga(id);
-		List<Comment> comments=commentService.getCommentsByIdManga(id);
+		Page<Comment> comments=commentService.getCommentsByIdManga(id, pageable);
+		List<Integer> listRating=commentService.findAllRatingByIdManga(id);
 		response.put("manga", manga);
+        LOGGER.info("comments : {}", comments);
 		response.put("comments", comments);
+		response.put("ratingAll", listRating);
 		return ResponseEntity.ok(response);
 	}
 
@@ -57,7 +73,6 @@ public class MangaController {
 		LOGGER.info("Mangas : {}", mangas);
 		return ResponseEntity.ok(mangas);
 	}
-
 
 	@GetMapping(value="/oderOne", produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Manga> getMangaLimitOne(){
