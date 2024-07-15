@@ -7,6 +7,8 @@ import com.fasterxml.jackson.databind.util.JSONPObject;
 import fr.projet.manga_up.model.Manga;
 import fr.projet.manga_up.model.User;
 import fr.projet.manga_up.service.MangaService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,9 +32,12 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
     @Autowired
     private MangaService mangaService;
 
+    @Operation(summary = "Récupère un user avec l'id'", description = "Retourne un user ")
+    @ApiResponse(responseCode = "201", description = "Un nouveau user est enregistré avec succès")
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getUser(@PathVariable("id") Integer id){
         LOGGER.info("getUser récupération de l'utilisateur par son id : {}", id);

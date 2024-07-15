@@ -1,5 +1,7 @@
 package fr.projet.manga_up.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +28,8 @@ public class CategoryController {
 
 
 
+	@Operation(summary = "Récupère une catégorie avec l'id'", description = "Retourne une catégorie")
+	@ApiResponse(responseCode = "201", description = "Une nouvelle catégorie est enregistrée avec succès")
 	@GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Category> getCategoryId(@PathVariable Integer id) {
 		LOGGER.info("Obtenir un manga");

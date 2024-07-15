@@ -8,6 +8,9 @@ import fr.projet.manga_up.model.Comment;
 import fr.projet.manga_up.model.User;
 import fr.projet.manga_up.service.CommentService;
 import fr.projet.manga_up.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +47,8 @@ public class MangaController {
 	 * @return Retourne le Manga de l'id spécifié + les 6 premiers commentaires si on arrive pour
 	 * la première fois sur la page. Sinon récupère la page demandé par l'utilisateur grâce à la pagination.
 	 */
+	@Operation(summary = "Récupère des mangas avec l'id'", description = "Retourne des mangas")
+	@ApiResponse(responseCode = "201", description = "Des nouveaux mangas sont enregistrés avec succès")
 	@GetMapping(value="/{id}", produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> getManga(
 			@PathVariable("id") Integer id,
@@ -103,6 +108,8 @@ public class MangaController {
 		LOGGER.info("Mangas : {}", manga);
 		return ResponseEntity.ok(manga);
 	}
+	@Operation(summary = "Sauvegarde  de mangas")
+	@ApiResponse(responseCode = "201", description = "Des nouveaus mangas sont enregistrés avec succès")
    @PostMapping(value="/{id}", produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> addUserInFavorite(
 			@PathVariable("id") Integer idManga,
@@ -113,6 +120,13 @@ public class MangaController {
 	    return ResponseEntity.ok().build();
 	}
 
+
+
+	@Operation(summary = "Suppression d'un manga by ID")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "le manga favori a été supprimée avec succès"),
+			@ApiResponse(responseCode = "404", description = "manga not found")
+	})
 	@DeleteMapping(value = "/{id}", produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> deleteUserAsFavorite(
 			@PathVariable("id") Integer idManga,

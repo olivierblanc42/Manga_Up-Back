@@ -2,6 +2,8 @@ package fr.projet.manga_up.controller;
 
 import java.util.List;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +32,8 @@ public class PictureController {
 	 * @param id L'id qui représente le Manga et qui permettra de récupérer les images associés.
 	 * @return Retourne une liste de picture.
 	 */
+	@Operation(summary = "Récupère des pictures avec l'id'", description = "Retourne des pictures")
+	@ApiResponse(responseCode = "201", description = "Des nouveaux pictures sont enregistrées avec succès")
 	@GetMapping(value="/{id}", produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Picture>> getPicturesByIdManga(@PathVariable("id") Integer id){
 		LOGGER.info("Méthode getPicturesByIdManga, id : {}", id);
