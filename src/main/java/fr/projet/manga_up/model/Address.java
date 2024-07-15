@@ -92,7 +92,7 @@ public class Address {
     public void setPostalCode(String postalCode) {
         this.postalCode = postalCode;
     }
-/*
+
     //Ajout d'une méthode qui permet d'afficher l'addresse
     @Override
     public String toString() {
@@ -106,5 +106,5 @@ public class Address {
                 '}';
     }
 
- */
+
 }
