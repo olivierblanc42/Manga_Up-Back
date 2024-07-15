@@ -6,7 +6,9 @@ import fr.projet.manga_up.dao.UserDao;
 import fr.projet.manga_up.model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
@@ -38,8 +40,8 @@ public class MangaService {
 		return mangas;
 	}
 
-	public List<Manga> getAllManga() {
-        return mangaDao.findAllManga();
+	public Page<Manga> findAllMangaPageable( Pageable pageable) {
+		return mangaDao.findAllMangaPageable(pageable);
 	}
 
 	public Manga getMangaLimitOne() {

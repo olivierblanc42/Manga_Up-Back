@@ -2,11 +2,14 @@ package fr.projet.manga_up.dao;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+
+import org.springframework.data.domain.Pageable;
 
 import fr.projet.manga_up.model.Manga;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,4 +37,9 @@ public interface MangaDao extends CrudRepository<Manga, Integer> {
 
 	@Query(value = "SELECT * FROM `manga` ORDER BY `release_date` DESC Limit 9;" , nativeQuery = true)
     List<Manga> findMangaOrderByDate();
+
+
+	@Query(  "FROM Manga  ")
+	Page<Manga> findAllMangaPageable(Pageable pageable);
+
 }

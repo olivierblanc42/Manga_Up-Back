@@ -67,21 +67,19 @@ public class MangaController {
 	}
 
 	@GetMapping()
-	public ResponseEntity<List<Manga>> getMangas() {
+	public ResponseEntity<Page<Manga>> getMangas(
+			@PageableDefault(
+					page = 0,
+					size = 10,
+					sort={"createdAt"},
+					direction = Sort.Direction.DESC) Pageable pageable
+
+	) {
 		LOGGER.info("Récupération de la liste des mangas");
-		List<Manga> mangas =  mangaService.getAllManga();
+		Page<Manga> mangas =  mangaService.findAllMangaPageable(pageable);
 		LOGGER.info("Mangas : {}", mangas);
 		return ResponseEntity.ok(mangas);
 	}
-
-	@GetMapping(value="/oderOne", produces=MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Manga> getMangaLimitOne(){
-		LOGGER.info("Récupération 1 manga");
-		Manga manga =  mangaService.getMangaLimitOne();
-		LOGGER.info("Mangas : {}", manga);
-		return ResponseEntity.ok(manga);
-	}
-
 	@GetMapping(value="/oderDate", produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Manga>> getOderDate() {
 		LOGGER.info("Récupération de 10 manga ");
@@ -98,6 +96,13 @@ public class MangaController {
 		return ResponseEntity.ok(mangas);
 	}
 
+	@GetMapping(value="/oderOne", produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Manga> getMangaLimitOne(){
+		LOGGER.info("Récupération 1 manga");
+		Manga manga =  mangaService.getMangaLimitOne();
+		LOGGER.info("Mangas : {}", manga);
+		return ResponseEntity.ok(manga);
+	}
    @PostMapping(value="/{id}", produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> addUserInFavorite(
 			@PathVariable("id") Integer idManga,
@@ -117,4 +122,8 @@ public class MangaController {
 		mangaService.deleteUserAsFavorite(_user.getId(), idManga);
 		return ResponseEntity.ok().build();
 	}
+
+
+
+
 }
