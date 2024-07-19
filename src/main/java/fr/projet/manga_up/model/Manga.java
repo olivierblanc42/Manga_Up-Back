@@ -61,6 +61,10 @@ public class Manga {
     @OneToMany(mappedBy="manga")
     private List<Picture> pictures;
 
+
+
+
+
     public Set<Genre> getGenres() {
         return genres;
     }

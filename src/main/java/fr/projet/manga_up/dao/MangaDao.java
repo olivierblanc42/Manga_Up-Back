@@ -2,6 +2,8 @@ package fr.projet.manga_up.dao;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import fr.projet.manga_up.model.Comment;
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -41,5 +43,11 @@ public interface MangaDao extends CrudRepository<Manga, Integer> {
 
 	@Query(  "FROM Manga  ")
 	Page<Manga> findAllMangaPageable(Pageable pageable);
+
+
+	//@Query(value="SELECT * FROM manga m WHERE m.manga_Id_manga = :idGenre " , nativeQuery=true)
+	//Page<Manga>findAllMangaByIdGenre(@Param("idGenre")Integer idGenre, Pageable pageable);
+
+
 
 }
