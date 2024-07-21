@@ -18,6 +18,9 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 public interface MangaDao extends CrudRepository<Manga, Integer> {
 
+	@Query(value = "SELECT m FROM Manga m JOIN m.genres g WHERE g.label = :genreLabel")
+	List<Manga> getMangaByGenre(@Param("genreLabel") String genreLabel);
+
 	@Query(value ="SELECT * FROM manga LIMIT 9", nativeQuery = true)
 	List<Manga> findNineManga();
 

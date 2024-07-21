@@ -14,6 +14,7 @@ public interface GenreDao extends CrudRepository<Genre, Integer> {
 
 
 
+
     @Query(value = "SELECT * FROM genre Limit 6 ", nativeQuery = true)
     List<Genre>  findGenreLimit6();
 }

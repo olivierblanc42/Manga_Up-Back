@@ -61,7 +61,8 @@ public class SecurityConfig {
 						.sameOrigin()
 				)
 		);
-
+		return http.build();
+	}
 				/*.requestMatchers(
 								"/api/comments/**",
 								"/api/pictures/**",
@@ -79,8 +80,7 @@ public class SecurityConfig {
 
 		//http.csrf(AbstractHttpConfigurer::disable);
 		// Retourne le filtre de sécurité configuré
-		return http.build();
-	}
+
 
 	/*
 	@Bean
