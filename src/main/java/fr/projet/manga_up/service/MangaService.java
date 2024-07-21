@@ -71,4 +71,11 @@ public class MangaService {
 		LOGGER.info("idManga : {}", idManga);
 		mangaDao.deleteUserAsFavorite(idUser, idManga);
 	}
+
+
+//	public Page<Manga> getMangaByIdGenre(Integer id , Pageable pageable){
+	//	LOGGER.info("getMangaByIdGenre , pageable : {}", pageable);
+	//	return mangaDao.findAllMangaByIdGenre(id ,pageable);
+//	}
+
 }

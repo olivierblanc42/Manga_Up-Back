@@ -75,13 +75,15 @@ public class MangaController {
 	public ResponseEntity<Page<Manga>> getMangas(
 			@PageableDefault(
 					page = 0,
-					size = 10,
-					sort={"createdAt"},
+					size = 9,
+					sort="createdAt",
 					direction = Sort.Direction.DESC) Pageable pageable
 
 	) {
 		LOGGER.info("Récupération de la liste des mangas");
 		Page<Manga> mangas =  mangaService.findAllMangaPageable(pageable);
+		LOGGER.info("pageable : {}", pageable);
+
 		LOGGER.info("Mangas : {}", mangas);
 		return ResponseEntity.ok(mangas);
 	}
