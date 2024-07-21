@@ -2,6 +2,8 @@ package fr.projet.manga_up.controller;
 
 import java.util.List;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +37,8 @@ public class CommentController {
 	 * @param id L'id qui représente le Manga et qui permettra de récupérer les commentaires associés.
 	 * @return Retourne une liste de commentaires suivant les spécifications de la pagination.
 	 */
+	@Operation(summary = "Récupère une page avec l'id'", description = "Retourne une page")
+	@ApiResponse(responseCode = "201", description = "la page a été trouvé avec succès")
 	@GetMapping(value="/{id}", produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> getCommentsByIdManga(
 			@PathVariable("id") Integer id,

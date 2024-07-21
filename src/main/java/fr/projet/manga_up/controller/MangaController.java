@@ -48,7 +48,7 @@ public class MangaController {
 	 * la première fois sur la page. Sinon récupère la page demandé par l'utilisateur grâce à la pagination.
 	 */
 	@Operation(summary = "Récupère des mangas avec l'id'", description = "Retourne des mangas")
-	@ApiResponse(responseCode = "201", description = "Des nouveaux mangas sont enregistrés avec succès")
+	@ApiResponse(responseCode = "201", description = "Des nouveaux mangas sont trouvées avec succès")
 	@GetMapping(value="/{id}", produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> getManga(
 			@PathVariable("id") Integer id,
@@ -110,6 +110,7 @@ public class MangaController {
 		LOGGER.info("Mangas : {}", manga);
 		return ResponseEntity.ok(manga);
 	}
+
 	@Operation(summary = "Sauvegarde  de mangas")
 	@ApiResponse(responseCode = "201", description = "Des nouveaus mangas sont enregistrés avec succès")
    @PostMapping(value="/{id}", produces=MediaType.APPLICATION_JSON_VALUE)

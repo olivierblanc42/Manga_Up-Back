@@ -45,6 +45,8 @@ public class GenreController {
     @Autowired
     private MangaService mangaService;
 
+	@Operation(summary = "Récupère un genre avec l'id'", description = "Retourne un genre")
+	@ApiResponse(responseCode = "201", description = "le genre a été trouvé avec succès")
 	@GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Genre> getGenreId(@PathVariable Integer id) {
 		LOGGER.info("Obtenir un manga");
@@ -53,6 +55,8 @@ public class GenreController {
 	}
 
 
+	@Operation(summary = "Récupère une liste de catégorie'", description = "Retourne une liste de catégorie")
+	@ApiResponse(responseCode = "201", description = "la liste de catégorie a été trouvé avec succès")
 	@GetMapping(value="/six", produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Genre>> getGenreSix() {
 		LOGGER.info("Récupération de 10 manga ");
@@ -62,6 +66,8 @@ public class GenreController {
 	}
 
 
+	@Operation(summary = "Récupère une liste de mangas par genre'", description = "Retourne une liste de mangas par genre")
+	@ApiResponse(responseCode = "201", description = "la liste de manga par genre a été trouvé avec succès")
 	@GetMapping()
 	public ResponseEntity<Page<Genre>> getGenres(
 			@PageableDefault(

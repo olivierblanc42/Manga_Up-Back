@@ -30,7 +30,7 @@ public class AddressController {
     }
 
     @Operation(summary = "Récupère une addresse avec l'id'", description = "Retourne une addresse")
-    @ApiResponse(responseCode = "201", description = "Une nouvelle addresse est enregistrée avec succès")
+    @ApiResponse(responseCode = "201", description = "l'addresse a été trouvée avec succès")
     @GetMapping("/{id}")
     public Address getAddressById(@PathVariable("id")Integer id) {
         LOGGER.info("Récupération d'une addresse avec l'id : " + id);

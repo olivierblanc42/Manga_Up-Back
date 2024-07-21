@@ -29,7 +29,7 @@ public class CategoryController {
 
 
 	@Operation(summary = "Récupère une catégorie avec l'id'", description = "Retourne une catégorie")
-	@ApiResponse(responseCode = "201", description = "Une nouvelle catégorie est enregistrée avec succès")
+	@ApiResponse(responseCode = "201", description = "la catégorie a été trouvé avec succès")
 	@GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Category> getCategoryId(@PathVariable Integer id) {
 		LOGGER.info("Obtenir un manga");
