@@ -9,10 +9,15 @@ import fr.projet.manga_up.model.User;
 import fr.projet.manga_up.service.CommentService;
 import fr.projet.manga_up.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -47,16 +52,24 @@ public class MangaController {
 	 * @return Retourne le Manga de l'id spécifié + les 6 premiers commentaires si on arrive pour
 	 * la première fois sur la page. Sinon récupère la page demandé par l'utilisateur grâce à la pagination.
 	 */
-	@Operation(summary = "Récupère des mangas avec l'id'", description = "Retourne des mangas")
-	@ApiResponse(responseCode = "201", description = "Des nouveaux mangas sont trouvées avec succès")
+	@Operation(summary = "Récupère des mangas avec l'id '", description = "Retourne des mangas")
+	@ApiResponse(responseCode = "201", description = "Des nouveaux mangas sont enregistrés avec succès")
+	@Parameter(in = ParameterIn.QUERY,
+			description = "Zero-based page index (0..N)",
+			name = "page", // !
+			schema = @Schema(type = "integer", defaultValue = "1"))
+	@Parameter(in = ParameterIn.QUERY,
+			description = "Zero-based page index (0..N)",
+			name = "size", // !
+			schema = @Schema(type = "integer", defaultValue = "6"))
+	@Parameter(in = ParameterIn.QUERY,
+			description = "Zero-based page index (0..N)",
+			name = "sort", // !
+			schema = @Schema(type = "string", defaultValue = "createdAt"))
 	@GetMapping(value="/{id}", produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> getManga(
 			@PathVariable("id") Integer id,
-			@PageableDefault(
-				page = 0,
-				size = 6,
-				sort="createdAt",
-				direction = Sort.Direction.DESC) Pageable pageable
+			@ParameterObject Pageable pageable
 	){
 		LOGGER.info("Pageable : {}", pageable);
 		LOGGER.info("Dans controller getMangaId, id : {}", id);
@@ -65,7 +78,7 @@ public class MangaController {
 		Page<Comment> comments=commentService.getCommentsByIdManga(id, pageable);
 		List<Integer> listRating=commentService.findAllRatingByIdManga(id);
 		response.put("manga", manga);
-        LOGGER.info("comments : {}", comments);
+		LOGGER.info("comments : {}", comments);
 		response.put("comments", comments);
 		response.put("ratingAll", listRating);
 		return ResponseEntity.ok(response);
@@ -83,7 +96,6 @@ public class MangaController {
 		LOGGER.info("Récupération de la liste des mangas");
 		Page<Manga> mangas =  mangaService.findAllMangaPageable(pageable);
 		LOGGER.info("pageable : {}", pageable);
-
 		LOGGER.info("Mangas : {}", mangas);
 		return ResponseEntity.ok(mangas);
 	}
@@ -110,17 +122,16 @@ public class MangaController {
 		LOGGER.info("Mangas : {}", manga);
 		return ResponseEntity.ok(manga);
 	}
-
 	@Operation(summary = "Sauvegarde  de mangas")
 	@ApiResponse(responseCode = "201", description = "Des nouveaus mangas sont enregistrés avec succès")
-   @PostMapping(value="/{id}", produces=MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(value="/{id}", produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> addUserInFavorite(
 			@PathVariable("id") Integer idManga,
-   			@RequestBody User _user){
+			@RequestBody User _user){
 		LOGGER.info("addUserInFavorite id : {}", idManga);
 		LOGGER.info("idUser : {}", _user.getId());
 		mangaService.addUserInFavorite(_user.getId(), idManga);
-	    return ResponseEntity.ok().build();
+		return ResponseEntity.ok().build();
 	}
 
 

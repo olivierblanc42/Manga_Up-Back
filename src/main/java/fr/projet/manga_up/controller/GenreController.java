@@ -5,9 +5,13 @@ import fr.projet.manga_up.model.Comment;
 import fr.projet.manga_up.model.Manga;
 import fr.projet.manga_up.service.MangaService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -40,13 +44,11 @@ public class GenreController {
 
 	@Autowired
 	private GenreService genreService;
-    @Autowired
-    private GenreDao genreDao;
-    @Autowired
-    private MangaService mangaService;
+	@Autowired
+	private GenreDao genreDao;
+	@Autowired
+	private MangaService mangaService;
 
-	@Operation(summary = "Récupère un genre avec l'id'", description = "Retourne un genre")
-	@ApiResponse(responseCode = "201", description = "le genre a été trouvé avec succès")
 	@GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Genre> getGenreId(@PathVariable Integer id) {
 		LOGGER.info("Obtenir un manga");
@@ -55,8 +57,6 @@ public class GenreController {
 	}
 
 
-	@Operation(summary = "Récupère une liste de catégorie'", description = "Retourne une liste de catégorie")
-	@ApiResponse(responseCode = "201", description = "la liste de catégorie a été trouvé avec succès")
 	@GetMapping(value="/six", produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Genre>> getGenreSix() {
 		LOGGER.info("Récupération de 10 manga ");
@@ -66,8 +66,6 @@ public class GenreController {
 	}
 
 
-	@Operation(summary = "Récupère une liste de mangas par genre'", description = "Retourne une liste de mangas par genre")
-	@ApiResponse(responseCode = "201", description = "la liste de manga par genre a été trouvé avec succès")
 	@GetMapping()
 	public ResponseEntity<Page<Genre>> getGenres(
 			@PageableDefault(
@@ -95,9 +93,9 @@ public class GenreController {
 	 * la première fois sur la page. Sinon récupère la page demandé par l'utilisateur grâce à la pagination.
 	 */
 	/*@Operation(summary = "Récupère des genres avec l'id'", description = "Retourne des mangas")
-	@GetMapping(value="genre/{id}", produces= MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value="genre/{label}", produces= MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> getGenre(
-			@PathVariable("id") Integer id,
+			@PathVariable("label") String  label,
 			@PageableDefault(
 					page = 0,
 					size = 10,
@@ -105,7 +103,7 @@ public class GenreController {
 					direction = Sort.Direction.DESC) Pageable pageable
 	){
 		LOGGER.info("Pageable : {}", pageable);
-		LOGGER.info("Dans controller getMangaId, id : {}", id);
+		LOGGER.info("Dans controller getGenreId, id : {}", id);
 		Map<String, Object> response = new HashMap<>();
 		Genre genre = genreService.getGenre(id);
 		Page<Manga> mangas = mangaService.getMangaByIdGenre(id,pageable);
@@ -116,6 +114,36 @@ public class GenreController {
 
 	}
 */
+
+	@GetMapping(value="genre/{id}", produces= MediaType.APPLICATION_JSON_VALUE)
+	@Parameter(in = ParameterIn.QUERY,
+			description = "Zero-based page index (0..N)",
+			name = "page", // !
+			schema = @Schema(type = "integer", defaultValue = "1"))
+	@Parameter(in = ParameterIn.QUERY,
+			description = "Zero-based page index (0..N)",
+			name = "size", // !
+			schema = @Schema(type = "integer", defaultValue = "6"))
+	@Parameter(in = ParameterIn.QUERY,
+			description = "Zero-based page index (0..N)",
+			name = "sort", // !
+			schema = @Schema(type = "string", defaultValue = "createdAt"))
+	public ResponseEntity<?> getGenre(
+			@PathVariable("id") Integer id,
+			@ParameterObject Pageable pageable
+
+	)
+	{
+		Map<String, Object> response = new HashMap<>();
+		Genre genre = genreService.getGenre(id);
+		Page<Manga> mangas= mangaService.getMangaByIdGenre(id,pageable);
+		response.put("genre",genre);
+		LOGGER.info("mangas : {}", mangas);
+		response.put("mangas",mangas);
+		return ResponseEntity.ok(response);
+	}
+
+
 
 
 
