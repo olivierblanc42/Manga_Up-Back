@@ -2,6 +2,7 @@ package fr.projet.manga_up.controller;
 
 
 import fr.projet.manga_up.model.Author;
+import fr.projet.manga_up.model.Genre;
 import fr.projet.manga_up.model.Manga;
 import fr.projet.manga_up.service.AuthorService;
 import fr.projet.manga_up.service.MangaService;
@@ -58,16 +59,24 @@ public class AuthorController {
         return ResponseEntity.ok(author);
     }
 
+
     @Operation(summary = "Récupère toute les mangas de l'auteur avec l'id de l'auteur ", description = "Retourne une liste de manga ")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "les manga de l'auteur ont bien été trouvé"),
             @ApiResponse(responseCode = "404", description = "Auteur not found")
     })
     @GetMapping(value="author/{id}", produces= MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> getAuthorByID(@PathVariable("id") Integer id){
+    public ResponseEntity<?> getAuthorByID(
+            @PathVariable("id") Integer id,
+            @PageableDefault(
+                    page = 0,
+                    size = 10,
+                    sort="createdAt",
+                    direction = Sort.Direction.DESC) Pageable pageable
+    ){
         Map<String,Object> response = new HashMap<>();
         Author author = authorService.getAuthor(id);
-        List<Manga> mangas = mangaService.getMangaByIdAuthor(id);
+        Page<Manga> mangas = mangaService.getMangaByIdAuthor(id,pageable);
         response.put("author",author);
         LOGGER.info("mangas : {}", mangas);
         response.put("mangas",mangas);

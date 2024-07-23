@@ -58,7 +58,7 @@ public interface MangaDao extends CrudRepository<Manga, Integer> {
 	 *  requete pour recuperer les manga avec l'id de l'auteur
 	 **/
 	@Query(value = "SELECT m FROM Manga m  JOIN m.authors a  WHERE a.id = :authorId")
-	List<Manga> findAllMangaByIdAuthor(@Param("authorId") Integer authorId);
+	Page<Manga> findAllMangaByIdAuthor(@Param("authorId") Integer authorId,Pageable pageable);
 
 
 

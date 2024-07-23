@@ -20,7 +20,7 @@ public class Genre {
     @Column(name = "label", length = 50)
     private String label;
 
-    @Column(name = "created_date")
+    @Column(name = "created_at")
     private Instant createdDate;
 
     @Lob

@@ -80,6 +80,13 @@ public class GenreController {
 	}
 
 
+
+
+
+
+
+
+
 	/**
 	 *
 	 * @param id L'id qui représente le Genre que l'on souhaite obtenir.
@@ -88,14 +95,14 @@ public class GenreController {
 	 * @return Retourne le Manga de l'id spécifié + les 6 premiers commentaires si on arrive pour
 	 * la première fois sur la page. Sinon récupère la page demandé par l'utilisateur grâce à la pagination.
 	 */
-	/*@Operation(summary = "Récupère des genres avec l'id'", description = "Retourne des mangas")
+	@Operation(summary = "Récupère des genres avec l'id'", description = "Retourne des mangas")
 	@GetMapping(value="genre/{id}", produces= MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> getGenre(
 			@PathVariable("id") Integer id,
 			@PageableDefault(
 					page = 0,
 					size = 10,
-					sort="created_date",
+					sort="createdAt",
 					direction = Sort.Direction.DESC) Pageable pageable
 	){
 		LOGGER.info("Pageable : {}", pageable);
@@ -109,7 +116,7 @@ public class GenreController {
 		return ResponseEntity.ok(response);
 
 	}
-*/
+
 
 
 
