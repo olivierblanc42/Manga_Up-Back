@@ -77,6 +77,10 @@ public class MangaService {
 		return mangaDao.findAllMangaByIdGenre(id,pageable);
 	}
 
+	public Page<Manga> getMangaByIdCategory(Integer id,Pageable pageable ){
+		return mangaDao.findAllMangaByIdCategory(id,pageable);
+	}
+
 	public Page<Manga> getMangaByIdAuthor(Integer id ,Pageable pageable){
 		return mangaDao.findAllMangaByIdAuthor(id,pageable);
 	}

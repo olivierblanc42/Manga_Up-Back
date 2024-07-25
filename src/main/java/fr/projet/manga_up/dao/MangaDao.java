@@ -20,8 +20,10 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 public interface MangaDao extends CrudRepository<Manga, Integer> {
 
-	@Query(value = "SELECT m FROM Manga m JOIN m.genres g WHERE g.label = :genreLabel")
-	List<Manga> getMangaByGenre(@Param("genreLabel") String genreLabel);
+
+
+	/*@Query(value = "SELECT m FROM Manga m JOIN m.genres g WHERE g.label = :genreLabel")
+	List<Manga> getMangaByGenre(@Param("genreLabel") String genreLabel);*/
 
 	@Query(value ="SELECT * FROM manga LIMIT 9", nativeQuery = true)
 	List<Manga> findNineManga();
@@ -53,6 +55,12 @@ public interface MangaDao extends CrudRepository<Manga, Integer> {
 	 **/
 	@Query(value="SELECT m FROM Manga m JOIN m.genres g WHERE g.id = :idGenre " )
 	Page<Manga>findAllMangaByIdGenre(@Param("idGenre")Integer idGenre,Pageable pageable);
+
+	      /**
+			*  requete pour recuperer les manga avec l'id de category
+			**/
+	@Query(value="SELECT m FROM Manga m JOIN m.category c WHERE c.id = :idCategory " )
+	Page<Manga>findAllMangaByIdCategory(@Param("idCategory ")Integer idCategory ,Pageable pageable);
 
 	/**
 	 *  requete pour recuperer les manga avec l'id de l'auteur
