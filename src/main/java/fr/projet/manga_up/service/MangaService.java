@@ -57,8 +57,8 @@ public class MangaService {
 		Manga manga = mangaDao.findById(idManga).orElse(null);
 		User user = userDao.findById(idUser).orElse(null);
 
-        if(user!=null && manga!=null){
-            LOGGER.info("addUserInFavorite manga : {}", manga.getId());
+		if(user!=null && manga!=null){
+			LOGGER.info("addUserInFavorite manga : {}", manga.getId());
 			LOGGER.info("addUserInFavorite : {}", user.getId());
 			mangaDao.addUserInFavorite(user.getId(), manga.getId());
 		}
@@ -73,9 +73,13 @@ public class MangaService {
 	}
 
 
-//	public Page<Manga> getMangaByIdGenre(Integer id , Pageable pageable){
-	//	LOGGER.info("getMangaByIdGenre , pageable : {}", pageable);
-	//	return mangaDao.findAllMangaByIdGenre(id ,pageable);
-//	}
+	public Page<Manga> getMangaByIdGenre(Integer id,Pageable pageable ){
+		return mangaDao.findAllMangaByIdGenre(id,pageable);
+	}
+
+	public Page<Manga> getMangaByIdAuthor(Integer id ,Pageable pageable){
+		return mangaDao.findAllMangaByIdAuthor(id,pageable);
+	}
+
 
 }
