@@ -22,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.repository.query.Param;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -45,8 +46,14 @@ public class MangaController {
 	private UserService userService;
 
 
-
-
+	@GetMapping(value="/search", produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<Manga>> getMangaByName(
+			@RequestParam("name") String name
+	){
+		LOGGER.info("Recherche le manga associé à un nom : {}", name);
+		List<Manga> mangas=mangaService.getMangaByName(name);
+		return ResponseEntity.ok(mangas);
+	}
 
 	/**
 	 *
@@ -78,7 +85,8 @@ public class MangaController {
 		response.put("comments", comments);
 		response.put("ratingAll", listRating);
 		return ResponseEntity.ok(response);
-	}
+    }
+
 @GetMapping()
 public ResponseEntity<Page<Manga>> getMangas(
 		@PageableDefault(
