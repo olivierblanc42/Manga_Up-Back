@@ -20,7 +20,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 public interface MangaDao extends CrudRepository<Manga, Integer> {
 
-
+	@Query("SELECT m FROM Manga m WHERE m.title LIKE %:name%")
+	List<Manga> getMangaByName(@Param("name") String name);
 
 	/*@Query(value = "SELECT m FROM Manga m JOIN m.genres g WHERE g.label = :genreLabel")
 	List<Manga> getMangaByGenre(@Param("genreLabel") String genreLabel);*/
