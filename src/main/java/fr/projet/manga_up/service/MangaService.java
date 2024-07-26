@@ -26,6 +26,11 @@ public class MangaService {
 	@Autowired
 	private UserDao userDao;
 
+	public List<Manga> getMangaByName(String name){
+		LOGGER.info("getMangaByName name : {}", name);
+		return mangaDao.getMangaByName(name);
+	}
+
 	public Manga getManga(Integer id){
 		Optional<Manga> mo=mangaDao.findById(id);
 		if(mo.isEmpty()) {
