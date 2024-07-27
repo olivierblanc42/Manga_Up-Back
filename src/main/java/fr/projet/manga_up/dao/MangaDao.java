@@ -54,14 +54,14 @@ public interface MangaDao extends CrudRepository<Manga, Integer> {
 	/**
 	 *  requete pour recuperer les manga avec l'id du genre
 	 **/
-	@Query(value="SELECT m FROM Manga m JOIN m.genres g WHERE g.id = :idGenre " )
+	@Query(value="SELECT m FROM Manga m JOIN m.genres g WHERE g.id = :idGenre" )
 	Page<Manga>findAllMangaByIdGenre(@Param("idGenre")Integer idGenre,Pageable pageable);
 
 	      /**
 			*  requete pour recuperer les manga avec l'id de category
 			**/
-	@Query(value="SELECT m FROM Manga m JOIN m.category c WHERE c.id = :idCategory " )
-	Page<Manga>findAllMangaByIdCategory(@Param("idCategory ")Integer idCategory ,Pageable pageable);
+	@Query(value="SELECT m FROM Manga m JOIN m.category c WHERE c.id = :idCategory" )
+	Page<Manga>findAllMangaByIdCategory(@Param("idCategory")Integer idCategory ,Pageable pageable);
 
 	/**
 	 *  requete pour recuperer les manga avec l'id de l'auteur

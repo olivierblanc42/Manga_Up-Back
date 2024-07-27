@@ -45,10 +45,31 @@ public class CategoryController {
 	@ApiResponse(responseCode = "201", description = "la catégorie a été trouvé avec succès")
 	@GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Category> getCategoryId(@PathVariable Integer id) {
-		LOGGER.info("Obtenir un manga");
+		LOGGER.info("Obtenir une categorie");
 		Category category = categoryService.getCategory(id);
 		return ResponseEntity.ok(category);
 	}
+
+	@GetMapping()
+	public ResponseEntity<Page<Category>> getCategories(
+			@PageableDefault(
+					page = 0,
+					size = 9,
+					sort="createdAt",
+					direction = Sort.Direction.DESC) Pageable pageable
+
+	) {
+		LOGGER.info("Récupération de la liste des categories");
+		Page<Category> category = categoryService.getCategories(pageable);
+		LOGGER.info("pageable : {}", pageable);
+
+		LOGGER.info("Mangas : {}", category);
+		return ResponseEntity.ok(category);
+	}
+
+
+
+
 
 	/**
 	 *
