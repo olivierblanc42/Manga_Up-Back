@@ -1,6 +1,9 @@
 package fr.projet.manga_up.dao;
 
+import fr.projet.manga_up.model.Manga;
 import fr.projet.manga_up.model.User;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -19,5 +22,9 @@ public interface UserDao extends CrudRepository<User, Integer> {
     List<Integer> getAllMangaByUserId(@Param("id") Integer id);
 
     User findByUsername(String userName);
+
+
+    @Query(  "FROM User  ")
+    List<User> findAllUsers();
 
 }

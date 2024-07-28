@@ -36,4 +36,9 @@ public class UserService {
         List<Integer> mangasId=userDao.getAllMangaByUserId(id);
         return mangasId;
     }
+
+    public List<User> getAllUsers(){
+         return  userDao.findAllUsers();
+    }
+
 }

@@ -50,4 +50,22 @@ public class UserController {
         response.put("mangasId", mangasId);
         return ResponseEntity.ok(response);
     }
+    /*
+    * récupérer tout les users
+    * */
+    @GetMapping()
+        public ResponseEntity<List<User>> getUsers() {
+            LOGGER.info("list de tout les utilisateurs");
+            List<User> users=userService.getAllUsers();
+            return ResponseEntity.ok(users);
+        }
+
+
+
+
+
+
+
+
+
 }
