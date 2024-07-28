@@ -34,6 +34,8 @@ public class CategoryService {
 		}
 	}
 
-
+	public Page<Category> getCategories(Pageable pageable){
+		return categoryDao.findAllCategoriesPageable(pageable);
+}
 
 }
