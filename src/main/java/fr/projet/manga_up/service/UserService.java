@@ -21,6 +21,12 @@ public class UserService {
     @Autowired
     private UserDao userDao;
 
+
+    public User getUserByUsernameAndPassword(String username, String password) {
+        LOGGER.info("getUserByUsernameAndPassword");
+        return userDao.getUserByUsernameAndPassword(username, password);
+    }
+
     public User getUser(Integer id){
         LOGGER.info("getUser");
         Optional<User> ou = userDao.findById(id);

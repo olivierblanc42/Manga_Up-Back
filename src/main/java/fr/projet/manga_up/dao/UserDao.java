@@ -14,6 +14,9 @@ import java.util.List;
 @Repository
 public interface UserDao extends CrudRepository<User, Integer> {
 
+
+    User getUserByUsernameAndPassword(String username, String password);
+
     @Modifying
     @Query(value = "SELECT Id_manga FROM user_manga WHERE id_user= :id", nativeQuery = true)
     List<Integer> getAllMangaByUserId(@Param("id") Integer id);
