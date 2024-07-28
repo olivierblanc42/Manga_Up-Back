@@ -133,5 +133,6 @@ public class LoginController {
         public void setUser(User user) {
             this.user = user;
         }
+
     }
 }
