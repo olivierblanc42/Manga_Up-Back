@@ -22,10 +22,10 @@ public class UserService {
     private UserDao userDao;
 
 
-    public User getUserByUsernameAndPassword(String username, String password) {
+   /* public User getUserByUsernameAndPassword(String username, String password) {
         LOGGER.info("getUserByUsernameAndPassword");
         return userDao.getUserByUsernameAndPassword(username, password);
-    }
+    }*/
 
     public User getUser(Integer id){
         LOGGER.info("getUser");
