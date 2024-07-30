@@ -4,6 +4,7 @@ import fr.projet.manga_up.model.Gender;
 import fr.projet.manga_up.model.Genre;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;

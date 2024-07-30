@@ -34,4 +34,14 @@ public class GenderService {
             return mo.get();
         }
     }
+
+
+    public void deleteGenderById(Integer id){
+       genderDao.deleteById(id);
+    }
+
+     public Gender saveGender(Gender gender){
+
+       return genderDao.save(gender);
+     }
 }
