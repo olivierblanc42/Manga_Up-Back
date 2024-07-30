@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
@@ -128,6 +130,61 @@ public class MangaDaoTest {
         // ASSERT
         Assertions.assertNotNull(mangas);
         Assertions.assertNotEquals(Instant.ofEpochSecond(2015- 2 -12), mangas.get(0).getReleaseDate());
+    }
+
+    @Test
+    public void testFindAllMangaPageable() {
+        //ARRANGE
+        Category category = new Category();
+        category.setName("Sport");
+        category.setDescription("Description de la catégorie sport");
+        categoryDao.save(category);
+
+        Manga manga = new Manga();
+        manga.setTitle("Haikyuu");
+        manga.setCategory(category);
+
+        // ACT
+        Page<Manga> mangas = mangaDao.findAllMangaPageable(Pageable.unpaged());
+
+        // ASSERT
+        Assertions.assertNotNull(mangas);
+    }
+
+    @Test
+    public void testFindAllMangaByIdGenre() {
+        //ARRANGE
+        Integer genreId = 1;
+
+        // ACT
+        Page<Manga> mangas = mangaDao.findAllMangaByIdGenre(genreId, Pageable.unpaged());
+
+        // ASSERT
+        Assertions.assertNotNull(mangas);
+    }
+
+    @Test
+    public void testFindAllMangaByIdCategory() {
+        //ARRANGE
+        Integer categoryId = 1;
+
+        // ACT
+        Page<Manga> mangas = mangaDao.findAllMangaByIdGenre(categoryId, Pageable.unpaged());
+
+        // ASSERT
+        Assertions.assertNotNull(mangas);
+    }
+
+    @Test
+    public void testFindAllMangaByIdAuthor() {
+        //ARRANGE
+        Integer authorId = 1;
+
+        // ACT
+        Page<Manga> mangas = mangaDao.findAllMangaByIdGenre(authorId, Pageable.unpaged());
+
+        // ASSERT
+        Assertions.assertNotNull(mangas);
     }
 
 }

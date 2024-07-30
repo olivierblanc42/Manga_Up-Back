@@ -2,8 +2,6 @@ package fr.projet.manga_up.dao;
 
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import fr.projet.manga_up.model.Comment;
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
