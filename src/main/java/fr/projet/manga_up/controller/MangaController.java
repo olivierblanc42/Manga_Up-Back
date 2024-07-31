@@ -31,7 +31,6 @@ import org.springframework.web.bind.annotation.*;
 import fr.projet.manga_up.model.Manga;
 import fr.projet.manga_up.service.MangaService;
 
-
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/mangas")
