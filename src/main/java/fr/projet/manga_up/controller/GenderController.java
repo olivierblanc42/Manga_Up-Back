@@ -39,7 +39,6 @@ private GenderService genderService;
         Gender gender = genderService.getGender(id);
         LOGGER.info("author : {}", gender);
         return ResponseEntity.ok(gender);
-
     }
 
 }
