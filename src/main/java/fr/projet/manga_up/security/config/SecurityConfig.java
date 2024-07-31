@@ -54,7 +54,9 @@ public class SecurityConfig {
 		//Seules les personnes ayant le rôle ROLE_USER sont autorisées
 		//L'authentification Basic est utilisée
 
-		http.authorizeHttpRequests(auth -> auth
+		http
+				.csrf(csrfCustomizer -> csrfCustomizer.ignoringRequestMatchers("/api/**"))
+				.authorizeHttpRequests(auth -> auth
 				.requestMatchers("/api/login").permitAll()
 				.requestMatchers("/api/user").hasAnyRole("USER", "ADMIN")
 				.requestMatchers("/api/admin").hasRole("ADMIN")
