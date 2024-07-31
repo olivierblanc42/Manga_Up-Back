@@ -8,6 +8,8 @@ import fr.projet.manga_up.model.Manga;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
@@ -26,9 +28,9 @@ public class AuthorService {
     /**
      * Toute la liste des auteurs
      * */
-    public List<Author> getAllAuthor(){
+    public Page<Author> getAllAuthor(Pageable pageable){
         LOGGER.info("getAllAuthor");
-        return authorDao.findAllAuthor();
+        return authorDao.findAllAuthor(pageable);
     }
 
 

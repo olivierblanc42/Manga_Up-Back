@@ -3,6 +3,8 @@ package fr.projet.manga_up.controller;
 
 import fr.projet.manga_up.model.Gender;
 import fr.projet.manga_up.service.GenderService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +41,21 @@ private GenderService genderService;
         Gender gender = genderService.getGender(id);
         LOGGER.info("author : {}", gender);
         return ResponseEntity.ok(gender);
+    }
+
+  /*  @Operation(summary = "Sauvegarde  de genre pour utilisateur")
+    @ApiResponse(responseCode = "201", description = "Des nouveaus mangas sont enregistrés avec succès")
+    @PostMapping
+    public Gender saveGender(@RequestBody Gender gender){
+        return genderService.saveGender(gender);
+    }*/
+
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Gender> deleteArticleById(@PathVariable("id")Integer id) {
+        LOGGER.info("Suppression du genre" + id);
+        genderService.deleteGenderById(id);
+        return ResponseEntity.ok().build();
     }
 
 }

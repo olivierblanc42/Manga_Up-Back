@@ -36,10 +36,17 @@ public class AuthorController {
     private MangaService mangaService;
 
     @GetMapping
-    public ResponseEntity<List<Author>> getAllAuthors()
+    public ResponseEntity<?> getAllAuthors(
+            @PageableDefault(
+                    page = 0,
+                    size = 10,
+                    sort="createdAt",
+                    direction = Sort.Direction.DESC) Pageable pageable
+
+    )
     {
         LOGGER.info("Récupération de la liste des authors");
-        List<Author> authors =  authorService.getAllAuthor();
+        Page<Author> authors =  authorService.getAllAuthor(pageable);
         LOGGER.info("authors : {}", authors);
         return ResponseEntity.ok(authors);
     }
@@ -82,7 +89,6 @@ public class AuthorController {
         response.put("mangas",mangas);
         return ResponseEntity.ok(response);
     }
-
 
 
 }
