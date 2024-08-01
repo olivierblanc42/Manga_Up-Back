@@ -17,4 +17,9 @@ public class PictureService {
 	public List<Picture> getPicturesByIdManga(Integer id) {
 		return pictureDao.findAllById(id);
 	}
+
+	public Picture  savePicture(Picture picture){
+	  return savePicture(picture);
+	}
+
 }

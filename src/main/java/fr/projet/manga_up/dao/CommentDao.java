@@ -19,4 +19,8 @@ public interface CommentDao extends CrudRepository<Comment, Integer> {
 
 	@Query(value = "SELECT c.rating FROM comment  c WHERE c.id_manga = :idManga", nativeQuery = true)
 	List<Integer> findAllRatingByIdManga(@Param("idManga") Integer idManga);
+
+	@Query("From Comment ")
+    List<Comment> findAll();
+
 }

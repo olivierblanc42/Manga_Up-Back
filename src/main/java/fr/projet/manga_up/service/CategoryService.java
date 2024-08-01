@@ -38,4 +38,15 @@ public class CategoryService {
 		return categoryDao.findAllCategoriesPageable(pageable);
 }
 
+   public Category createCategory(Category category) {
+		return categoryDao.save(category);
+   }
+
+
+   public void deleteCategory(Integer id) {
+		 categoryDao.deleteById(id);
+   }
+
+
+
 }

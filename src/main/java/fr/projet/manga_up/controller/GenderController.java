@@ -25,8 +25,9 @@ public class GenderController {
     private static final Logger LOGGER= LoggerFactory.getLogger(MangaController.class);
 
     @Autowired
-private GenderService genderService;
+   private GenderService genderService;
 
+    @Operation(summary= "Récupération des genre d'utilisateur")
     @GetMapping()
     public ResponseEntity<List<Gender>> getAllGenders(){
         LOGGER.info("Récupération de la liste des genres des users");
@@ -34,7 +35,7 @@ private GenderService genderService;
         LOGGER.info("Mangas : {}", genders);
         return ResponseEntity.ok(genders);
     }
-
+    @Operation(summary= "Récupération d'un genre graçe a son Id")
     @GetMapping(value = "/{id}",produces= MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Gender> getGenderById(@PathVariable int id){
         LOGGER.info("recuperation d'un genre d'utilisateur avec son id");
@@ -43,14 +44,17 @@ private GenderService genderService;
         return ResponseEntity.ok(gender);
     }
 
-  /*  @Operation(summary = "Sauvegarde  de genre pour utilisateur")
+
+
+
+    @Operation(summary = "Sauvegarde  de genre pour utilisateur")
     @ApiResponse(responseCode = "201", description = "Des nouveaus mangas sont enregistrés avec succès")
     @PostMapping
     public Gender saveGender(@RequestBody Gender gender){
         return genderService.saveGender(gender);
-    }*/
+    }
 
-
+    @Operation(summary= "Suppression d'un genre pour les utilisateurs")
     @DeleteMapping("/{id}")
     public ResponseEntity<Gender> deleteArticleById(@PathVariable("id")Integer id) {
         LOGGER.info("Suppression du genre" + id);

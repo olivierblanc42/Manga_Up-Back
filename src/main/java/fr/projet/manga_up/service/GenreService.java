@@ -53,6 +53,13 @@ public class GenreService {
 		return genreDao.findAllGenrePageable(pageable);
 	}
 
+   public  Genre saveGenre(Genre genre) {
+		return genreDao.save(genre);
+   }
 
+
+   public void deleteGenderById(Integer id) {
+		genreDao.deleteById(id);
+   }
 
 }

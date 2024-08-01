@@ -2,6 +2,7 @@ package fr.projet.manga_up.controller;
 
 import java.util.List;
 
+import fr.projet.manga_up.model.Author;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.slf4j.Logger;
@@ -9,11 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import fr.projet.manga_up.model.Picture;
 import fr.projet.manga_up.service.PictureService;
@@ -40,5 +37,13 @@ public class PictureController {
 		List<Picture> pictures=pictureService.getPicturesByIdManga(id);
 		LOGGER.info("List pictures : {}", pictures);
 		return ResponseEntity.ok(pictures);
+	}
+
+
+	@Operation(summary= "Creation d' une nouvelle image")
+	@ApiResponse(responseCode = "201", description = " uen nouvelle image a bien été crée")
+	@PostMapping
+	public Picture savePicture(@RequestBody Picture picture) {
+		return pictureService.savePicture(picture);
 	}
 }

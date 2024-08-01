@@ -46,5 +46,13 @@ public class AuthorService {
             return mo.get();
         }
     }
+ public Author createAuthor(Author author){
+        LOGGER.info("createAuthor");
+        return authorDao.save(author);
+  }
 
+  public  void deleteAuthor(Integer id){
+        LOGGER.info("deleteAuthor");
+        authorDao.deleteById(id);
+  }
 }

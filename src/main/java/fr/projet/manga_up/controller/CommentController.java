@@ -2,6 +2,7 @@ package fr.projet.manga_up.controller;
 
 import java.util.List;
 
+import fr.projet.manga_up.model.Picture;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
@@ -17,11 +18,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import fr.projet.manga_up.model.Comment;
 import fr.projet.manga_up.service.CommentService;
@@ -56,8 +53,13 @@ public class CommentController {
 		return ResponseEntity.ok(comments);
 	}
 
-
-
+	@Operation(summary= "recuperation de tout les commentaires" )
+	@ApiResponse(responseCode = "201", description = " un nouveau commentaire a été créé ")
+    @GetMapping
+	public ResponseEntity<List<Comment>>   getAllComments(){
+		List<Comment> comments = commentService.getComments();
+		return ResponseEntity.ok(comments);
+	}
 
 
 
@@ -91,4 +93,23 @@ public class CommentController {
 		LOGGER.info("List comments : {}", comments);
 		return ResponseEntity.ok(comments);
 	}*/
+
+
+	@Operation(summary= "Creation d'un nouveau commentaire" )
+	@ApiResponse(responseCode = "201", description = " un nouveau commentaire a été créé ")
+	@PostMapping
+	public Comment saveComment(@RequestBody Comment comment) {
+		return commentService.saveComment(comment);
+	}
+
+	@Operation(summary= "Suppression d'un commentaire" )
+    @DeleteMapping("/{id}")
+	public ResponseEntity<?> deleteComment(@PathVariable("id") Integer id) {
+		commentService.deleteComment(id);
+		return ResponseEntity.ok().build();
+	}
+
+
+
 }
+

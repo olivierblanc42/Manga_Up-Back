@@ -2,6 +2,7 @@ package fr.projet.manga_up.controller;
 
 import fr.projet.manga_up.dao.GenreDao;
 import fr.projet.manga_up.model.Comment;
+import fr.projet.manga_up.model.Gender;
 import fr.projet.manga_up.model.Manga;
 import fr.projet.manga_up.service.MangaService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -16,11 +17,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import fr.projet.manga_up.model.Genre;
 import fr.projet.manga_up.service.GenreService;
@@ -45,23 +42,24 @@ public class GenreController {
 	@Autowired
 	private MangaService mangaService;
 
+	@Operation(summary = "Récupére un genre par son Id")
 	@GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Genre> getGenreId(@PathVariable Integer id) {
-		LOGGER.info("Obtenir un manga");
+		LOGGER.info("Obtenir un genre");
 		Genre genre = genreService.getGenre(id);
 		return ResponseEntity.ok(genre);
 	}
 
-
+	@Operation(summary= "Récupérer six genres dans la base de données")
 	@GetMapping(value="/six", produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Genre>> getGenreSix() {
-		LOGGER.info("Récupération de 10 manga ");
+		LOGGER.info("Récupération de 6 genres");
 		List<Genre> genres = genreService.getSixGenre() ;
 		LOGGER.info("Mangas : {}", genres);
 		return ResponseEntity.ok(genres);
 	}
 
-
+	@Operation(summary= "Récupérer tous les genres avec la pagination")
 	@GetMapping()
 	public ResponseEntity<Page<Genre>> getGenres(
 			@PageableDefault(
@@ -118,10 +116,22 @@ public class GenreController {
 	}
 
 
+  @Operation(summary= "sauvegarde de genre pour les mangas ")
+  @ApiResponse(responseCode = "201", description = " un nouveau genre a été enregisté avec succès")
+	@PostMapping
+	public Genre saveGenre(@RequestBody Genre genre) {
+		return genreService.saveGenre(genre);
+  }
 
 
 
-
+	@Operation(summary= "Suppression d'un genre pour les mangas")
+	@DeleteMapping("/{id}")
+	public ResponseEntity<Genre> deleteArticleById(@PathVariable("id")Integer id) {
+		LOGGER.info("Suppression du genre" + id);
+         genreDao.deleteById(id);
+	     return ResponseEntity.ok().build();
+	}
 
 
 

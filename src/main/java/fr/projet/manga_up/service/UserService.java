@@ -47,4 +47,14 @@ public class UserService {
          return  userDao.findAllUsers();
     }
 
+    public User createUser(User user){
+        LOGGER.info("createUser");
+        return userDao.save(user);
+    }
+
+    public void deleteUserById(Integer id){
+        userDao.deleteById(id);
+    }
+
+
 }

@@ -44,7 +44,7 @@ public class MangaController {
 	@Autowired
 	private UserService userService;
 
-
+	@Operation(summary = "recherche d'un manga avec le nom du manga")
 	@GetMapping(value="/search", produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Manga>> getMangaByName(
 			@RequestParam("name") String name
@@ -86,24 +86,25 @@ public class MangaController {
 		return ResponseEntity.ok(response);
     }
 
-@GetMapping()
-public ResponseEntity<Page<Manga>> getMangas(
+	@Operation(summary = "Récupérer les mangas avec pagination dans l'application")
+	@GetMapping()
+	public ResponseEntity<Page<Manga>> getMangas(
 		@PageableDefault(
 				page = 0,
 				size = 9,
 				sort="createdAt",
 				direction = Sort.Direction.DESC) Pageable pageable
 
-) {
-	LOGGER.info("Récupération de la liste des mangas");
-	Page<Manga> mangas =  mangaService.findAllMangaPageable(pageable);
-	LOGGER.info("pageable : {}", pageable);
+	) {
+		LOGGER.info("Récupération de la liste des mangas");
+		Page<Manga> mangas =  mangaService.findAllMangaPageable(pageable);
+		LOGGER.info("pageable : {}", pageable);
 
-	LOGGER.info("Mangas : {}", mangas);
-	return ResponseEntity.ok(mangas);
-}
+		LOGGER.info("Mangas : {}", mangas);
+		return ResponseEntity.ok(mangas);
+	}
 
-
+	@Operation(summary = "Récupére neuf mangas triés par date")
 	@GetMapping(value="/oderDate", produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Manga>> getOderDate() {
 		LOGGER.info("Récupération de 10 manga ");
@@ -112,6 +113,7 @@ public ResponseEntity<Page<Manga>> getMangas(
 		return ResponseEntity.ok(mangas);
 	}
 
+	@Operation(summary = "Récupére neuf mangas")
 	@GetMapping(value="/nine", produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Manga>> getNineMangas() {
 		LOGGER.info("Récupération de 9 manga ");
@@ -120,6 +122,7 @@ public ResponseEntity<Page<Manga>> getMangas(
 		return ResponseEntity.ok(mangas);
 	}
 
+	@Operation(summary = "Récupére  un seul manga")
 	@GetMapping(value="/oderOne", produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Manga> getMangaLimitOne(){
 		LOGGER.info("Récupération 1 manga");
@@ -127,6 +130,9 @@ public ResponseEntity<Page<Manga>> getMangas(
 		LOGGER.info("Mangas : {}", manga);
 		return ResponseEntity.ok(manga);
 	}
+
+
+
 	@Operation(summary = "Sauvegarde  de mangas")
 	@ApiResponse(responseCode = "201", description = "Des nouveaus mangas sont enregistrés avec succès")
 	@PostMapping(value="/{id}", produces=MediaType.APPLICATION_JSON_VALUE)
@@ -141,7 +147,7 @@ public ResponseEntity<Page<Manga>> getMangas(
 
 
 
-	@Operation(summary = "Suppression d'un manga by ID")
+	@Operation(summary = "Suppression d'un favoris manga by ID")
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "le manga favori a été supprimée avec succès"),
 			@ApiResponse(responseCode = "404", description = "manga not found")

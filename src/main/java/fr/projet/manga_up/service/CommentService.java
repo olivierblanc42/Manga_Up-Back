@@ -32,4 +32,17 @@ public class CommentService {
 		return commentDao.findAllRatingByIdManga(idManga);
 
 	}
+
+	public Comment saveComment(Comment comment) {
+		return commentDao.save(comment);
+	}
+
+	public void deleteComment(Integer id) {
+		commentDao.deleteById(id);
+	}
+
+
+	public List<Comment> getComments(){
+		return commentDao.findAll();
+	}
 }

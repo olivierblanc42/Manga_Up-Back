@@ -35,6 +35,10 @@ public class AuthorController {
     @Autowired
     private MangaService mangaService;
 
+
+
+    @Operation(summary= "Récupération des auteurs avec la pagination")
+    @ApiResponse(responseCode = "201", description = " un nouveau auteur a été crée avec succès")
     @GetMapping
     public ResponseEntity<?> getAllAuthors(
             @PageableDefault(
@@ -52,7 +56,7 @@ public class AuthorController {
     }
 
 
-    @Operation(summary = "Récupère des auteur avec l'id'", description = "Retourne un auteur ")
+    @Operation(summary = "Récupération d'un auteur grâce à son Id", description = "Retourne un auteur ")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "l'Auteur a bien été trouvé "),
             @ApiResponse(responseCode = "404", description = "Auteur not found")
@@ -90,6 +94,21 @@ public class AuthorController {
         return ResponseEntity.ok(response);
     }
 
+    @Operation(summary= "Creation du nouveau auteur")
+    @ApiResponse(responseCode = "201", description = " un nouveau auteur a été crée avec succès")
+    @PostMapping
+    public Author saveAuthor(@RequestBody Author author) {
+        return authorService.createAuthor(author);
+    }
 
+
+    @Operation(summary = " supprime un autheur ")
+    @ApiResponse(responseCode = "201", description = "a bien été supprimé ")
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteAuthor(@PathVariable int id) {
+        LOGGER.info("deleteAuthor : {}", id);
+        authorService.deleteAuthor(id);
+        return ResponseEntity.ok().build();
+    }
 }
 

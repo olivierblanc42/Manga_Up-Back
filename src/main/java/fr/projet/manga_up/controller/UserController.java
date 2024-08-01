@@ -4,6 +4,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.util.JSONPObject;
+import fr.projet.manga_up.dao.UserDao;
+import fr.projet.manga_up.model.Gender;
+import fr.projet.manga_up.model.Genre;
 import fr.projet.manga_up.model.Manga;
 import fr.projet.manga_up.model.User;
 import fr.projet.manga_up.service.MangaService;
@@ -35,8 +38,8 @@ public class UserController {
 
     @Autowired
     private MangaService mangaService;
-
-
+    @Autowired
+    private UserDao userDao;
 
 
     @Operation(summary = "Récupère un user avec l'id'", description = "Retourne un user ")
@@ -53,9 +56,7 @@ public class UserController {
         response.put("mangasId", mangasId);
         return ResponseEntity.ok(response);
     }
-    /*
-    * récupérer tout les users
-    * */
+    @Operation(summary = "Récupére tout les utilisateur")
     @GetMapping()
         public ResponseEntity<List<User>> getUsers() {
             LOGGER.info("list de tout les utilisateurs");
@@ -66,9 +67,20 @@ public class UserController {
 
 
 
+    @Operation(summary = "Creation d'un nouveau utilisateur ")
+    @ApiResponse(responseCode = "201", description = "un nouveau utilisateur a été cre avec succès ")
+    @PostMapping
+    public User saveUser(@RequestBody User user){
+        return userService.createUser(user);
+    }
 
+    @Operation(summary = "supprime un utilisateur")
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Genre> deleteUserById(@PathVariable("id")Integer id) {
+        LOGGER.info("Suppression du genre" + id);
 
-
-
+        userService.deleteUserById(id);
+        return ResponseEntity.ok().build();
+    }
 
 }

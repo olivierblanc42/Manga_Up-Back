@@ -2,6 +2,7 @@ package fr.projet.manga_up.controller;
 
 import fr.projet.manga_up.model.Genre;
 import fr.projet.manga_up.model.Manga;
+import fr.projet.manga_up.model.Picture;
 import fr.projet.manga_up.service.MangaService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -14,11 +15,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import fr.projet.manga_up.model.Category;
 import fr.projet.manga_up.service.CategoryService;
@@ -50,6 +47,10 @@ public class CategoryController {
 		return ResponseEntity.ok(category);
 	}
 
+
+
+	@Operation(summary= "Récupération des Catégories avec la pagination")
+	@ApiResponse(responseCode = "201", description = "une mist de Catégories a bien été trouver")
 	@GetMapping()
 	public ResponseEntity<Page<Category>> getCategories(
 			@PageableDefault(
@@ -100,6 +101,26 @@ public class CategoryController {
 		return ResponseEntity.ok(response);
 
 	}
+
+
+
+	@Operation(summary= "Creation d' une nouvelle categorie")
+	@ApiResponse(responseCode = "201", description = " une nouvelle categorie a bien été crée")
+	@PostMapping
+	public Category saveCategory(@RequestBody Category category) {
+		return categoryService.createCategory(category);
+	}
+
+	@Operation(summary= "supression d'une categorie")
+	@ApiResponse(responseCode = "201", description = "la catégorie à bien été supprimé")
+    @DeleteMapping("/{id}")
+	public ResponseEntity<?> deleteCategory(@PathVariable Integer id) {
+		LOGGER.info("deleteCategory : {}", id);
+		categoryService.deleteCategory(id);
+		return ResponseEntity.ok().build();
+	}
+
+
 
 
 }

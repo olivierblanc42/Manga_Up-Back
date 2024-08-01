@@ -29,6 +29,9 @@ public class AddressController {
         return addressService.saveAddress(address);
     }
 
+
+
+
     @Operation(summary = "Récupère une addresse avec l'id'", description = "Retourne une addresse")
     @ApiResponse(responseCode = "201", description = "l'addresse a été trouvée avec succès")
     @GetMapping("/{id}")
@@ -39,7 +42,7 @@ public class AddressController {
     }
 
 
-    @Operation(summary = "Suppression d'une addresse by ID")
+    @Operation(summary = "Suppression d'une addresse avec son ID")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "l'addresse a été supprimée avec succès"),
             @ApiResponse(responseCode = "404", description = "addresse not found")
