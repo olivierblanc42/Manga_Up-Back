@@ -55,4 +55,23 @@ public class AuthorService {
         LOGGER.info("deleteAuthor");
         authorDao.deleteById(id);
   }
+
+
+    public Author updateAuthor(Integer id, Author authorDetails) {
+        LOGGER.info("updateAuthor");
+
+        Optional<Author> optionalAuthor = authorDao.findById(id);
+        if (optionalAuthor.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Aucun auteur n'a été trouvé");
+        }
+
+        Author author = optionalAuthor.get();
+        author.setFirstname(authorDetails.getFirstname());
+        author.setLastname(authorDetails.getLastname());
+        author.setDescription(authorDetails.getDescription());
+        author.setImg(authorDetails.getImg());
+
+        return authorDao.save(author);
+    }
+
 }
