@@ -1,11 +1,14 @@
 package fr.projet.manga_up.controller;
 
+import fr.projet.manga_up.dto.AuthorDto;
+import fr.projet.manga_up.dto.CategoryDto;
 import fr.projet.manga_up.model.Genre;
 import fr.projet.manga_up.model.Manga;
 import fr.projet.manga_up.model.Picture;
 import fr.projet.manga_up.service.MangaService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import jakarta.persistence.EntityNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +16,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +25,7 @@ import fr.projet.manga_up.model.Category;
 import fr.projet.manga_up.service.CategoryService;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @CrossOrigin(origins = "*")
@@ -80,7 +85,7 @@ public class CategoryController {
 	 * @return Retourne le Manga de l'id spécifié + les 6 premiers commentaires si on arrive pour
 	 * la première fois sur la page. Sinon récupère la page demandé par l'utilisateur grâce à la pagination.
 	 */
-	@Operation(summary = "Récupère des genres avec l'id'", description = "Retourne des mangas")
+	@Operation(summary = "Récupère des categories avec l'id'", description = "Retourne des categories")
 	@GetMapping(value="category/{id}", produces= MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> getCategory(
 			@PathVariable("id") Integer id,
@@ -104,14 +109,17 @@ public class CategoryController {
 
 
 
-	@Operation(summary= "Creation d' une nouvelle categorie")
+	@Operation(summary= "Creation d' une nouvelle catégorie")
 	@ApiResponse(responseCode = "201", description = " une nouvelle categorie a bien été crée")
 	@PostMapping
-	public Category saveCategory(@RequestBody Category category) {
-		return categoryService.createCategory(category);
+	public ResponseEntity<CategoryDto> createAuthor(@RequestBody CategoryDto categoryDto) {
+		LOGGER.info("createAuthor : {}", categoryDto);
+		CategoryDto createdCategory = categoryService.createdCategory(categoryDto);
+		return ResponseEntity.ok(createdCategory);
 	}
 
-	@Operation(summary= "supression d'une categorie")
+
+	@Operation(summary= "suppression d'une catégorie")
 	@ApiResponse(responseCode = "201", description = "la catégorie à bien été supprimé")
     @DeleteMapping("/{id}")
 	public ResponseEntity<?> deleteCategory(@PathVariable Integer id) {
@@ -120,6 +128,24 @@ public class CategoryController {
 		return ResponseEntity.ok().build();
 	}
 
+	@Operation(summary= "mise à d'une catégorie")
+	@ApiResponse(responseCode = "201", description = "la catégorie à bien été mise à jour")
+	@PutMapping("/{id}")
+	public ResponseEntity<CategoryDto> updateCategory(@PathVariable Integer id, @RequestBody CategoryDto categoryDto) {
+		try{
+			CategoryDto updateCategory = categoryService.updatedCategory(id,categoryDto);
+			return ResponseEntity.ok(updateCategory);
+		}catch (EntityNotFoundException e){
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+		}
+
+	}
+
+	@GetMapping("/dto")
+	public ResponseEntity<List<CategoryDto>> getAllCategory() {
+		List<CategoryDto> categoryDto = categoryService.getAllCategoryDto();
+		return ResponseEntity.ok(categoryDto);
+	}
 
 
 

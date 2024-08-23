@@ -6,17 +6,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.Lob;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonView;
+
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "manga", schema = "manga_up")
@@ -45,19 +39,33 @@ public class Manga {
     @Column(name = "point_fidelity")
     private Integer pointFidelity;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "Id_category", nullable = false)
+
+    @JsonManagedReference
+    @ManyToOne
+    @JoinColumn(name = "Id_category")
     private Category category;
 
-    @ManyToMany(mappedBy = "mangas")
+
+    @JsonManagedReference
+    @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+    @JoinTable(name = "author_manga",
+            joinColumns = @JoinColumn(name = "manga_Id_manga"),
+            inverseJoinColumns = @JoinColumn(name = "author_Id_author"))
     private Set<Author> authors = new HashSet<>();
 
-    @ManyToMany(mappedBy = "mangas")
+
+    @JsonManagedReference
+    @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+    @JoinTable(
+            name = "genre_manga",
+            joinColumns = @JoinColumn(name = "manga_Id_manga"),
+            inverseJoinColumns = @JoinColumn(name = "genre_Id_genre")
+    )
     private Set<Genre> genres = new HashSet<>();
         
     @ManyToMany(mappedBy = "mangas")
     private Set<User> users = new HashSet<>();
-    
+
     @OneToMany(mappedBy="manga")
     private List<Picture> pictures;
 

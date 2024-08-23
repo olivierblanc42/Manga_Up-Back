@@ -1,6 +1,8 @@
 package fr.projet.manga_up.service;
 
 import fr.projet.manga_up.dao.UserDao;
+import fr.projet.manga_up.dto.UserDto;
+import fr.projet.manga_up.mapper.UserMapper;
 import fr.projet.manga_up.model.Manga;
 import fr.projet.manga_up.model.User;
 import org.slf4j.Logger;
@@ -8,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
@@ -20,6 +23,8 @@ public class UserService {
 
     @Autowired
     private UserDao userDao;
+    @Autowired
+    private UserMapper userMapper;
 
 
    /* public User getUserByUsernameAndPassword(String username, String password) {
@@ -55,6 +60,16 @@ public class UserService {
     public void deleteUserById(Integer id){
         userDao.deleteById(id);
     }
+
+    @Transactional
+    public UserDto saveUserDto(UserDto userDto){
+        LOGGER.info("saveUserDto");
+        User user = userMapper.toEntity(userDto);
+        user =userDao.save(user);
+        return userMapper.toDto(user);
+    }
+
+
 
 
 }

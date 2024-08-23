@@ -5,6 +5,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.util.JSONPObject;
 import fr.projet.manga_up.dao.UserDao;
+import fr.projet.manga_up.dto.AuthorDto;
+import fr.projet.manga_up.dto.UserDto;
 import fr.projet.manga_up.model.Gender;
 import fr.projet.manga_up.model.Genre;
 import fr.projet.manga_up.model.Manga;
@@ -67,12 +69,24 @@ public class UserController {
 
 
 
-    @Operation(summary = "Creation d'un nouveau utilisateur ")
+   /* @Operation(summary = "Creation d'un nouveau utilisateur ")
     @ApiResponse(responseCode = "201", description = "un nouveau utilisateur a été cre avec succès ")
     @PostMapping
     public User saveUser(@RequestBody User user){
         return userService.createUser(user);
+    }*/
+
+
+    @Operation(summary = "Creation d'un nouveau utilisateur ")
+    @ApiResponse(responseCode = "201", description = "un nouveau utilisateur a été cre avec succès ")
+    @PostMapping
+    public ResponseEntity<UserDto> saveUser(@RequestBody UserDto userDto) {
+        LOGGER.info("createAuthor : {}", userDto);
+        UserDto createdUser = userService.saveUserDto(userDto);
+        return ResponseEntity.ok(createdUser);
     }
+
+
 
     @Operation(summary = "supprime un utilisateur")
     @DeleteMapping("/{id}")

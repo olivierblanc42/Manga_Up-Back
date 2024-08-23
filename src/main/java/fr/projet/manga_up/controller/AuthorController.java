@@ -1,6 +1,8 @@
 package fr.projet.manga_up.controller;
 
 
+import fr.projet.manga_up.dto.AuthorDto;
+import fr.projet.manga_up.dto.MangaDTO;
 import fr.projet.manga_up.model.Author;
 import fr.projet.manga_up.model.Genre;
 import fr.projet.manga_up.model.Manga;
@@ -9,6 +11,7 @@ import fr.projet.manga_up.service.MangaService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.persistence.EntityNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +19,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,6 +27,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -94,15 +99,24 @@ public class AuthorController {
         return ResponseEntity.ok(response);
     }
 
-    @Operation(summary= "Creation du nouveau auteur")
-    @ApiResponse(responseCode = "201", description = " un nouveau auteur a été crée avec succès")
-    @PostMapping
-    public Author saveAuthor(@RequestBody Author author) {
-        return authorService.createAuthor(author);
-    }
 
 
-    @Operation(summary = " supprime un autheur ")
+   @Operation(summary= "Creation du nouveau auteur")
+   @ApiResponse(responseCode = "201", description = " un nouveau auteur a été crée avec succès")
+   @PostMapping
+   public ResponseEntity<AuthorDto> createAuthor(@RequestBody AuthorDto authorDto) {
+       LOGGER.info("Received Author DTO: {}", authorDto);
+
+       // Validez les données reçues
+       if (authorDto.getLastName() == null || authorDto.getLastName().isEmpty()) {
+           return ResponseEntity.badRequest().body(null);
+       }
+
+       AuthorDto createdAuthor = authorService.saveAuthorDto(authorDto);
+       return ResponseEntity.ok(createdAuthor);
+   }
+
+    @Operation(summary = " supprime un autheur")
     @ApiResponse(responseCode = "201", description = "a bien été supprimé ")
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteAuthor(@PathVariable int id) {
@@ -111,11 +125,35 @@ public class AuthorController {
         return ResponseEntity.ok().build();
     }
 
-    @PutMapping("/{id}")
+
+
+  /*  @PutMapping("/{id}")
     public ResponseEntity<Author> updateAuthor(@PathVariable Integer id, @RequestBody Author authorDetails) {
         Author updatedAuthor = authorService.updateAuthor(id, authorDetails);
         return ResponseEntity.ok(updatedAuthor);
+    }*/
+
+  @PutMapping("/{id}")
+    public ResponseEntity<AuthorDto> updateAuthor(@PathVariable Integer id, @RequestBody AuthorDto authorUpdateDto) {
+        try{
+           AuthorDto updateAuthor = authorService.updateAuthorTest(id ,authorUpdateDto) ;
+           return ResponseEntity.ok(updateAuthor);
+        }catch (EntityNotFoundException e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+
     }
+
+
+
+    @GetMapping("/dto")
+    public ResponseEntity<Set<AuthorDto>> getAllAuthor() {
+        Set<AuthorDto> authorDto = authorService.getAllUserDto2();
+        return ResponseEntity.ok(authorDto);
+    }
+
+
+
 
 }
 

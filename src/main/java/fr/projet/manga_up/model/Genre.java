@@ -1,5 +1,6 @@
 package fr.projet.manga_up.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 import java.time.Instant;
@@ -27,10 +28,8 @@ public class Genre {
     @Column(name="picture", columnDefinition="blob")
     private byte[] img;
 
-    @ManyToMany
-    @JoinTable(name = "genre_manga",
-            joinColumns = @JoinColumn(name = "genre_Id_genre"),
-            inverseJoinColumns = @JoinColumn(name = "manga_Id_manga"))
+    @JsonBackReference
+    @ManyToMany(mappedBy = "genres")
     @JsonIgnore
     private Set<Manga> mangas = new HashSet<>();
 

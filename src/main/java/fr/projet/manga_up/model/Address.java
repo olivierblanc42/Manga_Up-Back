@@ -1,6 +1,8 @@
 package fr.projet.manga_up.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonView;
+
 import jakarta.persistence.*;
 
 import java.util.HashSet;

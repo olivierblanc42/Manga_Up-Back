@@ -1,6 +1,8 @@
 package fr.projet.manga_up.controller;
 
 
+import fr.projet.manga_up.dto.GenderDto;
+import fr.projet.manga_up.dto.MangaDTO;
 import fr.projet.manga_up.model.Gender;
 import fr.projet.manga_up.service.GenderService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -50,15 +52,21 @@ public class GenderController {
     @Operation(summary = "Sauvegarde  de genre pour utilisateur")
     @ApiResponse(responseCode = "201", description = "Des nouveaus mangas sont enregistrés avec succès")
     @PostMapping
-    public Gender saveGender(@RequestBody Gender gender){
-        return genderService.saveGender(gender);
+    public ResponseEntity<GenderDto> createdGender(@RequestBody GenderDto gender) {
+        GenderDto createdGender = genderService.saveGender(gender);
+        return ResponseEntity.ok(createdGender);
     }
+
+
+
+
+
 
     @Operation(summary= "Suppression d'un genre pour les utilisateurs")
     @DeleteMapping("/{id}")
-    public ResponseEntity<Gender> deleteArticleById(@PathVariable("id")Integer id) {
+    public ResponseEntity<Void> deleteArticleById(@PathVariable("id")Integer id) {
         LOGGER.info("Suppression du genre" + id);
-        genderService.deleteGenderById(id);
+        genderService.deleteManga(id);
         return ResponseEntity.ok().build();
     }
 

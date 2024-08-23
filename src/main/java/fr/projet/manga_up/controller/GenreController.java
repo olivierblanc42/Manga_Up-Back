@@ -1,6 +1,7 @@
 package fr.projet.manga_up.controller;
 
 import fr.projet.manga_up.dao.GenreDao;
+import fr.projet.manga_up.dto.GenreDto;
 import fr.projet.manga_up.model.Comment;
 import fr.projet.manga_up.model.Gender;
 import fr.projet.manga_up.model.Manga;
@@ -23,10 +24,7 @@ import fr.projet.manga_up.model.Genre;
 import fr.projet.manga_up.service.GenreService;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -120,6 +118,7 @@ public class GenreController {
   @ApiResponse(responseCode = "201", description = " un nouveau genre a été enregisté avec succès")
 	@PostMapping
 	public Genre saveGenre(@RequestBody Genre genre) {
+
 		return genreService.saveGenre(genre);
   }
 
@@ -133,6 +132,10 @@ public class GenreController {
 	     return ResponseEntity.ok().build();
 	}
 
-
-
+   @Operation(summary=" ")
+   @GetMapping("/dto")
+   public ResponseEntity<Set<GenreDto>> getGenreDto() {
+	   Set<GenreDto> genreDto = genreService.getAllGenresDto();
+	   return ResponseEntity.ok(genreDto);
+   }
 }

@@ -35,12 +35,9 @@ public class Author {
     @Lob
     @Column(name = "picture", columnDefinition="blob")
     private byte[] img;
-    
-    @ManyToMany
-    @JoinTable(name = "author_manga",
-            joinColumns = @JoinColumn(name = "author_Id_author"),
-            inverseJoinColumns = @JoinColumn(name = "manga_Id_manga"))
-    @JsonIgnore
+
+    @JsonBackReference
+    @ManyToMany(mappedBy = "authors")
     private Set<Manga> mangas = new HashSet<>();
 
     public Set<Manga> getMangas() {

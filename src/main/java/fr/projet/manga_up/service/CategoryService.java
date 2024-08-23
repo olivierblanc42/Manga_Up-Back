@@ -1,8 +1,15 @@
 package fr.projet.manga_up.service;
 
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
+import fr.projet.manga_up.dao.MangaDao;
+import fr.projet.manga_up.dto.AuthorDto;
+import fr.projet.manga_up.dto.CategoryDto;
+import fr.projet.manga_up.mapper.CategoryMapper;
+import fr.projet.manga_up.model.Author;
 import fr.projet.manga_up.model.Manga;
+import jakarta.persistence.EntityNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +17,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import fr.projet.manga_up.controller.CategoryController;
@@ -23,6 +31,10 @@ public class CategoryService {
 
 	@Autowired
 	private CategoryDao categoryDao;
+    @Autowired
+	private CategoryMapper categoryMapper;
+    @Autowired
+	private MangaDao mangaDao;
 
 	public Category getCategory(Integer id) {
 		Optional<Category> categoryOptional = categoryDao.findById(id);
@@ -38,15 +50,67 @@ public class CategoryService {
 		return categoryDao.findAllCategoriesPageable(pageable);
 }
 
-   public Category createCategory(Category category) {
+   /* public Category createCategory(Category category) {
 		return categoryDao.save(category);
-   }
+   }*/
 
 
-   public void deleteCategory(Integer id) {
-		 categoryDao.deleteById(id);
-   }
+	@Transactional
+	public CategoryDto createdCategory(CategoryDto categoryDto) {
+		LOGGER.info("addAuthorDto");
+		Category category = categoryMapper.toEntity(categoryDto);
+		category = categoryDao.save(category);
+		return categoryMapper.toDto(category);
+	}
 
 
+    @Transactional
+	public void deleteCategory(int categoryId ) {
+		Category category = categoryDao.findById(categoryId)
+				.orElseThrow(()-> new EntityNotFoundException("categorie n'existe pas"));
+
+		// Dissocier les mangas
+		for (Manga manga : category.getMangas()){
+			manga.setCategory(null);
+			mangaDao.save(manga);
+		}
+
+
+		categoryDao.delete(category);
+	}
+
+	@Transactional
+   public CategoryDto updatedCategory(Integer id,CategoryDto categoryDto) {
+		//trouver l'auteur existant
+        Category category = categoryDao.findById(id)
+				.orElseThrow(() -> new EntityNotFoundException("Category not found"));
+		//Mettre à jour les attributs de l'entité
+        category.setName(categoryDto.getName());
+        category.setDescription(categoryDto.getDescription());
+
+		// voir m'est à jour les manga coté category
+
+
+        category = categoryDao.save(category);
+		LOGGER.info("updateCategory");
+		return categoryMapper.toDto(category);
+	}
+
+
+
+	public List<CategoryDto> getAllCategoryDto() {
+		// Crée une nouvelle liste pour stocker les entités Category récupérées de la base de données
+		List<Category> categories = new ArrayList<>();
+
+		// Utilise la méthode findAll() du DAO pour récupérer toutes les catégories de la base de données
+		// Ensuite, ajoute chaque catégorie récupérée à la liste 'categories'
+		categoryDao.findAll().forEach(categories::add);
+
+		// Utilise un flux (stream) pour convertir chaque entité Category en un DTO (Data Transfer Object)
+		// à l'aide du mapper, puis collecte les résultats dans une liste
+		return categories.stream()
+				.map(categoryMapper::toDto)
+				.collect(Collectors.toList());
+	}
 
 }

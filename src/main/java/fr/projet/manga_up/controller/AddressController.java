@@ -1,13 +1,18 @@
 package fr.projet.manga_up.controller;
 
+import fr.projet.manga_up.dto.AddressDto;
+import fr.projet.manga_up.dto.AuthorDto;
 import fr.projet.manga_up.model.Address;
 import fr.projet.manga_up.service.AddressService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.persistence.EntityNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -24,9 +29,10 @@ public class AddressController {
     @Operation(summary = "Sauvegarde d'une nouvelle addresse")
     @ApiResponse(responseCode = "201", description = "Une nouvelle addresse est enregistrée avec succès")
     @PostMapping
-    public Address saveAddress(@RequestBody Address address) {
-        LOGGER.info("Sauvegarde d'une addresse");
-        return addressService.saveAddress(address);
+  public ResponseEntity<AddressDto> createAddress(@RequestBody AddressDto addressDto) {
+        LOGGER.info("createAuthor : {}", addressDto);
+       AddressDto createdAddress = addressService.saveAddress(addressDto);
+       return ResponseEntity.ok(createdAddress);
     }
 
 
@@ -52,5 +58,19 @@ public class AddressController {
         LOGGER.info("Suppression d'une addresse " + id);
         addressService.deleteAddressById(id);
     }
+
+
+
+    @PutMapping("/{id}")
+    public ResponseEntity<AddressDto> updateAddress(@PathVariable Integer id, @RequestBody AddressDto addressUpdateDto) {
+        try{
+            AddressDto updateAddress = addressService.updateAddress(id ,addressUpdateDto) ;
+            return ResponseEntity.ok(updateAddress);
+        }catch (EntityNotFoundException e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+
+    }
+
 
 }

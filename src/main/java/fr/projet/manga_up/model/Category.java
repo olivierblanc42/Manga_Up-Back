@@ -3,17 +3,11 @@ package fr.projet.manga_up.model;
 import java.time.Instant;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Lob;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "category", schema = "manga_up")
@@ -33,8 +27,8 @@ public class Category {
     @Column(name = "created_at")
     private Instant createdAt;
 
-    @OneToMany(mappedBy="category")
-    @JsonIgnore
+    @JsonBackReference
+    @OneToMany(mappedBy="category", cascade = CascadeType.PERSIST)
     private List<Manga> mangas;
     
     public Integer getId() {

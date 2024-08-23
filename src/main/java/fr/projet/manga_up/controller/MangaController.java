@@ -4,17 +4,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import fr.projet.manga_up.dto.MangaDTO;
 import fr.projet.manga_up.model.Comment;
 import fr.projet.manga_up.model.User;
 import fr.projet.manga_up.service.CommentService;
 import fr.projet.manga_up.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.enums.ParameterIn;
-import io.swagger.v3.oas.annotations.media.ArraySchema;
-import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.persistence.EntityNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 //import org.springdoc.core.annotations.ParameterObject;
@@ -22,8 +20,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.repository.query.Param;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -104,6 +102,11 @@ public class MangaController {
 		return ResponseEntity.ok(mangas);
 	}
 
+
+
+
+
+
 	@Operation(summary = "Récupére neuf mangas triés par date")
 	@GetMapping(value="/oderDate", produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Manga>> getOderDate() {
@@ -133,7 +136,7 @@ public class MangaController {
 
 
 
-	@Operation(summary = "Sauvegarde  de mangas")
+	@Operation(summary = "Sauvegarde  de mangas et favoris ")
 	@ApiResponse(responseCode = "201", description = "Des nouveaus mangas sont enregistrés avec succès")
 	@PostMapping(value="/{id}", produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> addUserInFavorite(
@@ -161,6 +164,34 @@ public class MangaController {
 		mangaService.deleteUserAsFavorite(_user.getId(), idManga);
 		return ResponseEntity.ok().build();
 	}
+
+
+	@Operation(summary = "Supprime un manga")
+	@DeleteMapping("/manga/{id}")
+	public ResponseEntity<Void> deleteManga(@PathVariable("id") int mangaId) {
+		try {
+			mangaService.deleteManga(mangaId);
+			return ResponseEntity.noContent().build(); // Code 204 No Content
+		} catch (EntityNotFoundException e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build(); // Code 404 Not Found
+		}
+	}
+
+
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "le manga a bien été crée"),
+			@ApiResponse(responseCode = "404", description = "impossible de créé le manga")
+	})
+	@Operation(summary= "ajoute un nouveau manga")
+	@PostMapping("/manga")
+	public ResponseEntity<MangaDTO> createManga(@RequestBody MangaDTO mangaDTO) {
+		MangaDTO createdManga = mangaService.saveMangaTest(mangaDTO);
+		return ResponseEntity.ok(createdManga);
+	}
+
+
+
+
 
 
 

@@ -1,10 +1,10 @@
 package fr.projet.manga_up.service;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
+import fr.projet.manga_up.dto.GenreDto;
+import fr.projet.manga_up.mapper.GenreMapper;
 import fr.projet.manga_up.model.Manga;
 import io.swagger.v3.oas.annotations.Operation;
 import org.slf4j.Logger;
@@ -34,6 +34,9 @@ public class GenreService {
 	@Autowired
 	private GenreDao genreDao;
 
+	@Autowired
+	private GenreMapper genreMapper;
+
 	public Genre getGenre(Integer id) {
 		Optional<Genre> genreOptional = genreDao.findById(id);
 		LOGGER.debug("Récupération info genre : ");
@@ -61,5 +64,30 @@ public class GenreService {
    public void deleteGenderById(Integer id) {
 		genreDao.deleteById(id);
    }
+
+
+
+	public GenreDto getGenreById(Integer id) {
+		Genre genre = genreDao.findById(id)
+				.orElseThrow(() -> new RuntimeException("Genre not found"));
+		return genreMapper.toDTO(genre);
+	}
+
+	 public GenreDto saveGenre(GenreDto dto) {
+		Genre genre = genreMapper.toEntity(dto);
+		genre = genreDao.save(genre);
+		return genreMapper.toDTO(genre);
+	 }
+
+	 public Set<GenreDto> getAllGenresDto() {
+		List<Genre> genres = new ArrayList<>();
+		genreDao.findAll().forEach(genres::add);
+
+		return genres.stream()
+				.map(genreMapper::toDTO)
+				.collect(Collectors.toSet());
+
+	 }
+
 
 }
