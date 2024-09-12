@@ -24,7 +24,7 @@ public class Gender {
 
     @OneToMany(mappedBy="gender")
     @JsonIgnore
-    private List<User> users;
+    private List<AppUser> users;
     
     public Integer getId() {
         return id;
@@ -42,11 +42,11 @@ public class Gender {
         this.label = label;
     }
 
-	public List<User> getUsers() {
+	public List<AppUser> getUsers() {
 		return users;
 	}
 
-	public void setUsers(List<User> users) {
+	public void setUsers(List<AppUser> users) {
 		this.users = users;
 	}
 
