@@ -10,7 +10,7 @@ import java.util.*;
 @Table(name = "user", schema = "manga_up", uniqueConstraints = {
         @UniqueConstraint(name = "user_AK", columnNames = {"email"})
 })
-public class User {
+public class AppUser {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -56,8 +56,20 @@ public class User {
     @JsonIgnore
     private Set<Manga> mangas=new HashSet<>();
 
-    @ManyToMany(fetch=FetchType.EAGER)
-    private List<Role> roles;
+    @ManyToMany(fetch=FetchType.LAZY)
+    @JoinTable(name = "user_role",
+        joinColumns = @JoinColumn(name = "Id_user"),
+        inverseJoinColumns = @JoinColumn(name = "Id_role")
+    )
+    private Set<AppRole> roles=new HashSet<>();
+
+    public Set<AppRole> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<AppRole> roles) {
+        this.roles = roles;
+    }
 
     public Integer getId() {
         return id;
