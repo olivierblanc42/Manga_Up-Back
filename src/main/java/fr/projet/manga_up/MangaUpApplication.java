@@ -2,6 +2,9 @@ package fr.projet.manga_up;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @SpringBootApplication
 public class MangaUpApplication {
@@ -10,4 +13,6 @@ public class MangaUpApplication {
 		SpringApplication.run(MangaUpApplication.class, args);
 	}
 
+	@Bean
+	PasswordEncoder passwordEncoder() { return new BCryptPasswordEncoder(); }
 }
