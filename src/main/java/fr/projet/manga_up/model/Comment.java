@@ -31,7 +31,7 @@ public class Comment {
 
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "Id_user", nullable = false)
-    private User user;
+    private AppUser user;
 
     public Integer getId() {
         return id;
@@ -73,11 +73,11 @@ public class Comment {
 		this.manga = manga;
 	}
 
-    public User getUser() {
+    public AppUser getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(AppUser user) {
         this.user = user;
     }
 
