@@ -4,10 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.time.Instant;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "user", schema = "manga_up", uniqueConstraints = {
@@ -54,8 +51,13 @@ public class User {
     @JoinTable(name = "user_manga",
             joinColumns = @JoinColumn(name = "Id_user"),
             inverseJoinColumns = @JoinColumn(name = "Id_manga"))
+    // @JsonIgnore permet d'ignorer la liste des mangas lors de la searialization des data de l'utilisateur.
+    // La liste des mangas ne sera pas ajouté au données de l'utilisateur qui seront renvoyé au front.
     @JsonIgnore
     private Set<Manga> mangas=new HashSet<>();
+
+    @ManyToMany(fetch=FetchType.EAGER)
+    private List<Role> roles;
 
     public Integer getId() {
         return id;
