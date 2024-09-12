@@ -2,7 +2,7 @@ package fr.projet.manga_up.dao;
 
 import fr.projet.manga_up.model.Address;
 import fr.projet.manga_up.model.Gender;
-import fr.projet.manga_up.model.User;
+import fr.projet.manga_up.model.AppUser;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +39,7 @@ public class UserDaoTest {
         gender.setLabel("H");
         Gender savedGender = genderDao.save(gender);
 
-        User user = new User();
+        AppUser user = new AppUser();
         user.setUsername(uniqueUsername);
         user.setEmail(uniqueEmail);
         user.setPassword("password");
@@ -47,7 +47,7 @@ public class UserDaoTest {
         user.setGender(savedGender);
 
         // ACT
-        User savedUser = userDao.save(user);
+        AppUser savedUser = userDao.save(user);
 
         // ASSERT
         Assertions.assertNotNull(savedUser);
@@ -69,7 +69,7 @@ public class UserDaoTest {
         gender.setLabel("H");
         Gender savedGender = genderDao.save(gender);
 
-        User user = new User();
+        AppUser user = new AppUser();
         user.setUsername(uniqueUsername);
         user.setEmail(uniqueEmail);
         user.setPassword("password");
@@ -77,8 +77,8 @@ public class UserDaoTest {
         user.setGender(savedGender);
 
         // ACT
-        User savedUser = userDao.save(user);
-        User foundUser = userDao.findByUsername(uniqueUsername);
+        AppUser savedUser = userDao.save(user);
+        AppUser foundUser = userDao.findByUsername(uniqueUsername);
 
         // ASSERT
         Assertions.assertNotNull(foundUser);
