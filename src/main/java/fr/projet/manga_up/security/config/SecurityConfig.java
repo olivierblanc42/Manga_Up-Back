@@ -8,6 +8,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -39,9 +41,18 @@ import javax.sql.DataSource;
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity(prePostEnabled=true)
 public class SecurityConfig {
 	// Déclaration d'un Logger pour cette classe, utilisant SLF4J
 	private static final Logger LOGGER = LoggerFactory.getLogger(MangaController.class);
+
+	private PasswordEncoder passwordEncoder;
+	private UserDetailsService userDetailsServiceImpl;
+
+	public SecurityConfig(PasswordEncoder passwordEncoder, UserDetailsService userDetailsServiceImpl) {
+		this.passwordEncoder = passwordEncoder;
+		this.userDetailsServiceImpl = userDetailsServiceImpl;
+	}
 
 	// Configuration du filtre de sécurité HTTP
 	@Bean
@@ -53,36 +64,37 @@ public class SecurityConfig {
 		//Demande à ce que toute requête soit authentifiée
 		//Seules les personnes ayant le rôle ROLE_USER sont autorisées
 		//L'authentification Basic est utilisée
-
 		http
-				.csrf(csrfCustomizer -> csrfCustomizer.ignoringRequestMatchers("/api/**"))
-				.authorizeHttpRequests(auth -> auth
-				.requestMatchers("/api/login").permitAll()
-				.requestMatchers("/api/user").hasAnyRole("USER", "ADMIN")
-				.requestMatchers("/api/admin").hasRole("ADMIN")
-				.anyRequest().permitAll());
-		//http.formLogin(Customizer.withDefaults());
-		//http.httpBasic(Customizer.withDefaults());
-		http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
-		http.headers(headers -> headers
-				.contentSecurityPolicy(csp -> csp
-						.policyDirectives("script-src 'self' https://trustedscripts.example.com; object-src https://trustedplugins.example.com; report-uri /csp-report-endpoint/")
-				)
-
-				.xssProtection(xss -> xss
-						.headerValue(XXssProtectionHeaderWriter.HeaderValue.ENABLED_MODE_BLOCK)
-				)
-
-				.frameOptions(frameOptions -> frameOptions
-						.sameOrigin()
-				)
-		);
+			.csrf(csrfCustomizer -> csrfCustomizer.ignoringRequestMatchers("/api/**"))
+			.authorizeHttpRequests(auth -> auth
+			.requestMatchers("/api/login", "/api/register").permitAll()
+			.requestMatchers("/api/user").hasAnyRole("USER", "ADMIN")
+			.requestMatchers("/api/admin").hasRole("ADMIN")
+			.anyRequest().permitAll())
+			//.formLogin(Customizer.withDefaults())
+			//.httpBasic(Customizer.withDefaults())
+			.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+			.headers(headers -> headers
+				.contentSecurityPolicy(csp -> csp.policyDirectives("script-src 'self' https://trustedscripts.example.com; object-src https://trustedplugins.example.com; report-uri /csp-report-endpoint/"))
+				.xssProtection(xss -> xss.headerValue(XXssProtectionHeaderWriter.HeaderValue.ENABLED_MODE_BLOCK))
+				.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin)
+			)
+			.userDetailsService(userDetailsServiceImpl);
 		return http.build();
 	}
 
-	@Bean
+	//@Bean
 	public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
 		return authenticationConfiguration.getAuthenticationManager();
+	}
+
+	@Bean
+	public AuthenticationManager authenticationManager(UserDetailsService userDetailsService){
+		// Le var permet de ne pas spécifier de type (i.e comme string, int, etc).
+		var authProvider = new DaoAuthenticationProvider();
+		authProvider.setPasswordEncoder(passwordEncoder);
+		authProvider.setUserDetailsService(userDetailsService);
+		return new ProviderManager(authProvider);
 	}
 
 	@Bean
