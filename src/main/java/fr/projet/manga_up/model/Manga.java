@@ -6,9 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.JsonView;
 
 import jakarta.persistence.*;
 
@@ -64,14 +62,10 @@ public class Manga {
     private Set<Genre> genres = new HashSet<>();
         
     @ManyToMany(mappedBy = "mangas")
-    private Set<User> users = new HashSet<>();
+    private Set<AppUser> users = new HashSet<>();
 
     @OneToMany(mappedBy="manga")
     private List<Picture> pictures;
-
-
-
-
 
     public Set<Genre> getGenres() {
         return genres;
@@ -161,11 +155,11 @@ public class Manga {
 		this.pictures = pictures;
 	}
 
-    public Set<User> getUsers() {
+    public Set<AppUser> getUsers() {
         return users;
     }
 
-    public void setUsers(Set<User> users) {
+    public void setUsers(Set<AppUser> users) {
         this.users = users;
     }
 /*
