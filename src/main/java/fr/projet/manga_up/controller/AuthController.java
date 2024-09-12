@@ -1,34 +1,82 @@
 package fr.projet.manga_up.controller;
 
+import fr.projet.manga_up.dto.RegisterDTO;
+import fr.projet.manga_up.dto.UserDto;
 import fr.projet.manga_up.model.AppUser;
 import fr.projet.manga_up.dao.UserDao;
+import fr.projet.manga_up.service.AccountServiceImpl;
 import fr.projet.manga_up.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api")
 @CrossOrigin(origins = "*")
-public class LoginController {
-    private static final Logger LOGGER= LoggerFactory.getLogger(UserService.class);
+public class AuthController {
+    private static final Logger LOGGER= LoggerFactory.getLogger(AuthController.class);
+
     @Autowired
     private AuthenticationManager authenticationManager;
+    @Autowired
+    private AccountServiceImpl accountServiceImpl;
 
     @Autowired
     private UserDao userDao;
+    @Autowired
+    private UserService userService;
 
+    @Operation(summary = "Enregistrement d'un nouvelle utilisateur.")
+    @ApiResponse(responseCode = "201", description = "Un nouvelle utilisateur à été enregistré avec succè !")
+    @PostMapping(value = "/register", consumes ={MediaType.APPLICATION_JSON_VALUE}, produces={MediaType
+            .APPLICATION_JSON_VALUE})
+    public ResponseEntity<?> register(@RequestBody RegisterDTO registerDTO){
+        LOGGER.info("Méthode register enregistrement de l'utilisateur : {}", registerDTO);
+        LOGGER.info("Méthode register email: {}", registerDTO.getEmail());
+
+        Map<String, Object> response = new HashMap<>();
+        Map<String, String> messageError=new LinkedHashMap<>();
+        AppUser uPerUsername = accountServiceImpl.loadUserByUsername(registerDTO.getUsername());
+        AppUser uPerEmail = accountServiceImpl.loadUserByEmail(registerDTO.getEmail());
+
+        if(uPerUsername != null){
+            messageError.put("username", registerDTO.getUsername());
+        }
+        if(uPerEmail != null){
+            messageError.put("email", registerDTO.getEmail());
+        }
+
+        if( ! messageError.isEmpty()){
+            response.put("success", false);
+            response.put("message", messageError);
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
+        }
+
+        LOGGER.info("Après saveUserDto");
+        response.put("success", true);
+        response.put("message", "Vous êtes enregistré !");
+        response.put("user", userService.saveUserDtoRegister(registerDTO));
+        return ResponseEntity.ok(response);
+    }
+
+    @Operation(summary = "Authentification de l'utilisateur ")
+    @ApiResponse(responseCode = "200", description = "Un utilisateur c'est authentifié avec succès !")
     @PostMapping("/users/login")
     public ResponseEntity<?> authenticateUser(@RequestBody AppUser appUser) {
         Map<String, Object> response = new HashMap<>();
@@ -41,7 +89,7 @@ public class LoginController {
 
             SecurityContextHolder.getContext().setAuthentication(authentication);
             String authorities=authentication.getAuthorities()
-                    .stream().map(a->a.getAuthority())
+                    .stream().map(GrantedAuthority::getAuthority)
                     .collect(Collectors.joining(" "));
 
             response.put("authorities", authorities);
