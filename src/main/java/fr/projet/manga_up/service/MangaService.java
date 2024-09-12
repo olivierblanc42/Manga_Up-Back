@@ -1,13 +1,9 @@
 package fr.projet.manga_up.service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 import fr.projet.manga_up.dao.*;
-import fr.projet.manga_up.dto.GenreDto;
 import fr.projet.manga_up.dto.MangaDTO;
 import fr.projet.manga_up.mapper.MangaMapper;
 import fr.projet.manga_up.model.*;
@@ -78,7 +74,7 @@ public class MangaService {
 	public Manga addUserInFavorite(Integer idUser, Integer idManga){
 		LOGGER.info("addUserInFavorite");
 		Manga manga = mangaDao.findById(idManga).orElse(null);
-		User user = userDao.findById(idUser).orElse(null);
+		AppUser user = userDao.findById(idUser).orElse(null);
 
 		if(user!=null && manga!=null){
 			LOGGER.info("addUserInFavorite manga : {}", manga.getId());
