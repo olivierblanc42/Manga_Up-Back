@@ -6,7 +6,7 @@ import java.util.Map;
 
 import fr.projet.manga_up.dto.MangaDTO;
 import fr.projet.manga_up.model.Comment;
-import fr.projet.manga_up.model.User;
+import fr.projet.manga_up.model.AppUser;
 import fr.projet.manga_up.service.CommentService;
 import fr.projet.manga_up.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -141,7 +141,7 @@ public class MangaController {
 	@PostMapping(value="/{id}", produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> addUserInFavorite(
 			@PathVariable("id") Integer idManga,
-			@RequestBody User _user){
+			@RequestBody AppUser _user){
 		LOGGER.info("addUserInFavorite id : {}", idManga);
 		LOGGER.info("idUser : {}", _user.getId());
 		mangaService.addUserInFavorite(_user.getId(), idManga);
@@ -158,7 +158,7 @@ public class MangaController {
 	@DeleteMapping(value = "/{id}", produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> deleteUserAsFavorite(
 			@PathVariable("id") Integer idManga,
-			@RequestBody User _user){
+			@RequestBody AppUser _user){
 		LOGGER.info("deleteUserAsFavorite id : {}", idManga);
 		LOGGER.info("deleteUserAsFavorite body : {}", _user.getId());
 		mangaService.deleteUserAsFavorite(_user.getId(), idManga);
