@@ -1,16 +1,27 @@
 package fr.projet.manga_up.dto;
 
-import fr.projet.manga_up.model.Address;
+import fr.projet.manga_up.model.AppRole;
+
+import java.util.Set;
 
 public class UserDto {
    private int id;
    private String userName;
    private String email;
-   private String  fisrtname;
+   private String firstname;
    private String lastname;
    private String password;
    private Integer addressId;
    private Integer genderId;
+   private Set<AppRole> roles;
+
+   public Set<AppRole> getRoles() {
+      return roles;
+   }
+
+   public void setRoles(Set<AppRole> roles) {
+      this.roles = roles;
+   }
 
    public int getId() {
       return id;
@@ -36,12 +47,12 @@ public class UserDto {
       this.email = email;
    }
 
-   public String getFisrtname() {
-      return fisrtname;
+   public String getFirstname() {
+      return firstname;
    }
 
-   public void setFisrtname(String fisrtname) {
-      this.fisrtname = fisrtname;
+   public void setFirstname(String firstname) {
+      this.firstname = firstname;
    }
 
    public String getLastname() {

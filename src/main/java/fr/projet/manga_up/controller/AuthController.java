@@ -19,6 +19,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -77,7 +78,7 @@ public class AuthController {
 
     @Operation(summary = "Authentification de l'utilisateur ")
     @ApiResponse(responseCode = "200", description = "Un utilisateur c'est authentifié avec succès !")
-    @PostMapping("/users/login")
+    @PostMapping(value="/users/login", consumes ={MediaType.APPLICATION_JSON_VALUE}, produces={MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<?> authenticateUser(@RequestBody AppUser appUser) {
         Map<String, Object> response = new HashMap<>();
         try {
@@ -91,11 +92,8 @@ public class AuthController {
             String authorities=authentication.getAuthorities()
                     .stream().map(GrantedAuthority::getAuthority)
                     .collect(Collectors.joining(" "));
-
-            response.put("authorities", authorities);
-            response.put("user", authentication.getName());
-            LOGGER.info("AuthenticateUser récupération de l'utilisateur par son username : {}", authentication.getName());
-            return ResponseEntity.ok(response);
+            LOGGER.info("authorities : {}", authorities);
+            return ResponseEntity.ok(userDao.findByUsername(authentication.getName()));
             //return ResponseEntity.ok(new LoginResponse("Authenticated successfully", HttpStatus.OK));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new LoginResponse("Invalid credentials", HttpStatus.UNAUTHORIZED));

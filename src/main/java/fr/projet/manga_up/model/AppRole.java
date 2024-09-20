@@ -16,9 +16,6 @@ public class AppRole {
     @Column(name = "role", nullable = false, length = 15)
     private String role;
 
-    @ManyToMany(mappedBy = "roles")
-    private Set<AppUser> users = new HashSet<>();
-
     public Integer getId() {
         return id;
     }
@@ -42,13 +39,5 @@ public class AppRole {
     public AppRole(String role) {
         super();
         this.role=role;
-    }
-
-    public Set<AppUser> getUsers() {
-        return users;
-    }
-
-    public void setUsers(Set<AppUser> users) {
-        this.users = users;
     }
 }

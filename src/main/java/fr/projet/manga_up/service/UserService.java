@@ -8,6 +8,7 @@ import fr.projet.manga_up.dto.UserDto;
 import fr.projet.manga_up.mapper.UserMapper;
 import fr.projet.manga_up.model.AppUser;
 import org.apache.juli.logging.Log;
+import org.mapstruct.control.MappingControl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +46,19 @@ public class UserService {
         LOGGER.info("getUserByUsernameAndPassword");
         return userDao.getUserByUsernameAndPassword(username, password);
     }*/
+    public AppUser getUserByUsername(String username){
+        LOGGER.info("getUserByUsername");
+        LOGGER.info("username : {}", username);
+        AppUser appUser=userDao.getUserByUsername(username);
+        LOGGER.info("appUser : {}", appUser);
+        //UserDto rdto=userMapper.toDto(appUser);
+
+        if(appUser == null){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Aucun utilisateur n'a été trouvé.");
+        }else{
+            return appUser;
+        }
+    }
 
     public AppUser getUser(Integer id){
         LOGGER.info("getUser");

@@ -1,9 +1,7 @@
 package fr.projet.manga_up.dao;
 
 import java.util.List;
-import java.util.Set;
 
-import fr.projet.manga_up.model.AppRole;
 import fr.projet.manga_up.model.AppUser;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -26,6 +24,9 @@ public interface UserDao extends CrudRepository<AppUser, Integer> {
     List<Integer> getAllMangaByUserId(@Param("id") Integer id);
 
     AppUser findByUsername(String username);
+
+    @Query(value = "SELECT u FROM AppUser u JOIN u.address a JOIN u.gender g WHERE u.username=:username")
+    AppUser getUserByUsername(@Param("username") String username);
 
     AppUser findByEmail(String email);
 

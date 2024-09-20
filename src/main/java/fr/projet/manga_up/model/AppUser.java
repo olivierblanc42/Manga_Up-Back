@@ -103,7 +103,7 @@ public class AppUser {
         this.password = password;
     }
 
-    public String getFisrtname() {
+    public String getFirstname() {
         return fisrtname;
     }
 

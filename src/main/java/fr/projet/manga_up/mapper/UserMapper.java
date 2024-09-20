@@ -24,7 +24,7 @@ public class UserMapper {
         return new RegisterDTO(
                 user.getUsername(),
                 user.getEmail(),
-                user.getFisrtname(),
+                user.getFirstname(),
                 user.getLastname(),
                 user.getPassword(),
                 user.getAddress(),
@@ -36,8 +36,7 @@ public class UserMapper {
         UserDto userDto = new UserDto();
         userDto.setId(user.getId());
         userDto.setLastname(user.getLastname());
-        userDto.setFisrtname(user.getFisrtname());
-        userDto.setLastname(user.getLastname());
+        userDto.setFirstname(user.getFirstname());
         userDto.setEmail(user.getEmail());
         userDto.setUserName(user.getUsername());
         userDto.setPassword(user.getPassword());
@@ -49,7 +48,9 @@ public class UserMapper {
             userDto.setGenderId(user.getGender().getId());
         }
 
-
+        if(user.getRoles() != null) {
+            userDto.setRoles(user.getRoles());
+        }
         return userDto;
     }
 
@@ -71,7 +72,7 @@ public class UserMapper {
         AppUser user = new AppUser();
         user.setId(userDto.getId());
         user.setLastname(userDto.getLastname());
-        user.setFisrtname(userDto.getFisrtname());
+        user.setFisrtname(userDto.getFirstname());
         user.setLastname(userDto.getLastname());
         user.setEmail(userDto.getEmail());
         user.setPassword(userDto.getPassword());
