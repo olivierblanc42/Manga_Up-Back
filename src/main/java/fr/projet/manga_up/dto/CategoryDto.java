@@ -11,7 +11,7 @@ public class CategoryDto {
     private String name;
     private String description;
     private Instant createdAt;
-    private List<Integer> mangaIds;
+    // private List<Integer> mangaIds;
 
 
 
@@ -48,11 +48,11 @@ public class CategoryDto {
         this.createdAt = createdAt;
     }
 
-    public List<Integer> getMangaIds() {
+   /* public List<Integer> getMangaIds() {
         return mangaIds;
     }
 
-    public void setMangaIds(List<Integer> mangaIds) {
+   public void setMangaIds(List<Integer> mangaIds) {
         this.mangaIds = mangaIds;
-    }
+    }*/
 }

@@ -42,7 +42,7 @@ public interface MangaDao extends CrudRepository<Manga, Integer> {
 	Manga findMangaLimitOne();
 
 	@Query(value = "SELECT * FROM `manga` ORDER BY `release_date` DESC Limit 9;" , nativeQuery = true)
-    List<Manga> findMangaOrderByDate();
+	List<Manga> findMangaOrderByDate();
 
 
 	@Query(  "FROM Manga  ")
@@ -55,9 +55,9 @@ public interface MangaDao extends CrudRepository<Manga, Integer> {
 	@Query(value="SELECT m FROM Manga m JOIN m.genres g WHERE g.id = :idGenre" )
 	Page<Manga>findAllMangaByIdGenre(@Param("idGenre")Integer idGenre,Pageable pageable);
 
-	      /**
-			*  requete pour recuperer les manga avec l'id de category
-			**/
+	/**
+	 *  requete pour recuperer les manga avec l'id de category
+	 **/
 	@Query(value="SELECT m FROM Manga m JOIN m.category c WHERE c.id = :idCategory" )
 	Page<Manga>findAllMangaByIdCategory(@Param("idCategory")Integer idCategory ,Pageable pageable);
 

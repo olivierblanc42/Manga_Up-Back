@@ -1,6 +1,7 @@
 package fr.projet.manga_up.controller;
 
 import fr.projet.manga_up.dao.GenreDao;
+import fr.projet.manga_up.dto.GenderDto;
 import fr.projet.manga_up.dto.GenreDto;
 import fr.projet.manga_up.model.Comment;
 import fr.projet.manga_up.model.Gender;
@@ -8,6 +9,7 @@ import fr.projet.manga_up.model.Manga;
 import fr.projet.manga_up.service.MangaService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import jakarta.persistence.EntityNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +41,7 @@ public class GenreController {
 	private GenreDao genreDao;
 	@Autowired
 	private MangaService mangaService;
+
 
 	@Operation(summary = "Récupére un genre par son Id")
 	@GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -114,13 +117,13 @@ public class GenreController {
 	}
 
 
-  @Operation(summary= "sauvegarde de genre pour les mangas ")
-  @ApiResponse(responseCode = "201", description = " un nouveau genre a été enregisté avec succès")
+	@Operation(summary= "sauvegarde de genre pour les mangas ")
+	@ApiResponse(responseCode = "201", description = " un nouveau genre a été enregisté avec succès")
 	@PostMapping
 	public Genre saveGenre(@RequestBody Genre genre) {
 
 		return genreService.saveGenre(genre);
-  }
+	}
 
 
 
@@ -128,14 +131,27 @@ public class GenreController {
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Genre> deleteArticleById(@PathVariable("id")Integer id) {
 		LOGGER.info("Suppression du genre" + id);
-         genreDao.deleteById(id);
-	     return ResponseEntity.ok().build();
+		genreService.removeGenreMangas(id);
+		return ResponseEntity.ok().build();
 	}
 
-   @Operation(summary=" ")
-   @GetMapping("/dto")
-   public ResponseEntity<Set<GenreDto>> getGenreDto() {
-	   Set<GenreDto> genreDto = genreService.getAllGenresDto();
-	   return ResponseEntity.ok(genreDto);
-   }
+	@Operation(summary=" ")
+	@GetMapping("/dto")
+	public ResponseEntity<Set<GenreDto>> getGenreDto() {
+		Set<GenreDto> genreDto = genreService.getAllGenresDto();
+		return ResponseEntity.ok(genreDto);
+	}
+
+	@PutMapping("/dto/{id}")
+	public ResponseEntity<GenreDto> updateGenre(@PathVariable Integer id, @RequestBody GenreDto genreDto) {
+		try{
+			GenreDto updatedGenre = genreService.updateGenre(id, genreDto);
+			return ResponseEntity.ok(updatedGenre);
+		}catch (EntityNotFoundException e){
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+		}
+	}
+
+
+
 }

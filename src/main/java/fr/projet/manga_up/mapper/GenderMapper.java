@@ -30,3 +30,18 @@ public class GenderMapper {
 
 
 }
+
+
+
+// Gestion des utilisateurs associés
+//voir si on modifi la relation en relation bidiritionnele
+      /*  if (dto.getUserId() != null) {
+
+            // Conversion du Set en List
+            List<User> usersList = dto.getUserId().stream()
+                    .map(id -> userDao.findById(id)
+                            .orElseThrow(() -> new RuntimeException("Manga not found"))).distinct().collect(Collectors.toList());
+
+            // Définition des mangas dans la catégorie
+            gender.setUsers(usersList);
+        }*/

@@ -101,20 +101,20 @@ public class AuthorController {
 
 
 
-   @Operation(summary= "Creation du nouveau auteur")
-   @ApiResponse(responseCode = "201", description = " un nouveau auteur a été crée avec succès")
-   @PostMapping
-   public ResponseEntity<AuthorDto> createAuthor(@RequestBody AuthorDto authorDto) {
-       LOGGER.info("Received Author DTO: {}", authorDto);
+    @Operation(summary= "Creation du nouveau auteur")
+    @ApiResponse(responseCode = "201", description = " un nouveau auteur a été crée avec succès")
+    @PostMapping
+    public ResponseEntity<AuthorDto> createAuthor(@RequestBody AuthorDto authorDto) {
+        LOGGER.info("Received Author DTO: {}", authorDto);
 
-       // Validez les données reçues
-       if (authorDto.getLastName() == null || authorDto.getLastName().isEmpty()) {
-           return ResponseEntity.badRequest().body(null);
-       }
+        // Validez les données reçues
+        if (authorDto.getLastName() == null || authorDto.getLastName().isEmpty()) {
+            return ResponseEntity.badRequest().body(null);
+        }
 
-       AuthorDto createdAuthor = authorService.saveAuthorDto(authorDto);
-       return ResponseEntity.ok(createdAuthor);
-   }
+        AuthorDto createdAuthor = authorService.saveAuthorDto(authorDto);
+        return ResponseEntity.ok(createdAuthor);
+    }
 
     @Operation(summary = " supprime un autheur")
     @ApiResponse(responseCode = "201", description = "a bien été supprimé ")
@@ -133,11 +133,11 @@ public class AuthorController {
         return ResponseEntity.ok(updatedAuthor);
     }*/
 
-  @PutMapping("/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<AuthorDto> updateAuthor(@PathVariable Integer id, @RequestBody AuthorDto authorUpdateDto) {
         try{
-           AuthorDto updateAuthor = authorService.updateAuthorTest(id ,authorUpdateDto) ;
-           return ResponseEntity.ok(updateAuthor);
+            AuthorDto updateAuthor = authorService.updateAuthorTest(id ,authorUpdateDto) ;
+            return ResponseEntity.ok(updateAuthor);
         }catch (EntityNotFoundException e){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
@@ -148,7 +148,7 @@ public class AuthorController {
 
     @GetMapping("/dto")
     public ResponseEntity<Set<AuthorDto>> getAllAuthor() {
-        Set<AuthorDto> authorDto = authorService.getAllUserDto2();
+        Set<AuthorDto> authorDto = authorService.getAllAuthorDto2();
         return ResponseEntity.ok(authorDto);
     }
 

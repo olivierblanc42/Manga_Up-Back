@@ -15,7 +15,8 @@ import java.util.List;
 public interface GenderDao extends CrudRepository<Gender, Integer> {
 
     @Query("FROM Gender ")
-    List<Gender> findAll();
+    Page<Gender> findAll(Pageable pageable);
 
-
+    @Query("FROM Gender ")
+    List<Gender> findAllList();
 }

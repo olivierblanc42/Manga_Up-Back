@@ -18,8 +18,8 @@ public class CategoryMapper {
 
     @Autowired
     private CategoryDao categoryDao;
-   @Autowired
-   private MangaDao mangaDao;
+    @Autowired
+    private MangaDao mangaDao;
 
 
     public CategoryDto toDto(Category category) {
@@ -31,7 +31,7 @@ public class CategoryMapper {
         dto.setName(category.getName()); // Copie le nom de la catégorie
         dto.setDescription(category.getDescription()); // Copie la description de la catégorie
         dto.setCreatedAt(category.getCreatedAt()); // Copie la date de création de la catégorie
-        dto.setMangaIds(category.getMangas().stream().map(Manga::getId).collect(Collectors.toList()));
+        // dto.setMangaIds(category.getMangas().stream().map(Manga::getId).collect(Collectors.toList()));
         // Retourne le DTO rempli
         return dto;
     }
@@ -49,7 +49,7 @@ public class CategoryMapper {
         category.setCreatedAt(dto.getCreatedAt()); // Définit la date de création de la catégorie à partir du DTO
 
         // Gestion des mangas associés
-        if (dto.getMangaIds() != null) {
+      /*  if (dto.getMangaIds() != null) {
 
             // Conversion du Set en List
             List<Manga> mangasList = dto.getMangaIds().stream()
@@ -58,7 +58,7 @@ public class CategoryMapper {
 
             // Définition des mangas dans la catégorie
             category.setMangas(mangasList);
-        }
+        }*/
 
         // Retourne l'entité remplie
         return category;

@@ -22,7 +22,7 @@ public class AddressMapper {
         addressDto.setLine3(address.getLine3());
         addressDto.setCity(address.getCity());
         addressDto.setPostalCode(address.getPostalCode());
-         return addressDto;
+        return addressDto;
     }
 
     public Address toEntity(AddressDto addressDto) {

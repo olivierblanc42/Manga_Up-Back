@@ -29,7 +29,7 @@ public class AuthorMapper {
         return dto;
 
     }
-   public Author toEntity(AuthorDto dto) {
+    public Author toEntity(AuthorDto dto) {
         Author author = new Author();
         author.setId(dto.getId());
         author.setLastname(dto.getLastName());
@@ -38,12 +38,12 @@ public class AuthorMapper {
         author.setCreatedAt(dto.getCreatedAt());
         author.setImg(dto.getImg());
 
-       // Log pour débogage
-       System.out.println("Author Entity: " + author);
+        // Log pour débogage
+        System.out.println("Author Entity: " + author);
 
-       return author;
+        return author;
 
-   }
+    }
 
 
 

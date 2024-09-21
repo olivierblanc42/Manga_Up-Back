@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -19,7 +20,7 @@ public class MangaDTO {
     private BigDecimal price;
     private Integer pointFidelity;
     private Integer categoryId;  // Utilisation de l'ID de la catégorie uniquement
-    private Set<Integer> genreIds;  // Liste des IDs des genres
+    private Set<Integer> genreIds = new HashSet<>(); // Toujours initialisé
     private Set<Integer> authorIds; // Liste des IDs des auteurs
 
 // Getters and Setters
@@ -96,7 +97,7 @@ public class MangaDTO {
         this.genreIds = genreIds;
     }
 
-   public Set<Integer> getAuthorIds() {
+    public Set<Integer> getAuthorIds() {
         return authorIds;
     }
 

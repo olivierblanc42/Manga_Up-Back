@@ -24,8 +24,8 @@ public class MangaMapper {
     private GenreDao genreDao;
     @Autowired
     private AuthorDao authorDao;
-   @Autowired
-   private CategoryDao categoryDao;
+    @Autowired
+    private CategoryDao categoryDao;
 
 
     public static MangaDTO toDto(Manga manga) {

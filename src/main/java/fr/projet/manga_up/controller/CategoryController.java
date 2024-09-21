@@ -121,7 +121,7 @@ public class CategoryController {
 
 	@Operation(summary= "suppression d'une catégorie")
 	@ApiResponse(responseCode = "201", description = "la catégorie à bien été supprimé")
-    @DeleteMapping("/{id}")
+	@DeleteMapping("/{id}")
 	public ResponseEntity<?> deleteCategory(@PathVariable Integer id) {
 		LOGGER.info("deleteCategory : {}", id);
 		categoryService.deleteCategory(id);
@@ -130,7 +130,7 @@ public class CategoryController {
 
 	@Operation(summary= "mise à d'une catégorie")
 	@ApiResponse(responseCode = "201", description = "la catégorie à bien été mise à jour")
-	@PutMapping("/{id}")
+	@PutMapping("/dto/{id}")
 	public ResponseEntity<CategoryDto> updateCategory(@PathVariable Integer id, @RequestBody CategoryDto categoryDto) {
 		try{
 			CategoryDto updateCategory = categoryService.updatedCategory(id,categoryDto);

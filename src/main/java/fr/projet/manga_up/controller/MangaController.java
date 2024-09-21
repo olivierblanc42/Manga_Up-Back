@@ -4,9 +4,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import fr.projet.manga_up.dao.MangaDao;
+import fr.projet.manga_up.dto.AuthorDto;
 import fr.projet.manga_up.dto.MangaDTO;
-import fr.projet.manga_up.model.Comment;
+import fr.projet.manga_up.mapper.MangaMapper;
 import fr.projet.manga_up.model.AppUser;
+import fr.projet.manga_up.model.Author;
+import fr.projet.manga_up.model.Comment;
 import fr.projet.manga_up.service.CommentService;
 import fr.projet.manga_up.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -24,6 +28,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import fr.projet.manga_up.model.Manga;
@@ -41,6 +46,10 @@ public class MangaController {
 	private CommentService commentService;
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private MangaDao mangaDao;
+	@Autowired
+	private MangaMapper mangaMapper;
 
 	@Operation(summary = "recherche d'un manga avec le nom du manga")
 	@GetMapping(value="/search", produces=MediaType.APPLICATION_JSON_VALUE)
@@ -82,16 +91,16 @@ public class MangaController {
 		response.put("comments", comments);
 		response.put("ratingAll", listRating);
 		return ResponseEntity.ok(response);
-    }
+	}
 
 	@Operation(summary = "Récupérer les mangas avec pagination dans l'application")
 	@GetMapping()
 	public ResponseEntity<Page<Manga>> getMangas(
-		@PageableDefault(
-				page = 0,
-				size = 9,
-				sort="createdAt",
-				direction = Sort.Direction.DESC) Pageable pageable
+			@PageableDefault(
+					page = 0,
+					size = 9,
+					sort="createdAt",
+					direction = Sort.Direction.DESC) Pageable pageable
 
 	) {
 		LOGGER.info("Récupération de la liste des mangas");
@@ -190,6 +199,16 @@ public class MangaController {
 	}
 
 
+	@PutMapping("/manga/{id}")
+	public ResponseEntity<MangaDTO> updateManga(@PathVariable Integer id, @RequestBody MangaDTO mangaUpdateDto) {
+		try{
+			MangaDTO updateManga = mangaService.updateManga(id ,mangaUpdateDto) ;
+			return ResponseEntity.ok(updateManga);
+		}catch (EntityNotFoundException e){
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+		}
+
+	}
 
 
 
