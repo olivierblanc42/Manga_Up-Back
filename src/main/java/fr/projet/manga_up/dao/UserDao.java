@@ -3,6 +3,9 @@ package fr.projet.manga_up.dao;
 import java.util.List;
 
 import fr.projet.manga_up.model.AppUser;
+import fr.projet.manga_up.model.Genre;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -32,4 +35,7 @@ public interface UserDao extends CrudRepository<AppUser, Integer> {
 
     @Query( "FROM AppUser  ")
     List<AppUser> findAllUsers();
+
+    @Query(  "FROM AppUser  ")
+    Page<AppUser> findAllUserPageable(Pageable pageable);
 }

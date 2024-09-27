@@ -31,32 +31,6 @@
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 
-		<!-- https://mvnrepository.com/artifact/io.springfox/springfox-swagger2
-           - http://localhost:8080/swagger-ui/index.html
-           - http://localhost:8080/v3/api-docs-->
-		<!--
-        <dependency>
-           <groupId>io.springfox</groupId>
-           <artifactId>springfox-swagger2</artifactId>
-           <version>3.0.0</version>
-        </dependency>-->
-
-		<!-- https://mvnrepository.com/artifact/io.springfox/springfox-swagger-ui -->
-		<!--
-        <dependency>
-           <groupId>io.springfox</groupId>
-           <artifactId>springfox-swagger-ui</artifactId>
-           <version>3.0.0</version>
-        </dependency>-->
-
-		<!-- https://mvnrepository.com/artifact/io.swagger.core.v3/swagger-annotations -->
-		<!--
-        <dependency>
-           <groupId>io.swagger.core.v3</groupId>
-           <artifactId>swagger-annotations</artifactId>
-           <version>2.2.20</version>
-        </dependency>-->
-
 		<!-- SpringDoc OpenAPI UI -->
 		<dependency>
 			<groupId>org.springdoc</groupId>

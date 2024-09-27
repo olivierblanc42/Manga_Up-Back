@@ -7,11 +7,14 @@ import fr.projet.manga_up.dto.RegisterDTO;
 import fr.projet.manga_up.dto.UserDto;
 import fr.projet.manga_up.mapper.UserMapper;
 import fr.projet.manga_up.model.AppUser;
+import fr.projet.manga_up.model.Genre;
 import org.apache.juli.logging.Log;
 import org.mapstruct.control.MappingControl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -115,6 +118,10 @@ public class UserService {
     }
 
 
+    public Page<AppUser> findAllUsersPageable( Pageable pageable) {
+
+        return userDao.findAllUserPageable(pageable);
+    }
 
 
 }

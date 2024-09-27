@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.*;
@@ -43,7 +44,6 @@ public class Manga {
     @JoinColumn(name = "Id_category")
     private Category category;
 
-
     @JsonManagedReference
     @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     @JoinTable(name = "author_manga",
@@ -60,7 +60,8 @@ public class Manga {
             inverseJoinColumns = @JoinColumn(name = "genre_Id_genre")
     )
     private Set<Genre> genres = new HashSet<>();
-        
+
+
     @ManyToMany(mappedBy = "mangas")
     private Set<AppUser> users = new HashSet<>();
 

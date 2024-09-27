@@ -10,6 +10,10 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -97,6 +101,25 @@ public class UserController {
 
         userService.deleteUserById(id);
         return ResponseEntity.ok().build();
+    }
+
+
+    @Operation(summary= "Récupérer tous les genres avec la pagination")
+    @GetMapping("/admin")
+    public ResponseEntity<Page<AppUser>> getUserPagination(
+            @PageableDefault(
+                    page = 0,
+                    size = 10,
+                    sort="createdAt",
+                    direction = Sort.Direction.DESC) Pageable pageable
+
+    ) {
+        LOGGER.info("Récupération de la liste des mangas");
+        Page<AppUser> users = userService.findAllUsersPageable(pageable);
+        LOGGER.info("pageable : {}", pageable);
+
+        LOGGER.info("Mangas : {}", users);
+        return ResponseEntity.ok(users);
     }
 
 }
