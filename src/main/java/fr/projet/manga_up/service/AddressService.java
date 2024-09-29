@@ -36,13 +36,6 @@ public class AddressService {
     /**
      * Récupère une page paginée d'adresses.
      *
-     * <p>Cette méthode fait appel au DAO pour récupérer une page d'adresses en fonction des informations
-     * de pagination fournies par un objet {@link Pageable}. Le service encapsule la logique métier pour
-     * fournir les données paginées.
-     *
-     * <p>Cette méthode est utilisée par d'autres couches de l'application, telles que les contrôleurs,
-     * pour renvoyer des adresses de manière paginée.
-     *
      * @param pageable un objet {@link Pageable} qui contient les informations de pagination et de tri
      * @return une page de résultats {@link Page<Address>} contenant les adresses
      */
@@ -54,12 +47,9 @@ public class AddressService {
     /**
      * Récupère une adresse par son identifiant.
      *
-     * <p>Cette méthode fait appel au DAO pour rechercher une adresse en fonction de l'ID fourni. Si l'adresse
-     * n'est pas trouvée, une exception {@link ResponseStatusException} avec un statut HTTP 404 (NOT_FOUND) est levée.
+     * <p> Si l'adresse
+     *  n'est pas trouvée, une exception {@link ResponseStatusException} avec un statut HTTP 404 (NOT_FOUND) est levée.
      *
-     * <p>Cette méthode est typiquement utilisée dans la couche service pour encapsuler la logique de récupération
-     * des données et renvoyer des adresses spécifiques. Elle peut être appelée par des contrôleurs ou d'autres
-     * services métier dans l'application.
      *
      * @param id l'identifiant unique de l'adresse à récupérer
      * @return l'objet {@link Address} correspondant à l'ID fourni
@@ -75,14 +65,8 @@ public class AddressService {
     }
 
     /**
-     * Sauvegarde une nouvelle adresse ou met à jour une adresse existante.
+     * Sauvegarde une nouvelle adresse
      *
-     * <p>Cette méthode convertit un objet {@link AddressDto} en entité {@link Address}, puis appelle le DAO pour
-     * sauvegarder ou mettre à jour l'adresse dans la base de données. Après la persistance, l'entité sauvegardée
-     * est convertie à nouveau en un objet {@link AddressDto} et renvoyée.
-     *
-     * <p>La méthode est annotée avec {@link Transactional}, ce qui garantit que toutes les opérations sont effectuées
-     * dans une transaction. Si une exception survient, la transaction sera automatiquement annulée.
      *
      * @param addressDto un objet {@link AddressDto} contenant les informations de l'adresse à sauvegarder
      * @return un objet {@link AddressDto} représentant l'adresse persistée
@@ -104,13 +88,6 @@ public class AddressService {
 
     /**
      * Met à jour une adresse existante par son identifiant.
-     *
-     * <p>Cette méthode cherche une adresse existante à partir de son identifiant. Si l'adresse est trouvée,
-     * ses attributs sont mis à jour avec les valeurs fournies par l'objet {@link AddressDto}. L'adresse mise à jour
-     * est ensuite sauvegardée dans la base de données, et l'entité mise à jour est renvoyée sous forme de DTO.
-     *
-     * <p>La méthode est annotée avec {@link Transactional}, ce qui garantit que les opérations sont effectuées
-     * dans une transaction, et qu'une exception annule toute modification en cas de problème.
      *
      * @param id l'identifiant unique de l'adresse à mettre à jour
      * @param addressDto un objet {@link AddressDto} contenant les nouvelles valeurs des attributs de l'adresse
@@ -140,13 +117,6 @@ public class AddressService {
 
     /**
      * Récupère l'ensemble des adresses sous forme de DTO.
-     *
-     * <p>Cette méthode interroge la base de données pour récupérer toutes les adresses enregistrées.
-     * Les entités récupérées sont ensuite converties en objets {@link AddressDto} et renvoyées sous forme d'un ensemble
-     * de DTOs.
-     *
-     * <p>Cette méthode encapsule la logique métier permettant de récupérer toutes les adresses et de les convertir
-     * en DTOs, facilitant ainsi leur utilisation dans d'autres parties de l'application.
      *
      * @return un ensemble de {@link AddressDto} représentant toutes les adresses disponibles
      */

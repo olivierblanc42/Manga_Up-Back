@@ -74,11 +74,7 @@ public class GenreService {
 
 	/**
 	 * Récupère une page de genres depuis la base de données en utilisant des critères de pagination.
-	 *
-	 * Cette méthode retourne une page de genres en fonction des paramètres de pagination fournis.
-	 * La pagination est gérée par l'objet {@link Pageable} qui spécifie le numéro de la page, la taille de la page,
-	 * et éventuellement des critères de tri.
-	 *
+
 	 * @param pageable les critères de pagination, y compris le numéro de la page, la taille de la page et les options de tri
 	 * @return une {@link Page} de genres correspondant aux critères de pagination fournis
 	 */
@@ -88,10 +84,6 @@ public class GenreService {
 
 	/**
 	 * Enregistre un genre dans la base de données.
-	 *
-	 * Cette méthode persiste un objet {@link Genre} dans la base de données. Si le genre n'existe pas encore,
-	 * il sera créé ; si le genre existe déjà (par exemple, si un identifiant est fourni et qu'il correspond à un genre existant),
-	 * il sera mis à jour.
 	 *
 	 * @param genre l'objet {@link Genre} à enregistrer dans la base de données
 	 * @return l'objet {@link Genre} enregistré, avec un identifiant généré ou mis à jour

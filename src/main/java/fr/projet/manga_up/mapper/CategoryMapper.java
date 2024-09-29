@@ -27,12 +27,12 @@ public class CategoryMapper {
         CategoryDto dto = new CategoryDto();
 
         // Copie les valeurs des attributs de l'entité Category dans le DTO
-        dto.setId(category.getId());  // Copie l'identifiant de la catégorie
-        dto.setName(category.getName()); // Copie le nom de la catégorie
-        dto.setDescription(category.getDescription()); // Copie la description de la catégorie
-        dto.setCreatedAt(category.getCreatedAt()); // Copie la date de création de la catégorie
+        dto.setId(category.getId());
+        dto.setName(category.getName());
+        dto.setDescription(category.getDescription());
+        dto.setCreatedAt(category.getCreatedAt());
         // dto.setMangaIds(category.getMangas().stream().map(Manga::getId).collect(Collectors.toList()));
-        // Retourne le DTO rempli
+
         return dto;
     }
 
@@ -43,10 +43,10 @@ public class CategoryMapper {
         Category category = new Category();
 
         // Copie les valeurs des attributs du DTO dans l'entité Category
-        category.setId(dto.getId());  // Définit l'identifiant de la catégorie à partir du DTO
-        category.setName(dto.getName()); // Définit le nom de la catégorie à partir du DTO
-        category.setDescription(dto.getDescription()); // Définit la description de la catégorie à partir du DTO
-        category.setCreatedAt(dto.getCreatedAt()); // Définit la date de création de la catégorie à partir du DTO
+        category.setId(dto.getId());
+        category.setName(dto.getName());
+        category.setDescription(dto.getDescription());
+        category.setCreatedAt(dto.getCreatedAt());
 
         // Gestion des mangas associés
       /*  if (dto.getMangaIds() != null) {

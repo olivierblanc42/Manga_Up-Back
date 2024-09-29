@@ -68,12 +68,6 @@ public class GenderService {
 
     /**
      * Récupère un genre par son identifiant.
-     *
-     * <p>Cette méthode cherche un genre dans la base de données en utilisant son identifiant.
-     * Si le genre est trouvé, il est retourné. Sinon, une exception {@link ResponseStatusException}
-     * avec un statut HTTP 404 (NOT_FOUND) est levée pour indiquer que le genre n'a pas été trouvé.
-     *
-     *
      * @param id l'identifiant unique du genre à récupérer
      * @return l'objet {@link Gender} correspondant à l'ID fourni
      * @throws ResponseStatusException si le genre avec l'ID donné n'est pas trouvé
@@ -92,13 +86,6 @@ public class GenderService {
     /**
      * Crée un nouveau genre à partir d'un DTO.
      *
-     * <p>Cette méthode convertit un objet {@link GenderDto} en une entité {@link Gender}, puis sauvegarde
-     * l'entité dans la base de données via le DAO. L'entité sauvegardée est ensuite convertie à nouveau en DTO
-     * et renvoyée.
-     *
-     * <p>La méthode est annotée avec {@link Transactional}, ce qui garantit que la création du genre est
-     * effectuée dans une transaction. Si une erreur survient, la transaction est annulée.
-     *
      * @param genderDto un objet {@link GenderDto} contenant les informations du genre à créer
      * @return un objet {@link GenderDto} représentant le genre créé
      */
@@ -110,7 +97,12 @@ public class GenderService {
     }
 
 
-
+    /**
+     * Supprime un genre d'utilisateur par son identifiant.
+     *
+     * @param genderId l'identifiant unique de la catégorie à supprimer
+     * @throws EntityNotFoundException si la catégorie avec l'ID donné n'existe pas
+     */
     @Transactional
     public void deleteGender(int genderId) {
         Gender gender = genderDao.findById(genderId)
@@ -125,16 +117,6 @@ public class GenderService {
 
     /**
      * Met à jour les informations d'un genre existant.
-     *
-     * <p>Cette méthode recherche un genre dans la base de données en utilisant son identifiant.
-     * Si le genre est trouvé, ses attributs sont mis à jour avec les valeurs fournies dans l'objet
-     * {@link GenderDto}. La catégorie mise à jour est ensuite sauvegardée dans la base de données
-     * et convertie à nouveau en DTO avant d'être renvoyée.
-     *
-     * <p>La méthode est annotée avec {@link Transactional}, ce qui garantit que la mise à jour du genre
-     * est effectuée dans une transaction. Si une erreur survient, la transaction est annulée.
-     *
-     * <p>Un message de log est enregistré pour indiquer que la mise à jour du genre a été effectuée.
      *
      * @param id l'identifiant unique du genre à mettre à jour
      * @param genderDto un objet {@link GenderDto} contenant les nouvelles valeurs des attributs du genre
@@ -155,12 +137,6 @@ public class GenderService {
 
     /**
      * Récupère tous les genres sous forme de DTO.
-     *
-     * <p>Cette méthode récupère toutes les entités {@link Gender} depuis la base de données en utilisant
-     * la méthode {@link GenderDao#findAll()}. Les entités récupérées sont ensuite converties en objets
-     * {@link GenderDto} à l'aide du {@link GenderMapper} et collectées dans un ensemble.
-     *
-     * <p>Un message de log est enregistré pour indiquer que la récupération des genres a été effectuée.
      *
      * @return un ensemble de {@link GenderDto} représentant tous les genres disponibles dans la base de données
      */

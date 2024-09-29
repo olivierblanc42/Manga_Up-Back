@@ -42,8 +42,6 @@ public class MangaService {
 
 	/**
 	 * Récupère une liste de mangas par leur nom.
-	 * <p>
-	 * Cette méthode recherche les mangas qui correspondent au nom fourni.
 	 *
 	 * @param name le nom du manga à rechercher
 	 * @return une liste d'objets {@link Manga} correspondant au nom fourni
@@ -57,9 +55,6 @@ public class MangaService {
 
 	/**
 	 * Récupère un manga par son identifiant.
-	 * <p>
-	 * Cette méthode recherche un manga dans la base de données en utilisant l'identifiant fourni.
-	 * Si aucun manga n'est trouvé, elle déclenche une exception.
 	 *
 	 * @param id l'identifiant du manga à rechercher
 	 * @return l'objet {@link Manga} correspondant à l'identifiant fourni
@@ -76,9 +71,6 @@ public class MangaService {
 
 	/**
 	 * Récupère une liste de neuf mangas.
-	 * <p>
-	 * Cette méthode renvoie une liste de neuf mangas sélectionnés selon une logique définie
-	 * dans la méthode `findNineManga` du DAO.
 	 *
 	 * @return une liste de neuf objets {@link Manga}
 	 */
@@ -88,12 +80,8 @@ public class MangaService {
 	}
 	/**
 	 * Récupère une page de mangas de manière paginée.
-	 * <p>
-	 * Cette méthode permet de récupérer une page de résultats contenant des objets {@link Manga}
-	 * en fonction des paramètres de pagination spécifiés.
 	 *
 	 * @param pageable un objet {@link Pageable} définissant les paramètres de pagination
-	 * (taille de la page, numéro de la page, tri, etc.)
 	 * @return une page de mangas sous forme d'objet {@link Page} contenant les résultats paginés
 	 */
 	public Page<Manga> findAllMangaPageable( Pageable pageable) {
@@ -103,10 +91,6 @@ public class MangaService {
 
 	/**
 	 * Récupère un manga unique.
-	 * <p>
-	 * Cette méthode renvoie un seul objet {@link Manga}, sélectionné selon une logique définie
-	 * dans la méthode `findMangaLimitOne` du DAO. Cette méthode est utilisée lorsque
-	 * l'on souhaite obtenir un manga de manière limitée à un seul résultat.
 	 *
 	 * @return un objet {@link Manga} représentant un seul manga
 	 */
@@ -117,9 +101,6 @@ public class MangaService {
 
 	/**
 	 * Récupère une liste de neuf mangas triés par date.
-	 * <p>
-	 * Cette méthode renvoie une liste de neuf objets {@link Manga}, triés par date de manière décroissante,
-	 * selon une logique définie dans la méthode `findMangaOrderByDate` du DAO.
 	 *
 	 * @return une liste de neuf objets {@link Manga} triés par date
 	 */
@@ -130,9 +111,6 @@ public class MangaService {
 
 	/**
 	 * Ajoute un manga aux favoris d'un utilisateur.
-	 * <p>
-	 * Cette méthode associe un utilisateur à un manga en ajoutant ce dernier à la liste des favoris de l'utilisateur.
-	 * Si l'utilisateur ou le manga n'existe pas, aucune action n'est effectuée.
 	 *
 	 * @param idUser l'identifiant de l'utilisateur
 	 * @param idManga l'identifiant du manga
@@ -153,9 +131,6 @@ public class MangaService {
 
 	/**
 	 * Supprime un manga des favoris d'un utilisateur.
-	 * <p>
-	 * Cette méthode retire un manga de la liste des favoris d'un utilisateur donné.
-	 * Les identifiants de l'utilisateur et du manga sont utilisés pour effectuer cette suppression.
 	 *
 	 * @param idUser l'identifiant de l'utilisateur dont le manga sera supprimé des favoris
 	 * @param idManga l'identifiant du manga à supprimer des favoris de l'utilisateur
@@ -169,9 +144,6 @@ public class MangaService {
 
 	/**
 	 * Récupère une page de mangas pour un genre spécifique.
-	 * <p>
-	 * Cette méthode permet de récupérer une liste paginée de mangas appartenant à un genre donné.
-	 * L'identifiant du genre et les paramètres de pagination sont utilisés pour obtenir les résultats.
 	 *
 	 * @param id l'identifiant du genre pour lequel les mangas sont recherchés
 	 * @param pageable un objet {@link Pageable} définissant les paramètres de pagination (taille de la page, numéro de la page, tri, etc.)
@@ -183,9 +155,6 @@ public class MangaService {
 
 	/**
 	 * Récupère une page de mangas pour une catégorie spécifique.
-	 * <p>
-	 * Cette méthode permet de récupérer une liste paginée de mangas appartenant à une catégorie donnée.
-	 * L'identifiant de la catégorie et les paramètres de pagination sont utilisés pour obtenir les résultats.
 	 *
 	 * @param id l'identifiant de la catégorie pour laquelle les mangas sont recherchés
 	 * @param pageable un objet {@link Pageable} définissant les paramètres de pagination (taille de la page, numéro de la page, tri, etc.)
@@ -197,9 +166,6 @@ public class MangaService {
 
 	/**
 	 * Récupère une page de mangas pour un auteur spécifique.
-	 * <p>
-	 * Cette méthode permet de récupérer une liste paginée de mangas écrits par un auteur donné.
-	 * L'identifiant de l'auteur et les paramètres de pagination sont utilisés pour obtenir les résultats.
 	 *
 	 * @param id l'identifiant de l'auteur pour lequel les mangas sont recherchés
 	 * @param pageable un objet {@link Pageable} définissant les paramètres de pagination (taille de la page, numéro de la page, tri, etc.)
@@ -208,17 +174,6 @@ public class MangaService {
 	public Page<Manga> getMangaByIdAuthor(Integer id ,Pageable pageable){
 		return mangaDao.findAllMangaByIdAuthor(id,pageable);
 	}
-
-
-	/*public Manga createManga(Manga manga){
-		LOGGER.info("createManga");
-		return mangaDao.save(manga);
-	}*/
-
-	/*public void deleteManga(Integer id){
-		LOGGER.info("deleteManga");
-		mangaDao.deleteById(id);
-	}*/
 
 
 
@@ -256,10 +211,6 @@ public class MangaService {
 
 	/**
 	 * Sauvegarde un manga et retourne son DTO associé.
-	 * <p>
-	 * Cette méthode convertit un objet {@link MangaDTO} en entité {@link Manga},
-	 * sauvegarde l'entité dans la base de données, puis convertit l'entité sauvegardée en DTO
-	 * avant de le retourner.
 	 *
 	 * @param dto l'objet {@link MangaDTO} à sauvegarder
 	 * @return l'objet {@link MangaDTO} correspondant au manga sauvegardé
@@ -324,7 +275,7 @@ public class MangaService {
 		if (mangaDto.getAuthorIds() != null) {
 			for (Integer authorId : mangaDto.getAuthorIds()) {
 				Author author = authorDao.findById(authorId)
-						.orElseThrow(() -> new RuntimeException("Genre not found: " + authorId));
+						.orElseThrow(() -> new RuntimeException("Author not found: " + authorId));
 
 				updatedAuthors.add(author);
 			}
