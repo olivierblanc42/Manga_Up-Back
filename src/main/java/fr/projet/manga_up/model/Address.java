@@ -33,6 +33,12 @@ public class Address {
     @Column(name = "postal_code", length = 5)
     private String postalCode;
 
+    @Column(name = "department", length = 200)
+    private String department;
+
+    @Column(name = "country", length = 200)
+    private String country;
+
     @ManyToMany
     @JoinTable(name = "address_cart",
             joinColumns = @JoinColumn(name = "address_Id_address"),
@@ -95,6 +101,22 @@ public class Address {
         this.postalCode = postalCode;
     }
 
+    public String getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(String department) {
+        this.department = department;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
     //Ajout d'une méthode qui permet d'afficher l'addresse
     @Override
     public String toString() {
@@ -105,8 +127,8 @@ public class Address {
                 ", line3='" + line3 + '\'' +
                 ", city='" + city + '\'' +
                 ", postalCode='" + postalCode + '\'' +
+                ", department='" + department + '\'' +
+                ", country='" + country + '\'' +
                 '}';
     }
-
-
 }

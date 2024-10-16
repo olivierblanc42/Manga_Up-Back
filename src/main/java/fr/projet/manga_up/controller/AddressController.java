@@ -28,11 +28,8 @@ public class AddressController {
 
     private static final Logger LOGGER= LoggerFactory.getLogger(AddressController.class);
 
-
     @Autowired
     private AddressService addressService;
-
-
 
     @Operation(summary=" Tout les adresses avec pagination")
     @ApiResponse(responseCode = "201", description = "Toutes les addresses ont été récupérer")
@@ -51,7 +48,6 @@ public class AddressController {
         return  ResponseEntity.ok(addresses);
     }
 
-
     @Operation(summary = "Sauvegarde d'une nouvelle addresse")
     @ApiResponse(responseCode = "201", description = "Une nouvelle addresse est enregistrée avec succès")
     @PostMapping
@@ -60,9 +56,6 @@ public class AddressController {
         AddressDto createdAddress = addressService.saveAddress(addressDto);
         return ResponseEntity.ok(createdAddress);
     }
-
-
-
 
     @Operation(summary = "Récupère une addresse avec l'id'", description = "Retourne une addresse")
     @ApiResponse(responseCode = "201", description = "l'addresse a été trouvée avec succès")
@@ -84,8 +77,6 @@ public class AddressController {
         LOGGER.info("Suppression d'une addresse " + id);
         addressService.deleteAddressById(id);
     }
-
-
 
     @PutMapping("/{id}")
     public ResponseEntity<AddressDto> updateAddress(@PathVariable Integer id, @RequestBody AddressDto addressUpdateDto) {

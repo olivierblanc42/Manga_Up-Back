@@ -1,5 +1,6 @@
 package fr.projet.manga_up.mapper;
 
+import fr.projet.manga_up.controller.AuthController;
 import fr.projet.manga_up.dao.AddressDao;
 import fr.projet.manga_up.dao.GenderDao;
 import fr.projet.manga_up.dao.UserDao;
@@ -8,6 +9,8 @@ import fr.projet.manga_up.dto.UserDto;
 import fr.projet.manga_up.model.Address;
 import fr.projet.manga_up.model.Gender;
 import fr.projet.manga_up.model.AppUser;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -20,6 +23,8 @@ public class UserMapper {
     @Autowired
     private GenderDao genderDao;
 
+    private static final Logger LOGGER= LoggerFactory.getLogger(UserMapper.class);
+
     public RegisterDTO toDtoRegister(AppUser user) {
         return new RegisterDTO(
                 user.getUsername(),
@@ -28,7 +33,8 @@ public class UserMapper {
                 user.getLastname(),
                 user.getPassword(),
                 user.getAddress(),
-                user.getGender()
+                user.getGender(),
+                user.getRoles()
         );
     }
 
@@ -41,7 +47,7 @@ public class UserMapper {
         userDto.setUserName(user.getUsername());
         userDto.setPassword(user.getPassword());
         if (user.getAddress() != null) {
-            userDto.setAddressId(user.getAddress().getId());
+            userDto.setAddress(user.getAddress());
         }
 
         if (user.getGender() != null) {
@@ -77,12 +83,15 @@ public class UserMapper {
         user.setEmail(userDto.getEmail());
         user.setPassword(userDto.getPassword());
         user.setUsername(userDto.getUserName());
-
-        if (userDto.getAddressId() != null) {
-            Address address = addressDao.findById(userDto.getAddressId())
+        user.setAddress(userDto.getAddress());
+        /*
+        if (userDto.getAddress() != null) {
+            LOGGER.info("userDto.getAddress() : {}", userDto.getAddress());
+            Address address = addressDao.findById(userDto.getAddress().getId())
                     .orElseThrow(() -> new RuntimeException("Address not found"));
             user.setAddress(address);
         }
+         */
 
         if (userDto.getGenderId() != null) {
             Gender gender = genderDao.findById(userDto.getGenderId())

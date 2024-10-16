@@ -50,30 +50,20 @@ public class AuthController {
     public ResponseEntity<?> register(@RequestBody RegisterDTO registerDTO){
         LOGGER.info("Méthode register enregistrement de l'utilisateur : {}", registerDTO);
         LOGGER.info("Méthode register email: {}", registerDTO.getEmail());
+        LOGGER.info("Méthode register user gender: {}", registerDTO.getGender());
+        LOGGER.info("Méthode register user firstname: {}", registerDTO.getFirstname());
 
         Map<String, Object> response = new HashMap<>();
         Map<String, String> messageError=new LinkedHashMap<>();
         AppUser uPerUsername = accountServiceImpl.loadUserByUsername(registerDTO.getUsername());
         AppUser uPerEmail = accountServiceImpl.loadUserByEmail(registerDTO.getEmail());
 
-        if(uPerUsername != null){
-            messageError.put("username", registerDTO.getUsername());
-        }
-        if(uPerEmail != null){
-            messageError.put("email", registerDTO.getEmail());
-        }
-
-        if( ! messageError.isEmpty()){
-            response.put("success", false);
-            response.put("message", messageError);
+        if( uPerUsername != null || uPerEmail != null){
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
         }
 
         LOGGER.info("Après saveUserDto");
-        response.put("success", true);
-        response.put("message", "Vous êtes enregistré !");
-        response.put("user", userService.saveUserDtoRegister(registerDTO));
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(userService.saveUserDtoRegister(registerDTO));
     }
 
     @Operation(summary = "Authentification de l'utilisateur ")

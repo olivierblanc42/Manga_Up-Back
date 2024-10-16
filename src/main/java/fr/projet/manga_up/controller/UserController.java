@@ -39,7 +39,6 @@ public class UserController {
     private MangaService mangaService;
     @Autowired
     private UserDao userDao;
-
     @Autowired
     private AuthenticationManager authenticationManager;
 
@@ -79,7 +78,7 @@ public class UserController {
     @ApiResponse(responseCode = "201", description = "un nouveau utilisateur a été cre avec succès ")
     @PostMapping
     public ResponseEntity<UserDto> saveUser(@RequestBody UserDto userDto) {
-        LOGGER.info("createAuthor : {}", userDto);
+        LOGGER.info("createUser : {}", userDto.getUserName());
         UserDto createdUser = userService.saveUserDto(userDto);
         return ResponseEntity.ok(createdUser);
     }

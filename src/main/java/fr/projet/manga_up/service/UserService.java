@@ -1,13 +1,13 @@
 package fr.projet.manga_up.service;
 
 import fr.projet.manga_up.dao.AddressDao;
+import fr.projet.manga_up.dao.AppRoleDao;
 import fr.projet.manga_up.dao.GenderDao;
 import fr.projet.manga_up.dao.UserDao;
 import fr.projet.manga_up.dto.RegisterDTO;
 import fr.projet.manga_up.dto.UserDto;
 import fr.projet.manga_up.mapper.UserMapper;
-import fr.projet.manga_up.model.AppUser;
-import fr.projet.manga_up.model.Genre;
+import fr.projet.manga_up.model.*;
 import org.apache.juli.logging.Log;
 import org.mapstruct.control.MappingControl;
 import org.slf4j.Logger;
@@ -43,6 +43,8 @@ public class UserService {
     private AccountServiceImpl accountServiceImpl;
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private AppRoleDao appRoleDao;
 
 
    /* public User getUserByUsernameAndPassword(String username, String password) {
@@ -98,7 +100,7 @@ public class UserService {
         AppUser user = userMapper.toEntityRegister(registerDTO);
         LOGGER.info("saveUserDtoRegister user: {}", user);
         addressDao.save(user.getAddress());
-        genderDao.save(user.getGender());
+        genderDao.save(user.getGender()); // Attention normalement on a pas à ajouter dans la table le genre ce fait dans le user
         LOGGER.info("saveUserDtoRegister user : {}", user);
         user.setCreatedAt(Instant.now());
         user.setPassword(passwordEncoder.encode(registerDTO.getPassword()));
@@ -111,12 +113,15 @@ public class UserService {
 
     @Transactional
     public UserDto saveUserDto(UserDto userDto){
-        LOGGER.info("saveUserDto");
         AppUser user = userMapper.toEntity(userDto);
-        user =userDao.save(user);
+        Address address = addressDao.save(userDto.getAddress());
+        LOGGER.info("genderId : {}", userDto.getGenderId());
+        LOGGER.info("username : {}", userDto.getUserName());
+
+        user.setAddress(address);
+        user = userDao.save(user);
         return userMapper.toDto(user);
     }
-
 
     public Page<AppUser> findAllUsersPageable( Pageable pageable) {
 

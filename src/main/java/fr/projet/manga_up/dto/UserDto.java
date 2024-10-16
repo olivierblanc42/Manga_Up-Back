@@ -1,5 +1,6 @@
 package fr.projet.manga_up.dto;
 
+import fr.projet.manga_up.model.Address;
 import fr.projet.manga_up.model.AppRole;
 
 import java.util.Set;
@@ -11,7 +12,7 @@ public class UserDto {
    private String firstname;
    private String lastname;
    private String password;
-   private Integer addressId;
+   private Address address;
    private Integer genderId;
    private Set<AppRole> roles;
 
@@ -71,15 +72,13 @@ public class UserDto {
       this.password = password;
    }
 
-
-   public Integer getAddressId() {
-      return addressId;
+   public Address getAddress() {
+      return address;
    }
 
-   public void setAddressId(Integer addressId) {
-      this.addressId = addressId;
+   public void setAddress(Address address) {
+      this.address = address;
    }
-
 
    public Integer getGenderId() {
       return genderId;
