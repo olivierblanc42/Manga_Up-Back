@@ -99,8 +99,10 @@ public class UserService {
         LOGGER.info("saveUserDtoRegister registerDTO : {}", registerDTO);
         AppUser user = userMapper.toEntityRegister(registerDTO);
         LOGGER.info("saveUserDtoRegister user: {}", user);
-        addressDao.save(user.getAddress());
-        genderDao.save(user.getGender()); // Attention normalement on a pas à ajouter dans la table le genre ce fait dans le user
+        //addressDao.save(user.getAddress());
+        //genderDao.save(user.getGender()); // Attention normalement on a pas à ajouter dans la table le genre ce fait dans le user
+        user.setGender(user.getGender());
+        user.setAddress(user.getAddress());
         LOGGER.info("saveUserDtoRegister user : {}", user);
         user.setCreatedAt(Instant.now());
         user.setPassword(passwordEncoder.encode(registerDTO.getPassword()));
@@ -113,12 +115,18 @@ public class UserService {
 
     @Transactional
     public UserDto saveUserDto(UserDto userDto){
-        AppUser user = userMapper.toEntity(userDto);
-        Address address = addressDao.save(userDto.getAddress());
-        LOGGER.info("genderId : {}", userDto.getGenderId());
-        LOGGER.info("username : {}", userDto.getUserName());
+        LOGGER.info("Méthode saveUserDto genderId : {}", userDto.getGenderId());
+        LOGGER.info("Méthode saveUserDto username : {}", userDto.getUserName());
+        LOGGER.info("Méthode saveUserDto id user : {}", userDto.getId());
+        LOGGER.info("Méthode saveUserDto id password : {}", userDto.getPassword());
+        LOGGER.info("Méthode saveUserDto id address : {}", userDto.getAddress().getId());
 
-        user.setAddress(address);
+        addressDao.save(userDto.getAddress());
+        AppUser user = userMapper.toEntity(userDto);
+        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
+        user.setCreatedAt(Instant.now());
+        user.setGender(userDto.getGender());
+        user.setAddress(userDto.getAddress());
         user = userDao.save(user);
         return userMapper.toDto(user);
     }

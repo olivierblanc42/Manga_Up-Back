@@ -76,9 +76,13 @@ public class UserController {
 
     @Operation(summary = "Creation d'un nouveau utilisateur ")
     @ApiResponse(responseCode = "201", description = "un nouveau utilisateur a été cre avec succès ")
-    @PostMapping
+    @PostMapping(value = {"/", "/admin/edit"}, consumes={MediaType.APPLICATION_JSON_VALUE}, produces={MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<UserDto> saveUser(@RequestBody UserDto userDto) {
-        LOGGER.info("createUser : {}", userDto.getUserName());
+        LOGGER.info("Méthode saveUser getUserName: {}", userDto.getUserName());
+        LOGGER.info("Méthode saveUser userDto : {}", userDto);
+        LOGGER.info("Méthode saveUser email: {}", userDto.getEmail());
+        LOGGER.info("Méthode register user gender: {}", userDto.getGender());
+        LOGGER.info("Méthode register user firstname: {}", userDto.getFirstname());
         UserDto createdUser = userService.saveUserDto(userDto);
         return ResponseEntity.ok(createdUser);
     }

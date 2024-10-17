@@ -45,8 +45,7 @@ public class AuthController {
 
     @Operation(summary = "Enregistrement d'un nouvelle utilisateur.")
     @ApiResponse(responseCode = "201", description = "Un nouvelle utilisateur à été enregistré avec succè !")
-    @PostMapping(value = "/register", consumes ={MediaType.APPLICATION_JSON_VALUE}, produces={MediaType
-            .APPLICATION_JSON_VALUE})
+    @PostMapping(value = "/register", consumes ={MediaType.APPLICATION_JSON_VALUE}, produces={MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<?> register(@RequestBody RegisterDTO registerDTO){
         LOGGER.info("Méthode register enregistrement de l'utilisateur : {}", registerDTO);
         LOGGER.info("Méthode register email: {}", registerDTO.getEmail());
