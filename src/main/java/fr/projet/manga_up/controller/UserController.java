@@ -73,9 +73,8 @@ public class UserController {
         return userService.createUser(user);
     }*/
 
-
-    @Operation(summary = "Creation d'un nouveau utilisateur ")
-    @ApiResponse(responseCode = "201", description = "un nouveau utilisateur a été cre avec succès ")
+    @Operation(summary = "Creation ou édition d'un nouveau utilisateur ")
+    @ApiResponse(responseCode = "201", description = "un nouvelle utilisateur ou une modification d'un utilisateur a été fait avec succès ")
     @PostMapping(value = {"/", "/admin/edit"}, consumes={MediaType.APPLICATION_JSON_VALUE}, produces={MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<UserDto> saveUser(@RequestBody UserDto userDto) {
         LOGGER.info("Méthode saveUser getUserName: {}", userDto.getUserName());

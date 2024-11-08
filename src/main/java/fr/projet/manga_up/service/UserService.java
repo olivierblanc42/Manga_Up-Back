@@ -94,12 +94,12 @@ public class UserService {
         userDao.deleteById(id);
     }
 
-    @Transactional
+    //@Transactional
     public RegisterDTO saveUserDtoRegister(RegisterDTO registerDTO){
         LOGGER.info("saveUserDtoRegister registerDTO : {}", registerDTO);
         AppUser user = userMapper.toEntityRegister(registerDTO);
         LOGGER.info("saveUserDtoRegister user: {}", user);
-        //addressDao.save(user.getAddress());
+        addressDao.save(user.getAddress());
         //genderDao.save(user.getGender()); // Attention normalement on a pas à ajouter dans la table le genre ce fait dans le user
         user.setGender(user.getGender());
         user.setAddress(user.getAddress());
