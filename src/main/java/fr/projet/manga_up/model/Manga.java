@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.*;
@@ -38,13 +39,24 @@ public class Manga {
     @Column(name = "point_fidelity")
     private Integer pointFidelity;
 
+    @Column(name = "price_excluding_taxe", precision = 10, scale = 2, nullable = false)
+    private BigDecimal priceExcludingTaxe;
 
-    @JsonManagedReference
+    @Column(name = "vat_rate", precision = 10, scale = 3, nullable = false)
+    private BigDecimal vatRate;
+
+    @Column(name = "stock_quantity")
+    private Integer stockQuantity;
+
+    @Column(name = "discount_percentage", precision = 10, scale = 2)
+    private BigDecimal discountPercentage;
+
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "Id_category")
     private Category category;
 
-    @JsonManagedReference
+    @JsonIgnore
     @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     @JoinTable(name = "author_manga",
             joinColumns = @JoinColumn(name = "manga_Id_manga"),
@@ -53,6 +65,7 @@ public class Manga {
 
 
     @JsonManagedReference
+    @JsonIgnore
     @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     @JoinTable(
             name = "genre_manga",
@@ -67,6 +80,49 @@ public class Manga {
 
     @OneToMany(mappedBy="manga")
     private List<Picture> pictures;
+
+    @OneToMany(mappedBy = "manga")
+    private List<BasketLine> basketLines;
+
+    public BigDecimal getPriceExcludingTaxe() {
+        return priceExcludingTaxe;
+    }
+
+    public void setPriceExcludingTaxe(BigDecimal priceExcludingTaxe) {
+        this.priceExcludingTaxe = priceExcludingTaxe;
+    }
+
+    public BigDecimal getVatRate() {
+        return vatRate;
+    }
+
+    public void setVatRate(BigDecimal vatRate) {
+        this.vatRate = vatRate;
+    }
+
+    public BigDecimal getDiscountPercentage() {
+        return discountPercentage;
+    }
+
+    public void setDiscountPercentage(BigDecimal discountPercentage) {
+        this.discountPercentage = discountPercentage;
+    }
+
+    public Integer getStockQuantity() {
+        return stockQuantity;
+    }
+
+    public void setStockQuantity(Integer stockQuantity) {
+        this.stockQuantity = stockQuantity;
+    }
+
+    public List<BasketLine> getBasketLines() {
+        return basketLines;
+    }
+
+    public void setBasketLines(List<BasketLine> basketLines) {
+        this.basketLines = basketLines;
+    }
 
     public Set<Genre> getGenres() {
         return genres;

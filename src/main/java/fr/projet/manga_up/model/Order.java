@@ -2,6 +2,7 @@ package fr.projet.manga_up.model;
 
 import jakarta.persistence.*;
 
+import java.math.BigDecimal;
 import java.time.Instant;
 
 @Entity
@@ -20,6 +21,18 @@ public class Order {
 
     @Column(name = "invoice_date", length = 50)
     private String invoiceDate;
+
+    /* Quantité total hors taxe */
+    @Column(name = "total_amount_excluding_taxe", precision = 10, scale = 2)
+    private BigDecimal totalAmountExcludingTaxe;
+
+    /* Total TVA */
+    @Column(name = "total_vat", precision = 10, scale = 2)
+    private BigDecimal totalVat;
+
+    /* Total de remise en pourcentage */
+    @Column(name = "total_discount_percentage", precision = 10, scale = 2)
+    private BigDecimal totalDiscountPercentage;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "Id_carts", nullable = false)
@@ -76,4 +89,28 @@ public class Order {
 	public void setAddress(Address address) {
 		this.address = address;
 	}
+
+    public BigDecimal getTotalAmountExcludingTaxe() {
+        return totalAmountExcludingTaxe;
+    }
+
+    public void setTotalAmountExcludingTaxe(BigDecimal totalAmountExcludingTaxe) {
+        this.totalAmountExcludingTaxe = totalAmountExcludingTaxe;
+    }
+
+    public BigDecimal getTotalVat() {
+        return totalVat;
+    }
+
+    public void setTotalVat(BigDecimal totalVat) {
+        this.totalVat = totalVat;
+    }
+
+    public BigDecimal getTotalDiscountPercentage() {
+        return totalDiscountPercentage;
+    }
+
+    public void setTotalDiscountPercentage(BigDecimal totalDiscountPercentage) {
+        this.totalDiscountPercentage = totalDiscountPercentage;
+    }
 }

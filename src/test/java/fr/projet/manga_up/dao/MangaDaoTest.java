@@ -81,7 +81,6 @@ public class MangaDaoTest {
         manga.setTitle("Haikyuu");
         manga.setCategory(category);
 
-
         // ACT
         List<Manga> mangas = mangaDao.findNineManga();
 

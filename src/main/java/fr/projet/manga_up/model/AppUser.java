@@ -38,7 +38,10 @@ public class AppUser {
     @Lob
     @Column(name = "picture", columnDefinition="blob")
     private byte[] img;
-    
+
+    @OneToMany(mappedBy = "user")
+    private List<BasketLine> basketLines;
+
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "Id_address", nullable = false)
     private Address address;
@@ -62,6 +65,18 @@ public class AppUser {
         inverseJoinColumns = @JoinColumn(name = "Id_role")
     )
     private Set<AppRole> roles=new HashSet<>();
+
+    public String getFisrtname() {
+        return fisrtname;
+    }
+
+    public List<BasketLine> getBasketLines() {
+        return basketLines;
+    }
+
+    public void setBasketLines(List<BasketLine> basketLines) {
+        this.basketLines = basketLines;
+    }
 
     public Set<AppRole> getRoles() {
         return roles;

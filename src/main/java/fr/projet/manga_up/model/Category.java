@@ -27,7 +27,7 @@ public class Category {
     @Column(name = "created_at")
     private Instant createdAt;
 
-    @JsonBackReference
+    @JsonManagedReference
     @OneToMany(mappedBy="category", cascade = CascadeType.PERSIST)
     private List<Manga> mangas;
     

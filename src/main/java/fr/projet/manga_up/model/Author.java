@@ -36,7 +36,8 @@ public class Author {
     @Column(name = "picture", columnDefinition="blob")
     private byte[] img;
 
-    @JsonBackReference
+    //@JsonBackReference
+    //@JsonManagedReference
     @ManyToMany(mappedBy = "authors")
     private Set<Manga> mangas = new HashSet<>();
 

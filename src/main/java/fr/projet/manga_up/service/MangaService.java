@@ -90,6 +90,13 @@ public class MangaService {
 	}
 
 	/**
+	 *
+	 * @return Récupère tous les mangas dans une liste.
+	 */
+	public List<Manga> findAllManga() {
+		return mangaDao.findAllManga();
+	}
+	/**
 	 * Récupère un manga unique.
 	 *
 	 * @return un objet {@link Manga} représentant un seul manga

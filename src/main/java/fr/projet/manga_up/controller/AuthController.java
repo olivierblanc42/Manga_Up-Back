@@ -82,6 +82,7 @@ public class AuthController {
                     .stream().map(GrantedAuthority::getAuthority)
                     .collect(Collectors.joining(" "));
             LOGGER.info("authorities : {}", authorities);
+            LOGGER.info("userDao : {}", userDao.findByUsername(authentication.getName()));
             return ResponseEntity.ok(userDao.findByUsername(authentication.getName()));
             //return ResponseEntity.ok(new LoginResponse("Authenticated successfully", HttpStatus.OK));
         } catch (Exception e) {
