@@ -8,6 +8,9 @@ public class AddressDto {
     private String line3;
     private String city;
     private String postalCode;
+    private String department;
+    private String country;
+
 
     public int getId() {
         return id;
@@ -56,4 +59,22 @@ public class AddressDto {
     public void setPostalCode(String postalCode) {
         this.postalCode = postalCode;
     }
+
+    public String getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(String department) {
+        this.department = department;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+
 }

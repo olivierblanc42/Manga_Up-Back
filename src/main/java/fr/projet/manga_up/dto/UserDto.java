@@ -13,6 +13,7 @@ public class UserDto {
    private String firstname;
    private String lastname;
    private String password;
+   private String phone;
    private Address address;
    private Integer genderId;
    private Gender gender;
@@ -97,5 +98,13 @@ public class UserDto {
 
    public void setGender(Gender gender) {
       this.gender = gender;
+   }
+
+   public String getPhone() {
+      return phone;
+   }
+
+   public void setPhone(String phone) {
+      this.phone = phone;
    }
 }

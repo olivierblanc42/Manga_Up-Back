@@ -32,6 +32,9 @@ public class AppUser {
     @Column(name = "lastname", length = 50)
     private String lastname;
 
+    @Column(name = "phone", length = 10)
+    private String phone;
+
     @Column(name = "created_at")
     private Instant createdAt;
 
@@ -172,6 +175,14 @@ public class AppUser {
 
     public void setMangas(Set<Manga> mangas) {
         this.mangas = mangas;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     @Override
